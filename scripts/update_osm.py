@@ -83,12 +83,22 @@ def main():
             pass
     today = datetime.datetime.now(datetime.timezone.utc).date()
     # A fixed historical reference avoids conflating mapped changes with crime trends.
-    dates = [today.isoformat()]\n    # Spread the 25 cities over five daily runs to stay within free-tier quotas.\n    city_names = list(CITIES)\n    selected = {city_names[(today.toordinal() * 5 + j) % len(city_names)] for j in range(5)}
+    dates = [today.isoformat()]
+    # Spread the 25 cities over five daily runs to stay within free-tier quotas.
+    city_names = list(CITIES)
+    selected = {city_names[(today.toordinal() * 5 + j) % len(city_names)] for j in range(5)}
     now = datetime.datetime.now(datetime.timezone.utc).isoformat()
     places = []
     successes = 0
     for name, (lat, lon) in CITIES.items():
-        if name not in selected:\n            places.append(dict(previous[name]) if name in previous else {\n                "name": name, "count": None, "status": "unavailable",\n                "lat": lat, "lon": lon, "source": "OpenStreetMap via ohsome API",\n                "coverage": "approximately 20 km x 20 km bounding box",\n            })\n            continue\n        counts = {}
+        if name not in selected:
+            places.append(dict(previous[name]) if name in previous else {
+                "name": name, "count": None, "status": "unavailable",
+                "lat": lat, "lon": lon, "source": "OpenStreetMap via ohsome API",
+                "coverage": "approximately 20 km x 20 km bounding box",
+            })
+            continue
+        counts = {}
         errors = []
         for date in dates:
             try:
@@ -128,7 +138,8 @@ def main():
         "updated": now, "source": "ohsome API / OpenStreetMap",
         "coverage_note": "Fixed-size approximate geographic boxes; not municipal boundaries.",
         "places": places,
-    }, indent=2) + "\n", encoding="utf-8")
+    }, indent=2) + "
+", encoding="utf-8")
     print(f"Saved {len(places)} cities; refreshed {successes} of {len(selected)} attempted", flush=True)
 
 if __name__ == "__main__":
