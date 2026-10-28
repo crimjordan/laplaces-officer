@@ -1,8 +1,7 @@
-"""Refresh counts of OSM surveillance-tagged features in three 10 km circles."""
+"""Fetch best-effort OpenStreetMap surveillance counts without losing successful cities."""
 import datetime
 import json
 import time
-import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -16,53 +15,64 @@ PLACES = {
 ENDPOINTS = [
     "https://overpass-api.de/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
-    "https://overpass.nchc.org.tw/api/interpreter",
 ]
 
-def query_count(lat, lon):
-    # Node count only. It is NOT a census of physical cameras.
-    query = f'[out:json][timeout:30];node(around:10000,{lat},{lon})["surveillance"];out count;'
-    data = urllib.parse.urlencode({"data": query}).encode("utf-8")
+def count_nodes(lat, lon):
+    # Bounding circle, 10 km radius; OSM surveillance-tagged nodes only.
+    query = f'[out:json][timeout:20];node(around:10000,{lat},{lon})["surveillance"];out count;'
+    data = urllib.parse.urlencode({"data": query}).encode()
     errors = []
     for endpoint in ENDPOINTS:
         try:
-            req = urllib.request.Request(
-                endpoint,
-                data=data,
-                headers={"User-Agent": "LaplacesOfficerResearchObservatory/1.1", "Accept": "application/json"},
-                method="POST",
-            )
-            with urllib.request.urlopen(req, timeout=50) as response:
+            req = urllib.request.Request(endpoint, data=data, headers={
+                "User-Agent": "LaplacesOfficerResearchObservatory/1.2",
+                "Accept": "application/json",
+            })
+            with urllib.request.urlopen(req, timeout=25) as response:
                 payload = json.load(response)
-            elements = payload.get("elements", [])
-            if not elements or elements[0].get("type") != "count":
-                raise ValueError("Overpass returned no count element")
-            tags = elements[0]["tags"]
-            return int(tags["nodes"])
-        except (OSError, ValueError, KeyError, json.JSONDecodeError) as exc:
+            entry = payload["elements"][0]
+            if entry.get("type") != "count":
+                raise ValueError("No count returned")
+            return int(entry["tags"]["nodes"])
+        except (Exception,) as exc:
             errors.append(f"{endpoint}: {exc}")
-            time.sleep(2)
+            time.sleep(1)
     raise RuntimeError("; ".join(errors))
 
 def main():
-    results = []
+    previous = {}
+    if OUT.exists():
+        try:
+            previous = {p["name"]: p for p in json.loads(OUT.read_text()).get("places", [])}
+        except (ValueError, KeyError, TypeError):
+            pass
+    now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    places = []
     for name, (lat, lon) in PLACES.items():
         try:
-            count = query_count(lat, lon)
-            results.append({
-                "name": name, "count": count, "radius_km": 10,
-                "source": "OpenStreetMap / Overpass", "feature_type": "surveillance-tagged nodes"
-            })
+            count = count_nodes(lat, lon)
+            places.append({"name": name, "count": count, "radius_km": 10,
+                           "source": "OpenStreetMap / Overpass",
+                           "feature_type": "surveillance-tagged nodes",
+                           "status": "current", "observed_at": now})
             print(f"{name}: {count} mapped nodes", flush=True)
         except RuntimeError as exc:
-            print(f"Unable to update {name}: {exc}", flush=True)
-            # Do not publish a misleading partial geographic comparison.
-            return 1
+            print(f"WARNING {name}: {exc}", flush=True)
+            if name in previous:
+                old = dict(previous[name])
+                old["status"] = "stale"
+                places.append(old)
+            else:
+                places.append({"name": name, "count": None, "radius_km": 10,
+                               "source": "OpenStreetMap / Overpass",
+                               "feature_type": "surveillance-tagged nodes",
+                               "status": "unavailable"})
+    if not any(p.get("status") == "current" for p in places):
+        print("All sources unavailable: preserving last snapshot", flush=True)
+        return 0
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({
-        "updated": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-        "places": results
-    }, indent=2) + "\n", encoding="utf-8")
+    OUT.write_text(json.dumps({"updated": now, "places": places}, indent=2) + "\n")
+    print("Saved surveillance snapshot; unavailable cities explicitly marked", flush=True)
     return 0
 
 if __name__ == "__main__":
