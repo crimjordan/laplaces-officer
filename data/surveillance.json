@@ -1,26 +1,282 @@
 {
-  "updated": "2026-10-28T16:27:01.486924+00:00",
+  "updated": "2026-10-28T16:42:31.288515+00:00",
+  "source": "ohsome API / OpenStreetMap",
+  "coverage_note": "Fixed-size approximate geographic boxes; not municipal boundaries.",
   "places": [
     {
-      "name": "Omaha, Nebraska",
+      "name": "Omaha, NE",
       "count": null,
-      "source": "OpenStreetMap / Overpass",
+      "historical_count": 5,
+      "status": "unavailable",
+      "lat": 41.2565,
+      "lon": -95.9345,
+      "source": "OpenStreetMap via ohsome API",
       "coverage": "approximately 20 km x 20 km bounding box",
-      "status": "unavailable"
+      "feature_type": "OSM nodes tagged surveillance=*"
     },
     {
-      "name": "Lincoln, Nebraska",
+      "name": "Lincoln, NE",
       "count": null,
-      "source": "OpenStreetMap / Overpass",
+      "historical_count": 0,
+      "status": "unavailable",
+      "lat": 40.8136,
+      "lon": -96.7026,
+      "source": "OpenStreetMap via ohsome API",
       "coverage": "approximately 20 km x 20 km bounding box",
-      "status": "unavailable"
+      "feature_type": "OSM nodes tagged surveillance=*"
     },
     {
-      "name": "Denver, Colorado",
+      "name": "Denver, CO",
       "count": null,
-      "source": "OpenStreetMap / Overpass",
+      "historical_count": 906,
+      "status": "unavailable",
+      "lat": 39.7392,
+      "lon": -104.9903,
+      "source": "OpenStreetMap via ohsome API",
       "coverage": "approximately 20 km x 20 km bounding box",
-      "status": "unavailable"
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "New York, NY",
+      "count": null,
+      "historical_count": 200,
+      "status": "unavailable",
+      "lat": 40.7128,
+      "lon": -74.006,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Los Angeles, CA",
+      "count": null,
+      "historical_count": 13,
+      "status": "unavailable",
+      "lat": 34.0522,
+      "lon": -118.2437,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Chicago, IL",
+      "count": null,
+      "historical_count": 18,
+      "status": "unavailable",
+      "lat": 41.8781,
+      "lon": -87.6298,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Houston, TX",
+      "count": null,
+      "historical_count": 0,
+      "status": "unavailable",
+      "lat": 29.7604,
+      "lon": -95.3698,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Phoenix, AZ",
+      "count": null,
+      "historical_count": 5,
+      "status": "unavailable",
+      "lat": 33.4484,
+      "lon": -112.074,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Philadelphia, PA",
+      "count": null,
+      "historical_count": 14,
+      "status": "unavailable",
+      "lat": 39.9526,
+      "lon": -75.1636,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "San Antonio, TX",
+      "count": null,
+      "historical_count": 0,
+      "status": "unavailable",
+      "lat": 29.4241,
+      "lon": -98.4936,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "San Diego, CA",
+      "count": null,
+      "historical_count": 11,
+      "status": "unavailable",
+      "lat": 32.7157,
+      "lon": -117.1611,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Dallas, TX",
+      "count": null,
+      "historical_count": 4,
+      "status": "unavailable",
+      "lat": 32.7767,
+      "lon": -96.797,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Jacksonville, FL",
+      "count": null,
+      "historical_count": 0,
+      "status": "unavailable",
+      "lat": 30.3322,
+      "lon": -81.6557,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Fort Worth, TX",
+      "count": null,
+      "historical_count": 4,
+      "status": "unavailable",
+      "lat": 32.7555,
+      "lon": -97.3308,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Columbus, OH",
+      "count": null,
+      "historical_count": 8,
+      "status": "unavailable",
+      "lat": 39.9612,
+      "lon": -82.9988,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Indianapolis, IN",
+      "count": null,
+      "historical_count": 8,
+      "status": "unavailable",
+      "lat": 39.7684,
+      "lon": -86.1581,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Charlotte, NC",
+      "count": null,
+      "historical_count": 0,
+      "status": "unavailable",
+      "lat": 35.2271,
+      "lon": -80.8431,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Washington, DC",
+      "count": null,
+      "historical_count": 509,
+      "status": "unavailable",
+      "lat": 38.9072,
+      "lon": -77.0369,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Seattle, WA",
+      "count": null,
+      "historical_count": 164,
+      "status": "unavailable",
+      "lat": 47.6062,
+      "lon": -122.3321,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Boston, MA",
+      "count": null,
+      "historical_count": 976,
+      "status": "unavailable",
+      "lat": 42.3601,
+      "lon": -71.0589,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Portland, OR",
+      "count": null,
+      "historical_count": 22,
+      "status": "unavailable",
+      "lat": 45.5152,
+      "lon": -122.6784,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "San Francisco, CA",
+      "count": null,
+      "historical_count": 12,
+      "status": "unavailable",
+      "lat": 37.7749,
+      "lon": -122.4194,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Minneapolis, MN",
+      "count": null,
+      "historical_count": 9,
+      "status": "unavailable",
+      "lat": 44.9778,
+      "lon": -93.265,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Atlanta, GA",
+      "count": null,
+      "historical_count": 0,
+      "status": "unavailable",
+      "lat": 33.749,
+      "lon": -84.388,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
+    },
+    {
+      "name": "Miami, FL",
+      "count": null,
+      "historical_count": 3,
+      "status": "unavailable",
+      "lat": 25.7617,
+      "lon": -80.1918,
+      "source": "OpenStreetMap via ohsome API",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "feature_type": "OSM nodes tagged surveillance=*"
     }
   ]
 }
