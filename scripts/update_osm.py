@@ -61,7 +61,7 @@ def query_count(lat, lon, date):
         headers={"User-Agent": "LaplacesOfficerObservatory/2.0 (academic demonstration)",
                  "Accept": "application/json"},
     )
-    with urllib.request.urlopen(req, timeout=35) as response:
+    with urllib.request.urlopen(req, timeout=10) as response:
         payload = json.load(response)
     result = payload.get("result", [])
     if not result or not isinstance(result[0].get("value"), (int, float)):
