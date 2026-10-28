@@ -138,8 +138,7 @@ def main():
         "updated": now, "source": "ohsome API / OpenStreetMap",
         "coverage_note": "Fixed-size approximate geographic boxes; not municipal boundaries.",
         "places": places,
-    }, indent=2) + "
-", encoding="utf-8")
+    }, indent=2) + "\n", encoding="utf-8")
     print(f"Saved {len(places)} cities; refreshed {successes} of {len(selected)} attempted", flush=True)
 
 if __name__ == "__main__":
