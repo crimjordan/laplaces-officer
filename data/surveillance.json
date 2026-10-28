@@ -1,0 +1,26 @@
+{
+  "updated": "2026-10-28T16:27:01.486924+00:00",
+  "places": [
+    {
+      "name": "Omaha, Nebraska",
+      "count": null,
+      "source": "OpenStreetMap / Overpass",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "status": "unavailable"
+    },
+    {
+      "name": "Lincoln, Nebraska",
+      "count": null,
+      "source": "OpenStreetMap / Overpass",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "status": "unavailable"
+    },
+    {
+      "name": "Denver, Colorado",
+      "count": null,
+      "source": "OpenStreetMap / Overpass",
+      "coverage": "approximately 20 km x 20 km bounding box",
+      "status": "unavailable"
+    }
+  ]
+}
