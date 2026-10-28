@@ -86,7 +86,13 @@ def main():
     dates = [today.isoformat()]
     # Spread the 25 cities over five daily runs to stay within free-tier quotas.
     city_names = list(CITIES)
-    selected = {city_names[(today.toordinal() * 5 + j) % len(city_names)] for j in range(5)}
+    batch = os.environ.get("CITY_BATCH", "auto").strip().lower()
+    if batch == "auto":
+        batch = str(today.toordinal() % 5)
+    if batch not in {"0", "1", "2", "3", "4"}:
+        raise ValueError("CITY_BATCH must be auto or a number from 0 to 4")
+    selected = set(city_names[int(batch) * 5:(int(batch) + 1) * 5])
+    print(f"Refreshing city batch {batch}: {sorted(selected)}", flush=True)
     now = datetime.datetime.now(datetime.timezone.utc).isoformat()
     places = []
     successes = 0
