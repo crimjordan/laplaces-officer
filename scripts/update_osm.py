@@ -68,10 +68,11 @@ def query_count(lat, lon, date):
     )
     with urllib.request.urlopen(req, timeout=25) as response:
         payload = json.load(response)
-    result = payload.get("result", [])
-    if not result or not isinstance(result[0].get("value"), (int, float)):
+    result = payload.get("result", {})
+    values = result.get("value", []) if isinstance(result, dict) else []
+    if not values or not isinstance(values[-1], (int, float)):
         raise ValueError("ohsome returned no valid numeric count")
-    return int(result[0]["value"])
+    return int(values[-1])
 
 def main():
     previous = {}
@@ -82,12 +83,12 @@ def main():
             pass
     today = datetime.datetime.now(datetime.timezone.utc).date()
     # A fixed historical reference avoids conflating mapped changes with crime trends.
-    dates = [today.isoformat(), f"{today.year - 3}-01-01"]
+    dates = [today.isoformat()]\n    # Spread the 25 cities over five daily runs to stay within free-tier quotas.\n    city_names = list(CITIES)\n    selected = {city_names[(today.toordinal() * 5 + j) % len(city_names)] for j in range(5)}
     now = datetime.datetime.now(datetime.timezone.utc).isoformat()
     places = []
     successes = 0
     for name, (lat, lon) in CITIES.items():
-        counts = {}
+        if name not in selected:\n            places.append(dict(previous[name]) if name in previous else {\n                "name": name, "count": None, "status": "unavailable",\n                "lat": lat, "lon": lon, "source": "OpenStreetMap via ohsome API",\n                "coverage": "approximately 20 km x 20 km bounding box",\n            })\n            continue\n        counts = {}
         errors = []
         for date in dates:
             try:
@@ -99,8 +100,8 @@ def main():
             successes += 1
             record = {
                 "name": name, "count": counts[dates[0]],
-                "historical_count": counts.get(dates[1]),
-                "historical_date": dates[1],
+                "historical_count": previous.get(name, {}).get("historical_count"),
+                "historical_date": previous.get(name, {}).get("historical_date"),
                 "status": "current", "observed_at": now,
                 "lat": lat, "lon": lon,
                 "source": "OpenStreetMap via ohsome API",
@@ -114,7 +115,7 @@ def main():
             print(f"WARNING {name}: retaining prior count; {'; '.join(errors)}", flush=True)
         else:
             record = {
-                "name": name, "count": None, "historical_count": counts.get(dates[1]),
+                "name": name, "count": None, "historical_count": previous.get(name, {}).get("historical_count"),
                 "status": "unavailable", "lat": lat, "lon": lon,
                 "source": "OpenStreetMap via ohsome API",
                 "coverage": "approximately 20 km x 20 km bounding box",
@@ -128,7 +129,7 @@ def main():
         "coverage_note": "Fixed-size approximate geographic boxes; not municipal boundaries.",
         "places": places,
     }, indent=2) + "\n", encoding="utf-8")
-    print(f"Saved {len(places)} cities, {successes} with current counts", flush=True)
+    print(f"Saved {len(places)} cities; refreshed {successes} of {len(selected)} attempted", flush=True)
 
 if __name__ == "__main__":
     main()
