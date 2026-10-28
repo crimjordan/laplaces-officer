@@ -7,6 +7,7 @@ Missing API data are never represented as zero.
 import datetime
 import json
 import math
+import os
 import time
 import urllib.parse
 import urllib.request
@@ -40,7 +41,7 @@ CITIES = {
     "Atlanta, GA": (33.7490, -84.3880),
     "Miami, FL": (25.7617, -80.1918),
 }
-ENDPOINT = "https://api.ohsome.org/v1/elements/count"
+ENDPOINT = "https://api.heigit.org/ohsome-api/v2-rc/stats/features/count.json"
 FILTER = "surveillance=* and type:node"
 HALF_LAT = 10 / 111.32
 
@@ -50,18 +51,22 @@ def bbox(lat, lon):
                     (lon - half_lon, lat - HALF_LAT, lon + half_lon, lat + HALF_LAT))
 
 def query_count(lat, lon, date):
-    data = urllib.parse.urlencode({
-        "bboxes": bbox(lat, lon),
-        "filter": FILTER,
+    key = os.environ.get("OHSOME_API_KEY", "").strip()
+    if not key:
+        raise RuntimeError("OHSOME_API_KEY secret is not configured")
+    bounds = [float(v) for v in bbox(lat, lon).split(",")]
+    body = json.dumps({
+        "aoi": bounds,
+        "filter": "surveillance=* and geometry:point",
         "time": date,
-        "format": "json",
     }).encode("utf-8")
     req = urllib.request.Request(
-        ENDPOINT, data=data,
-        headers={"User-Agent": "LaplacesOfficerObservatory/2.0 (academic demonstration)",
-                 "Accept": "application/json"},
+        ENDPOINT, data=body,
+        headers={"Authorization": key, "Content-Type": "application/json",
+                 "Accept": "application/json",
+                 "User-Agent": "LaplacesOfficerObservatory/2.1"},
     )
-    with urllib.request.urlopen(req, timeout=10) as response:
+    with urllib.request.urlopen(req, timeout=25) as response:
         payload = json.load(response)
     result = payload.get("result", [])
     if not result or not isinstance(result[0].get("value"), (int, float)):
