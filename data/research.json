@@ -1,6 +1,66 @@
 {
-  "updated": "2026-10-28T16:08:16.308863+00:00",
+  "updated": "2026-10-28T16:20:59.926657+00:00",
   "items": [
+    {
+      "title": "Predictive Policing",
+      "url": "https://doi.org/10.67173/99r0bt55",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Predictive Policing",
+      "url": "https://doi.org/10.15170/studia.2026.01.09",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Rethinking predictive policing",
+      "url": "https://doi.org/10.4324/9781003731115-10",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "The Ethics of Predictive Policing",
+      "url": "https://doi.org/10.4324/9781003634591-2",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Predictive Policing",
+      "url": "https://openalex.org/W7212412914",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Co-Creation in Predictive Policing",
+      "url": "https://doi.org/10.4324/9781003671312-17",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Predictive Policing and Prevention Fit",
+      "url": "https://doi.org/10.5281/zenodo.21432529",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Recidivism and Predictive Policing",
+      "url": "https://doi.org/10.1201/9781003731290-24",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Predictive Policing and the Risk of Algorithmic Bias",
+      "url": "https://openalex.org/W7217219339",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Quantifying fairness in spatial predictive policing",
+      "url": "https://doi.org/10.1007/s10506-026-09508-7",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
     {
       "title": "Governing Algorithmic Policing in Himachal Pradesh",
       "url": "https://doi.org/10.4018/979-8-3373-5228-2.ch002",
@@ -22,12 +82,6 @@
     {
       "title": "Algorithmic Transformations in Policing Practices",
       "url": "https://doi.org/10.1093/9780197852712.003.0021",
-      "year": 2026,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "Predictive Policing and the Risk of Algorithmic Bias",
-      "url": "https://openalex.org/W7217219339",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -194,18 +248,6 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Predictive Policing",
-      "url": "https://doi.org/10.15170/studia.2026.01.09",
-      "year": 2026,
-      "source": "Crossref"
-    },
-    {
-      "title": "Predictive Policing",
-      "url": "https://doi.org/10.67173/99r0bt55",
-      "year": 2026,
-      "source": "Crossref"
-    },
-    {
       "title": "Digital Surveillance and Predictive Policing: A Rights-Based Analysis in India",
       "url": "https://doi.org/10.63108/vab.lit.1.8",
       "year": 2026,
@@ -230,18 +272,6 @@
       "source": "Crossref"
     },
     {
-      "title": "Rethinking predictive policing",
-      "url": "https://doi.org/10.4324/9781003731115-10",
-      "year": 2026,
-      "source": "Crossref"
-    },
-    {
-      "title": "Recidivism and Predictive Policing",
-      "url": "https://doi.org/10.1201/9781003731290-24",
-      "year": 2026,
-      "source": "Crossref"
-    },
-    {
       "title": "Predictive Policing: Technology of Stasis",
       "url": "https://doi.org/10.1353/cul.2026.a1002020",
       "year": 2026,
@@ -250,24 +280,6 @@
     {
       "title": "Predictive Policing Meets Procedural Law",
       "url": "https://doi.org/10.1201/9781003629146-11",
-      "year": 2026,
-      "source": "Crossref"
-    },
-    {
-      "title": "Co-Creation in Predictive Policing",
-      "url": "https://doi.org/10.4324/9781003671312-17",
-      "year": 2026,
-      "source": "Crossref"
-    },
-    {
-      "title": "The Ethics of Predictive Policing",
-      "url": "https://doi.org/10.4324/9781003634591-2",
-      "year": 2026,
-      "source": "Crossref"
-    },
-    {
-      "title": "Quantifying fairness in spatial predictive policing",
-      "url": "https://doi.org/10.1007/s10506-026-09508-7",
       "year": 2026,
       "source": "Crossref"
     },
@@ -288,6 +300,42 @@
       "url": "https://doi.org/10.47119/ijrp1001911220268688",
       "year": 2026,
       "source": "Crossref"
+    },
+    {
+      "title": "Predictive Policing",
+      "url": "https://doi.org/10.4324/9781003558491-3",
+      "year": 2025,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Predictive policing",
+      "url": "https://openalex.org/W7125361769",
+      "year": 2025,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Predictive policing",
+      "url": "https://doi.org/10.4337/9781035336906.00075",
+      "year": 2025,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Predictive Policing",
+      "url": "https://doi.org/10.4324/9781041056393-3",
+      "year": 2025,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Introduction: the discreet charm of predictive policing",
+      "url": "https://doi.org/10.4337/9781035323036.00006",
+      "year": 2025,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Verfassungsrechtliche Grenzen des Predictive Policing",
+      "url": "https://doi.org/10.3726/b22537",
+      "year": 2025,
+      "source": "OpenAlex"
     },
     {
       "title": "Public perception of algorithmic policing in a non-democratic context: evidence from Kazakhstan",
@@ -458,24 +506,6 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Predictive policing",
-      "url": "https://doi.org/10.4337/9781035336906.00075",
-      "year": 2025,
-      "source": "Crossref"
-    },
-    {
-      "title": "Predictive Policing",
-      "url": "https://doi.org/10.4324/9781041056393-3",
-      "year": 2025,
-      "source": "Crossref"
-    },
-    {
-      "title": "Predictive Policing",
-      "url": "https://doi.org/10.4324/9781003558491-3",
-      "year": 2025,
-      "source": "Crossref"
-    },
-    {
       "title": "Predictive Protest Policing",
       "url": "https://doi.org/10.2139/ssrn.5847102",
       "year": 2025,
@@ -518,12 +548,6 @@
       "source": "Crossref"
     },
     {
-      "title": "Verfassungsrechtliche Grenzen des Predictive Policing",
-      "url": "https://doi.org/10.3726/b22537",
-      "year": 2025,
-      "source": "Crossref"
-    },
-    {
       "title": "11 Policing Borders: States of Surveillance",
       "url": "https://doi.org/10.56687/9781529239850-014",
       "year": 2025,
@@ -548,12 +572,6 @@
       "source": "Crossref"
     },
     {
-      "title": "Introduction: the discreet charm of predictive policing",
-      "url": "https://doi.org/10.4337/9781035323036.00006",
-      "year": 2025,
-      "source": "Crossref"
-    },
-    {
       "title": "Law Enforcement Use of Predictive Policing Approaches",
       "url": "https://doi.org/10.17226/28036",
       "year": 2025,
@@ -570,6 +588,54 @@
       "url": "https://doi.org/10.5040/9798881845834.ch-018",
       "year": 2025,
       "source": "Crossref"
+    },
+    {
+      "title": "Algorithmic fairness in predictive policing",
+      "url": "https://doi.org/10.1007/s43681-024-00541-3",
+      "year": 2024,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Predictive Policing \u2013 Eine Bestandsaufnahme",
+      "url": "https://doi.org/10.1007/978-3-658-46695-4_2",
+      "year": 2024,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Predictive Policing: The Role of AI in Crime Prevention",
+      "url": "https://doi.org/10.7753/ijcatr1310.1006",
+      "year": 2024,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Applicability Predictive Policing in Indonesia Police Agency",
+      "url": "https://doi.org/10.46976/litbangpolri.v27i1.234",
+      "year": 2024,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "The Effectiveness of Big Data-Driven Predictive Policing: Systematic Review",
+      "url": "https://doi.org/10.1080/24751979.2024.2371781",
+      "year": 2024,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Predictive Policing: A Fairness-aware Approach",
+      "url": "https://doi.org/10.1142/s0218213024600054",
+      "year": 2024,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "AI-gestuurde big data policing/predictive policing",
+      "url": "https://openalex.org/W7113308856",
+      "year": 2024,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "THE MERITS AND ETHICAL CONUNDRUMS OF PREDICTIVE POLICING",
+      "url": "https://doi.org/10.33807/monte.20243099",
+      "year": 2024,
+      "source": "OpenAlex"
     },
     {
       "title": "Algorithmic Police Reform: 'Reading' a Police Early Intervention Algorithm",
@@ -610,12 +676,6 @@
     {
       "title": "Algorithmic crime prevention. From abstract police to precision policing",
       "url": "https://doi.org/10.1080/10439463.2024.2326516",
-      "year": 2024,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "Algorithmic fairness in predictive policing",
-      "url": "https://doi.org/10.1007/s43681-024-00541-3",
       "year": 2024,
       "source": "OpenAlex"
     },
@@ -680,12 +740,6 @@
       "source": "Crossref"
     },
     {
-      "title": "Predictive Policing \u2013 Eine Bestandsaufnahme",
-      "url": "https://doi.org/10.1007/978-3-658-46695-4_2",
-      "year": 2024,
-      "source": "Crossref"
-    },
-    {
       "title": "Smart Policing, Surveillance, IT and the Future of Policing",
       "url": "https://doi.org/10.4135/9781036233419.n11",
       "year": 2024,
@@ -698,20 +752,8 @@
       "source": "Crossref"
     },
     {
-      "title": "Predictive Policing: A Fairness-aware Approach",
-      "url": "https://doi.org/10.1142/s0218213024600054",
-      "year": 2024,
-      "source": "Crossref"
-    },
-    {
       "title": "Predictive Policing im Kontext gegenw\u00e4rtiger Kriminalit\u00e4tskontrolle",
       "url": "https://doi.org/10.1007/978-3-658-46695-4_4",
-      "year": 2024,
-      "source": "Crossref"
-    },
-    {
-      "title": "Applicability Predictive Policing in Indonesia Police Agency",
-      "url": "https://doi.org/10.46976/litbangpolri.v27i1.234",
       "year": 2024,
       "source": "Crossref"
     },
@@ -734,6 +776,42 @@
       "source": "Crossref"
     },
     {
+      "title": "Predictive policing and algorithmic fairness",
+      "url": "https://doi.org/10.1007/s11229-023-04189-0",
+      "year": 2023,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "PREDICTIVE POLICING",
+      "url": "https://doi.org/10.20544/icp.8.1.23.p20",
+      "year": 2023,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Predictively policed",
+      "url": "https://doi.org/10.7765/9781526165596.00010",
+      "year": 2023,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Predictive Policing und Gefahrenkategorien",
+      "url": "https://doi.org/10.1628/978-3-16-162731-6",
+      "year": 2023,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "The 'uberization of policing'? How police negotiate and operationalise predictive policing technology",
+      "url": "https://doi.org/10.32920/23656788.v1",
+      "year": 2023,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "the predictive policing case",
+      "url": "https://openalex.org/W7112394297",
+      "year": 2023,
+      "source": "OpenAlex"
+    },
+    {
       "title": "Algorithmic policing accountability: eight sociotechnical challenges",
       "url": "https://doi.org/10.1080/10439463.2023.2241965",
       "year": 2023,
@@ -748,12 +826,6 @@
     {
       "title": "Big data policing: The use of big data and algorithms by the Netherlands Police",
       "url": "https://doi.org/10.1093/police/paad061",
-      "year": 2023,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "Predictive policing and algorithmic fairness",
-      "url": "https://doi.org/10.1007/s11229-023-04189-0",
       "year": 2023,
       "source": "OpenAlex"
     },
@@ -812,18 +884,6 @@
       "source": "OpenAlex"
     },
     {
-      "title": "PREDICTIVE POLICING",
-      "url": "https://doi.org/10.20544/icp.8.1.23.p20",
-      "year": 2023,
-      "source": "Crossref"
-    },
-    {
-      "title": "Predictive Policing und Gefahrenkategorien",
-      "url": "https://doi.org/10.1628/978-3-16-162731-6",
-      "year": 2023,
-      "source": "Crossref"
-    },
-    {
       "title": "Entrapment, surveillance and covert policing",
       "url": "https://doi.org/10.5040/9781526519542.chapter-007",
       "year": 2023,
@@ -844,12 +904,6 @@
     {
       "title": "The 'uberization of policing'? How police negotiate and operationalise predictive policing technology",
       "url": "https://doi.org/10.32920/23656788",
-      "year": 2023,
-      "source": "Crossref"
-    },
-    {
-      "title": "The 'uberization of policing'? How police negotiate and operationalise predictive policing technology",
-      "url": "https://doi.org/10.32920/23656788.v1",
       "year": 2023,
       "source": "Crossref"
     },
