@@ -4,3 +4,10 @@
 [hidden]{display:none!important}
 
 .audit{display:grid;gap:9px;margin:12px 0}.audititem{background:#14293d;border:1px solid #294557;border-radius:8px;padding:10px}.audititem span{display:block;color:#a7beca;font-size:10px;letter-spacing:.05em}.audititem strong{font-size:18px;display:block;margin-top:5px}.auditbar{height:7px;border-radius:9px;background:#28415b;overflow:hidden;margin-top:7px}.auditbar div{height:100%;border-radius:9px}
+
+/* Research report generator */
+.reportcta{display:block;width:100%;background:linear-gradient(95deg,#43edd5,#8af1d4);color:#062b2f;border:1px solid #92f8da;font-weight:900;letter-spacing:.035em;padding:13px 10px;margin-top:12px;box-shadow:0 6px 22px #1af2cd28}
+.reportcta:hover{background:linear-gradient(95deg,#8cfbe7,#cdfcf2);border-color:white;color:#09272d}
+.reportcta:disabled{background:#163244;border-color:#36505a;color:#7894a3;box-shadow:none;cursor:not-allowed}
+#reportStatus{padding:9px 10px;border-left:2px solid #48aeaa;background:#102637;border-radius:3px;margin-top:12px}
+#reportProfile{margin:3px 0}
