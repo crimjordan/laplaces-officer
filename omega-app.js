@@ -159,6 +159,8 @@ for(const b of document.querySelectorAll("[data-shock]"))b.addEventListener("cli
 for(const b of document.querySelectorAll("[data-preset]"))b.addEventListener("click",()=>preset(b.dataset.preset));
 for(const id of ["mixTreat","mixEducate","mixHouse","mixOutreach","spillover"])$(id).addEventListener("input",()=>{readMix();updateAll()});
 for(const [id,type] of [["camOrbit","orbit"],["camTop","top"],["camStreet","street"]])$(id).addEventListener("click",()=>viewer?.setCamera(type));
+for(const [id,mode] of [["weatherNeon","neon"],["weatherDawn","dawn"],["weatherStorm","storm"]])$(id).addEventListener("click",()=>{viewer?.setAtmosphere?.(mode);for(const target of ["weatherNeon","weatherDawn","weatherStorm"])$(target).classList.toggle("chosen",target===id)});
+$("autoOrbit").addEventListener("click",()=>{const active=viewer?.toggleOrbit?.();$("autoOrbit").classList.toggle("chosen",!!active)});
 $("photo").addEventListener("click",()=>{if(!viewer)return;try{const data=viewer.capture(),a=document.createElement("a");a.href=data;a.download="laplace-omega-3d-synthetic-city.png";a.click()}catch(e){$("engineStatus").textContent="IMAGE CAPTURE UNAVAILABLE: "+e.message}});
 $("exportCSV").addEventListener("click",exportCSV);$("exportJSON").addEventListener("click",exportJSON);$("shareScenario").addEventListener("click",share);
 document.addEventListener("keydown",e=>{const node=e.target?.tagName;if(node==="INPUT"||node==="SELECT"||node==="TEXTAREA"||e.ctrlKey||e.altKey||e.metaKey)return;
