@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#050d19"><meta name="description" content="GENESIS: an agent-based synthetic city with matched policy worlds, evolving life histories, empirical evidence anchors, 3D visualization, and repeated experiments.">
-<title>GENESIS — A City of Possible Futures | Laplace's Officer</title>
+<title>GENESIS v2 — Model Mechanism Observatory | Laplace's Officer</title>
 <link rel="stylesheet" href="genesis.css?v=cinema-restored-2"></head><body>
 <div class="sitebar">
  <div class="brand"><span class="glyph">✳</span><div><div class="eyebrow">LAPLACE'S OFFICER / LIFECOURSE LAB</div><strong>GENESIS <span class="muted thin">/ A CITY OF POSSIBLE FUTURES</span></strong></div></div>
@@ -10,7 +10,7 @@
 </div>
 <section class="masthead">
  <div><div class="eyebrow">AN EXPERIMENT IN INDIVIDUAL LIVES, INSTITUTIONS AND PUBLIC POLICY</div><h1>LET A CITY <em>BECOME.</em></h1><p>Follow fictional residents across two futures. Make interventions, let years unfold, and ask whether prevention changes trajectories—or merely changes what institutions record.</p></div>
- <div class="mastchips"><span>1,152 SYNTHETIC RESIDENTS</span><span>144 DISTRICTS</span><span>20 YEARS</span><span>12 CRIME &amp; HARM OUTCOMES</span><small>Empirical anchors ≠ a calibrated forecast.</small></div>
+ <div class="mastchips"><span>1,152 SYNTHETIC RESIDENTS</span><span>144 DISTRICTS</span><span>20 YEARS</span><span>12 CRIME &amp; HARM OUTCOMES</span><span>MODEL v2 · AUDITABLE MECHANISMS</span><small>Empirical anchors ≠ a calibrated forecast.</small></div>
 </section>
 <main>
 <section class="metrics" aria-label="Citywide simulation performance">
@@ -100,7 +100,7 @@
   </div>
   <div class="panel chartbox">
    <div class="eyebrow">05 / CAUSAL QUESTIONS, MODEL-GENERATED ANSWERS</div><h2>Compare the trajectories</h2>
-   <div class="buttons chartbuttons"><button data-chart="totalCrime" class="chosen">CRIME</button><button data-chart="recordedCrime">RECORDED</button><button data-chart="category">OFFENSE FILTER</button><button data-chart="violentArrests">VIOLENT ARRESTS</button><button data-chart="overdoseDeaths">OVERDOSE DEATHS</button><button data-chart="employed">EMPLOYMENT</button><button data-chart="trust">TRUST</button></div>
+   <div class="buttons chartbuttons"><button data-chart="totalCrime" class="chosen">CRIME</button><button data-chart="recordedCrime">RECORDED</button><button data-chart="category">OFFENSE FILTER</button><button data-chart="violentArrests">VIOLENT ARRESTS</button><button data-chart="expectedCrime">EXPECTED CRIME</button><button data-chart="expectedMortality">EXPECTED DEATHS</button><button data-chart="overdoseDeaths">OVERDOSE DEATHS</button><button data-chart="employed">EMPLOYMENT</button><button data-chart="trust">TRUST</button></div>
    <canvas id="chart" width="1100" height="420" aria-label="Synthetic monthly outcomes for both policy worlds"></canvas>
    <div class="chartLegend"><span><i class="a"></i> WORLD A</span><span><i class="b"></i> WORLD B</span><small>Repeated-run variation is available in Experiment Lab.</small></div>
   </div>
@@ -151,6 +151,17 @@
    <label class="flexlabel" for="mixTreatment">OPIOID TREATMENT <output id="mixTreatmentOut">20</output></label><input id="mixTreatment" type="range" min="0" max="100" value="20">
    <label class="flexlabel" for="mixHousing">HOUSING SUPPORT <output id="mixHousingOut">20</output></label><input id="mixHousing" type="range" min="0" max="100" value="20">
    <label class="flexlabel" for="mixReentry">CORRECTIONAL EDUCATION <output id="mixReentryOut">10</output></label><input id="mixReentry" type="range" min="0" max="100" value="10">
+   <div class="separator"></div><div class="eyebrow">OPTIONAL / STRUCTURAL SENSITIVITY ASSUMPTIONS</div>
+   <h3>Do social improvements alter crime exposure?</h3>
+   <p class="fine">These sliders are <strong>not empirical effect estimates</strong>. At zero, the direct individual-level pathway is absent. Nonzero values test hypothetical protective links for specified offense categories, not a universal crime benefit. They apply to both worlds so you can compare social changes under the same assumptions.</p>
+   <label class="flexlabel" for="mechanismEmployment">NEW EMPLOYMENT → LOWER EXPOSURE <output id="mechanismEmploymentOut">0%</output></label>
+   <input id="mechanismEmployment" type="range" min="0" max="100" step="10" value="0" aria-label="Hypothetical employment to crime-exposure pathway">
+   <label class="flexlabel" for="mechanismHousing">IMPROVED HOUSING → LOWER EXPOSURE <output id="mechanismHousingOut">0%</output></label>
+   <input id="mechanismHousing" type="range" min="0" max="100" step="10" value="0" aria-label="Hypothetical housing stability to crime-exposure pathway">
+   <label class="flexlabel" for="mechanismEducation">EDUCATIONAL GAINS → LOWER EXPOSURE <output id="mechanismEducationOut">0%</output></label>
+   <input id="mechanismEducation" type="range" min="0" max="100" step="10" value="0" aria-label="Hypothetical education to crime-exposure pathway">
+   <div class="buttons"><button id="zeroMechanisms">RESET ASSUMPTIONS TO ZERO</button><button id="exploreMechanisms">ILLUSTRATIVE SENSITIVITY (50%)</button></div>
+   <p class="fine" id="assumptionStatus" aria-live="polite">No new individual-level crime pathways assumed. District deterrence and existing stylized neighborhood mechanisms remain.</p>
    <div class="disclosure"><strong>EMPIRICAL GUARDRAIL</strong><p>Youth jobs modify only the violent-arrest outcome for offered eligible youth; treatment modifies modeled overdose death conditional on survival and treatment; correctional education modifies post-release recidivism odds. No imported effect is assumed to reduce all crimes.</p></div>
   </div>
   <div class="panel eventdirector">
@@ -164,9 +175,19 @@
    <div id="exportStatus" class="fine" role="status" aria-live="polite">Advance the world to enable reports.</div>
   </div>
 </section>
+
+<section class="panel diagnostics" id="mechanismObservatory">
+  <div class="eyebrow">13 / MECHANISM OBSERVATORY · WHAT ACTUALLY CHANGED?</div>
+  <h2>Follow the causal chain, not just the final crime count.</h2>
+  <p class="fine">These quantities are model diagnostics, not empirical causal estimates. A “reference expected count” holds the current synthetic population and place context fixed while removing same-month policy exposure multipliers. It is <strong>not</strong> a full no-policy counterfactual because previous policies may already have altered the population.</p>
+  <div id="diagnosticSummary" role="region" aria-label="Mechanism exposure comparisons"></div>
+  <p class="fine" id="diagnosticStatus" aria-live="polite">Advance at least one month to see who was eligible, reached, and what the hypothetical mechanisms imply.</p>
+  <div class="between"><div><strong>Independent pathway diagnostics</strong><p class="fine">Separate the study-inspired outcomes from hypothesized changes in victimization or recorded crime.</p></div><button id="exportDiagnostics" disabled>↓ EXPORT MECHANISM CSV</button></div>
+</section>
+
 <section class="panel evidencesection" id="evidence">
- <div class="eyebrow">13 / THE EVIDENCE LEDGER</div><h2>Where the science ends—and the simulation begins.</h2>
- <p>Every major intervention comes with a source, population, outcome, study design and explicit transportability warning. Clicking an evidence card reveals how GENESIS actually uses that finding. Read the <a href="https://github.com/crimjordan/laplaces-officer/blob/main/GENESIS_MODEL_CARD.md" target="_blank" rel="noopener noreferrer">full model card, equations, validation boundaries, and references</a> for a reproducible methods description.</p>
+ <div class="eyebrow">14 / THE EVIDENCE LEDGER</div><h2>Where the science ends—and the simulation begins.</h2>
+ <p>Every major intervention comes with a source, population, outcome, study design and explicit transportability warning. Clicking an evidence card reveals how GENESIS actually uses that finding. Read the <a href="https://github.com/crimjordan/laplaces-officer/blob/main/GENESIS_MODEL_CARD.md" target="_blank" rel="noopener noreferrer">full model card, equations, diagnostics, validation boundaries, and references</a> for a reproducible methods description.</p>
  <div class="legendlabs"><span class="pill verified">NARROW EMPIRICAL ANCHOR</span><span class="pill model">MODEL-INSPIRED MECHANISM</span><span class="pill hypot">HYPOTHETICAL PARAMETER</span></div>
  <div id="evidenceCards" class="evidenceCards"></div>
  <div class="disclosure">
@@ -174,6 +195,6 @@
   <p>No geographic coordinates, names, identities, or personal histories represent actual individuals. It is a closed synthetic cohort, not a demographic forecast. No parameters are fitted to a real city's baseline incidence, crime reporting, policing exposure, employment, or education. Changes in observed counts do not prove policy effectiveness. A repeated-run distribution describes uncertainty given the invented model, not uncertainty over real-world causal effects. Policies here cannot establish reasonable suspicion or individual risk, and the interface must not be used for operational deployment.</p>
  </div>
 </section>
-</main><footer><span>LAPLACE'S OFFICER / GENESIS <small>© SYNTHETIC RESEARCH ENVIRONMENT</small></span><span>SCIENCE IS A CONSTRAINT, NOT A SPECIAL EFFECT.</span></footer>
-<script src="genesis-evidence.js"></script><script src="genesis-engine.js"></script><script src="genesis-fx.js?v=cinema-restored-2"></script><script src="genesis-3d.js?v=cinema-restored-2"></script><script src="genesis-report.js"></script><script defer src="genesis-app.js?v=cinema-restored-2"></script>
+</main><footer><span>LAPLACE'S OFFICER / GENESIS <small>© SYNTHETIC RESEARCH ENVIRONMENT</small></span><span><a href="genesis-legacy.html">V1 LEGACY REPRODUCTION</a> · SCIENCE IS A CONSTRAINT, NOT A SPECIAL EFFECT.</span></footer>
+<script src="genesis-evidence.js"></script><script src="genesis-engine-v2.js?v=research-v2"></script><script src="genesis-fx.js?v=cinema-restored-2"></script><script src="genesis-3d.js?v=cinema-restored-2"></script><script src="genesis-report.js?v=research-v2"></script><script defer src="genesis-app.js?v=research-v2"></script>
 </body></html>
