@@ -231,15 +231,11 @@ function shift(world,options={}){
     if(u(seed,t,id,200+k)<prob(chance)){
       d.underlying[k]++;typesT[k]++;
       if(k===11){
+        // Nonfatal overdose incidence is generated independently of medication.
+        // Mortality is a separate monthly hazard for people with prior nonfatal
+        // overdose, following the STUDY OUTCOME (mortality among survivors).
         p.overdoses++;nonfatalOverdose++;overdosed=true;p.lastFlags|=BIT.OVERDOSE;p.overdoseSurvivor=true;
-        // Record survival or mortality only after the hypothetical mortality draw below.
-        // Mortality association only applies to overdose death, never overdose event rates.
-        const baseDeath=.02;
-        const isTreated=t<p.treatmentUntil;
-        if(u(seed,t,id,290)<baseDeath*(isTreated?.41:1)){
-          p.alive=false;overdoseDeaths++;p.lastFlags|=BIT.DEATH;
-          if(world.track)event(world,p,"death","Synthetic fatal opioid overdose (model-generated, not an individual prediction).");
-        }else if(world.track)event(world,p,"overdose","Survived a synthetic nonfatal overdose emergency.");
+        if(world.track)event(world,p,"overdose","Survived a modeled nonfatal overdose emergency.");
       }else if(k!==9){p.victimizations++;anyVictim=true;p.lastFlags|=BIT.VICTIM;
         if(k===6){
           p.alive=false;p.lastFlags|=BIT.DEATH;
@@ -251,6 +247,17 @@ function shift(world,options={}){
       if(climate.reporting)detect*=.32;
       if(u(seed,t,id,400+k)<prob(detect)){d.reported[k]++;typesR[k]++}
       if(!p.alive)break;
+    }
+  }
+  // Separate opioid mortality hazard for people who survived an earlier
+  // nonfatal overdose. An observed mortality association is applied as a
+  // scenario contrast (0.41 multiplier), NOT as a per-overdose fatality rate.
+  // The base 0.0018 monthly hazard is hypothetical, not the study baseline.
+  if(p.alive&&p.overdoseSurvivor){
+    const receivingMedication=t<p.treatmentUntil;
+    if(u(seed,t,id,291)<.0018*(receivingMedication?.41:1)){
+      p.alive=false;overdoseDeaths++;p.lastFlags|=BIT.DEATH;
+      if(world.track)event(world,p,"death","Modeled opioid-overdose mortality among a synthetic overdose survivor; not an individual prediction.");
     }
   }
   if(!p.alive){
