@@ -5,7 +5,7 @@
 const fs=require("node:fs"),path=require("node:path"),vm=require("node:vm"),assert=require("node:assert/strict");
 const root=path.resolve(__dirname,"..");
 const get=file=>fs.readFileSync(path.join(root,file),"utf8");
-const sourceFiles=["genesis-evidence.js","genesis-engine.js","genesis-3d.js","genesis-report.js","genesis-app.js"];
+const sourceFiles=["genesis-evidence.js","genesis-engine-v2.js","genesis-diagnostics.js","genesis-fx.js","genesis-3d.js","genesis-report.js","genesis-app.js"];
 for(const file of sourceFiles)assert.doesNotThrow(()=>new vm.Script(get(file),{filename:file}),"Syntax: "+file);
 const html=get("genesis.html");
 for(const file of ["genesis.css",...sourceFiles])assert(html.includes(file),"Missing page asset "+file);
@@ -13,8 +13,9 @@ assert(get("index.html").includes('href="genesis.html"'),"Home page missing GENE
 const ids=[...get("genesis-app.js").matchAll(/\$\("([a-zA-Z][a-zA-Z0-9]*)"\)/g)].map(m=>m[1]);
 for(const id of new Set(ids))assert(html.includes('id="'+id+'"'),"GENESIS HTML missing DOM control "+id);
 const context=vm.createContext({window:{},console,Date,Math,Uint8Array,Uint16Array});
-for(const file of ["genesis-evidence.js","genesis-engine.js","genesis-report.js"])vm.runInContext(get(file),context,{filename:file});
-const E=context.window.GenesisEngine,R=context.window.GenesisReport,evidence=context.window.GenesisEvidence;
+for(const file of ["genesis-evidence.js","genesis-engine-v2.js","genesis-diagnostics.js","genesis-report.js"])vm.runInContext(get(file),context,{filename:file});
+const E=context.window.GenesisEngine,R=context.window.GenesisReport,Diag=context.window.GenesisDiagnostics,evidence=context.window.GenesisEvidence;
+assert.equal(E.VERSION,"genesis-v2.0");
 assert.equal(E.TYPES.length,12);
 assert.equal(E.TYPES.filter(x=>x.health).length,1);
 assert.equal(evidence.length>=7,true);
@@ -41,7 +42,14 @@ assert.equal(E.stateOf(A,12,0).home,A.people[12].initial,"Time zero was modified
 assert.equal(E.stateOf(A,12,18).month,18,"Life history snapshot unavailable");
 const modified=E.create(args.seed,E.PRESETS.prevent,args.population,{track:true});
 for(let month=0;month<48;month++)E.shift(modified,{});
-const report=R.build({A,B:modified,types:E.TYPES,evidence,months:32,selected:12,shocks:[]});
+const report=R.build({A,B:modified,types:E.TYPES,evidence,diagnostics:Diag,months:32,selected:12,shocks:[]});
+const diag=Diag.summarize(A,modified,32);
+assert(diag.rows.some(row=>row.key==="expectedCrime"),"Mechanism audit lost expected crime");
+assert(diag.rows.some(row=>row.key==="treatedPersonMonths"),"Mechanism audit lost treatment person-months");
+assert(diag.rows.some(row=>row.key==="expectedYouthOffers"),"Mechanism audit lost summer job reach");
+assert(report.html.includes("04B / MECHANISM AUDIT"),"Report omitted v2 mechanism section");
+assert(report.html.includes("genesis-v2.0"),"Report not labeled with model version");
+assert(Diag.toCSV(A,modified,12).includes("referenceExpectedCrime".toLowerCase()) || Diag.toCSV(A,modified,12).includes("referenceExpectedCrime".replace(/[A-Z]/g,x=>"_"+x.toLowerCase())),"Mechanism CSV absent");
 assert(report.html.includes("Print / Save PDF"),"Printable report unavailable");
 assert(report.html.includes("EVIDENCE REGISTER"),"Report omitted evidence provenance");
 assert(report.html.includes("Overdose emergencies"),"Report omitted noncriminal overdose indicator");
@@ -49,7 +57,24 @@ assert.equal(report.months,32,"Wrong report timeline cutoff");
 assert(!/\bNaN\b/.test(report.html),"Invalid number in report");
 assert(!report.html.includes("undefined"),"Missing value in report");
 assert.doesNotThrow(()=>new vm.Script(report.html.match(/<script>([\s\S]*?)<\/script>/)?.[1]||"",{filename:"report-inline.js"}));
-const checkpoints=[{k:"identical-world control",status:"PASS"},{k:"monthly offense measurement",status:"PASS"},{k:"historical branch reconstruction",status:"PASS"},{k:"person lifecourse snapshots",status:"PASS"},{k:"report generation and caveats",status:"PASS"},{k:"page asset/DOM links",status:"PASS"}];
+// Regression checks for the two non-obvious v1 funding assumptions.
+const noPrevention=E.create(100234,{...E.PRESETS.patrol,prevention:0,budget:3},384,{track:false});
+const fullPrevention=E.create(100234,{...E.PRESETS.prevent,prevention:100,budget:24},384,{track:false});
+for(let i=0;i<24;i++){E.shift(noPrevention,{});E.shift(fullPrevention,{})}
+assert.equal(noPrevention.history.reduce((n,r)=>n+r.offeredJobs,0),0,"Unfunded youth jobs still offered");
+assert.equal(fullPrevention.history.reduce((n,r)=>n+r.patrolCount,0),0,"Unfunded patrol still allocated");
+assert(fullPrevention.history.every(r=>Number.isFinite(r.expectedCrime)&&Number.isFinite(r.referenceExpectedCrime)),"Nonfinite expected crime values");
+// Optional structural assumptions must be zero in the default model and
+// produce interpretable change in expected *risk*, not guaranteed observed effects.
+assert.equal(E.DEFAULTS.employmentLink,0);
+assert.equal(E.DEFAULTS.housingLink,0);
+assert.equal(E.DEFAULTS.educationLink,0);
+const mechanismWorld=E.create(100234,{...E.PRESETS.prevent,employmentLink:100,housingLink:100,educationLink:100},384,{track:false});
+const baselineWorld=E.create(100234,{...E.PRESETS.prevent,employmentLink:0,housingLink:0,educationLink:0},384,{track:false});
+for(let i=0;i<60;i++){E.shift(mechanismWorld,{});E.shift(baselineWorld,{})}
+const expected=(w)=>w.history.reduce((s,r)=>s+r.expectedCrime,0);
+assert(expected(mechanismWorld)<expected(baselineWorld),"Hypothetical exposure links produced no reduction in expected counts");
+const checkpoints=[{k:"identical-world control",status:"PASS"},{k:"monthly offense measurement",status:"PASS"},{k:"historical branch reconstruction",status:"PASS"},{k:"person lifecourse snapshots",status:"PASS"},{k:"report generation and mechanism provenance",status:"PASS"},{k:"funding floor and structural-link regression checks",status:"PASS"},{k:"page asset/DOM links",status:"PASS"}];
 console.log("GENESIS RELEASE SMOKE TEST PASSED");
 for(const c of checkpoints)console.log("✓ "+c.k);
 console.log("48 paired synthetic months, 384 agents per world; report includes 32 months.");
