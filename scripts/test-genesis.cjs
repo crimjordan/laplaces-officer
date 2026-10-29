@@ -49,7 +49,7 @@ assert(diag.rows.some(row=>row.key==="treatedPersonMonths"),"Mechanism audit los
 assert(diag.rows.some(row=>row.key==="expectedYouthOffers"),"Mechanism audit lost summer job reach");
 assert(report.html.includes("04B / MECHANISM AUDIT"),"Report omitted v2 mechanism section");
 assert(report.html.includes("genesis-v2.0"),"Report not labeled with model version");
-assert(Diag.toCSV(A,modified,12).includes("referenceExpectedCrime".toLowerCase()) || Diag.toCSV(A,modified,12).includes("referenceExpectedCrime".replace(/[A-Z]/g,x=>"_"+x.toLowerCase())),"Mechanism CSV absent");
+assert(Diag.toCSV(A,modified,12).includes("referenceExpectedCrime"),"Mechanism CSV absent");
 assert(report.html.includes("Print / Save PDF"),"Printable report unavailable");
 assert(report.html.includes("EVIDENCE REGISTER"),"Report omitted evidence provenance");
 assert(report.html.includes("Overdose emergencies"),"Report omitted noncriminal overdose indicator");
