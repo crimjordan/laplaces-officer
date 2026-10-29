@@ -24,6 +24,11 @@ async function create(container,callbacks={}){
   const scene=new THREE.Scene();scene.background=new THREE.Color(0x050d19);scene.fog=new THREE.FogExp2(0x091c28,.0045);
   const camera=new THREE.PerspectiveCamera(47,1,.1,800),target=new THREE.Vector3(0,0,0);
   let yaw=.77,pitch=.86,distance=157,autoOrbit=false,disposed=false,raf=null,drag=null;
+  let walking=false,walkYaw=0,walkPitch=0,walkPosition=new THREE.Vector3(0,2.5,65),lastTick=0;
+  const pressed=new Set();
+  const keydown=e=>{if(["INPUT","TEXTAREA","SELECT"].includes(e.target?.tagName))return;if(["w","a","s","d","shift"].includes(e.key.toLowerCase())){pressed.add(e.key.toLowerCase());if(walking)e.preventDefault()}};
+  const keyup=e=>pressed.delete(e.key.toLowerCase());
+  const blur=()=>pressed.clear();root.addEventListener("keydown",keydown);root.addEventListener("keyup",keyup);root.addEventListener("blur",blur);
   scene.add(new THREE.HemisphereLight(0x9bfcfa,0x061226,1.9));
   const key=new THREE.DirectionalLight(0xe3fef6,2.2);key.position.set(-55,115,44);scene.add(key);
   const accent=new THREE.PointLight(0x35c5aa,42,135);accent.position.set(-30,45,-32);scene.add(accent);
@@ -100,11 +105,11 @@ async function create(container,callbacks={}){
     return null;
   }
   renderer.domElement.addEventListener("pointerdown",e=>{drag={x:e.clientX,y:e.clientY,prevX:e.clientX,prevY:e.clientY};renderer.domElement.setPointerCapture(e.pointerId)});
-  renderer.domElement.addEventListener("pointermove",e=>{if(!drag)return;const dx=e.clientX-drag.prevX,dy=e.clientY-drag.prevY;drag.prevX=e.clientX;drag.prevY=e.clientY;yaw-=dx*.005;pitch=clamp(pitch+dy*.004,.14,1.48)});
+  renderer.domElement.addEventListener("pointermove",e=>{if(!drag)return;const dx=e.clientX-drag.prevX,dy=e.clientY-drag.prevY;drag.prevX=e.clientX;drag.prevY=e.clientY;if(walking){walkYaw-=dx*.005;walkPitch=clamp(walkPitch-dy*.004,-.65,.75)}else{yaw-=dx*.005;pitch=clamp(pitch+dy*.004,.14,1.48)}});
   renderer.domElement.addEventListener("pointerup",e=>{if(!drag)return;const moved=Math.hypot(e.clientX-drag.x,e.clientY-drag.y);drag=null;if(moved<7){const picked=pick(e);if(picked?.person!=null)callbacks.selectPerson?.(picked.person);else if(picked?.district!=null)callbacks.selectDistrict?.(picked.district)}});
   renderer.domElement.addEventListener("pointercancel",()=>drag=null);
-  renderer.domElement.addEventListener("wheel",e=>{e.preventDefault();distance=clamp(distance*(e.deltaY>0?1.08:.93),32,290)},{passive:false});
-  function setCamera(view){if(view==="top"){pitch=1.47;yaw=.04;distance=181}else if(view==="street"){pitch=.21;yaw=.55;distance=108}else{pitch=.86;yaw=.77;distance=157}}
+  renderer.domElement.addEventListener("wheel",e=>{e.preventDefault();if(!walking)distance=clamp(distance*(e.deltaY>0?1.08:.93),32,290)},{passive:false});
+  function setCamera(view){walking=view==="street";if(view==="top"){pitch=1.47;yaw=.04;distance=181}else if(view==="street"){walkPosition.set(0,2.5,65);walkYaw=0;walkPitch=.10;autoOrbit=false}else{pitch=.86;yaw=.77;distance=157}}
   function colorFor(layer,value,max){
     const color=new THREE.Color(palettes[layer]||palettes.people);
     let v=layer==="people"?Math.min(1,value/20):layer==="crime"||layer==="recorded"?Math.pow(value/Math.max(1,max),.7):clamp(value,0,1);
@@ -147,8 +152,16 @@ async function create(container,callbacks={}){
   function animate(time){
     if(disposed)return;
     raf=requestAnimationFrame(animate);if(document.hidden)return;
-    if(autoOrbit&&!drag&&!reduceMotion)yaw+=.0009;
-    camera.position.set(target.x+Math.sin(yaw)*Math.cos(pitch)*distance,target.y+Math.sin(pitch)*distance,target.z+Math.cos(yaw)*Math.cos(pitch)*distance);camera.lookAt(target);
+    if(walking){
+      const dt=clamp((time-lastTick)/1000,0,.05),speed=(pressed.has("shift")?17:8)*dt;
+      const forward=(pressed.has("w")?1:0)-(pressed.has("s")?1:0),side=(pressed.has("d")?1:0)-(pressed.has("a")?1:0);
+      walkPosition.x=clamp(walkPosition.x+(Math.sin(walkYaw)*forward+Math.cos(walkYaw)*side)*speed,-75,75);
+      walkPosition.z=clamp(walkPosition.z+(-Math.cos(walkYaw)*forward+Math.sin(walkYaw)*side)*speed,-75,75);
+      camera.position.copy(walkPosition);
+      camera.lookAt(walkPosition.x+Math.sin(walkYaw)*10,walkPosition.y+Math.sin(walkPitch)*10,walkPosition.z-Math.cos(walkYaw)*10);
+    }else{if(autoOrbit&&!drag&&!reduceMotion)yaw+=.0009;
+      camera.position.set(target.x+Math.sin(yaw)*Math.cos(pitch)*distance,target.y+Math.sin(pitch)*distance,target.z+Math.cos(yaw)*Math.cos(pitch)*distance);camera.lookAt(target)}
+    lastTick=time;
     if(!reduceMotion){
       const t=time*.001;
       for(let k=0;k<pulses.length;k++)if(pulses[k].visible){const phase=(t*.55+k*.16)%1;pulses[k].scale.setScalar(1+phase*.75);pulses[k].material.opacity=.50*(1-phase)}
@@ -158,8 +171,8 @@ async function create(container,callbacks={}){
     renderer.render(scene,camera);
   }
   function capture(){renderer.render(scene,camera);return renderer.domElement.toDataURL("image/png")}
-  function toggleOrbit(){autoOrbit=!autoOrbit;return autoOrbit}
-  function dispose(){disposed=true;cancelAnimationFrame(raf);observer?.disconnect();root.removeEventListener("resize",size);renderer.dispose();renderer.domElement.remove()}
+  function toggleOrbit(){walking=false;autoOrbit=!autoOrbit;return autoOrbit}
+  function dispose(){disposed=true;cancelAnimationFrame(raf);observer?.disconnect();root.removeEventListener("resize",size);root.removeEventListener("keydown",keydown);root.removeEventListener("keyup",keyup);root.removeEventListener("blur",blur);renderer.dispose();renderer.domElement.remove()}
   status("WEBGL ACTIVE · "+buildingCount+" BUILDINGS / "+POP_TEXT()+" PEOPLE");
   function POP_TEXT(){return current?.people?.length||"1,152"}
   animate(0);
