@@ -14,6 +14,7 @@ const SEED=382941;
 let A=E.create(SEED,E.PRESETS.patrol),B=E.create(SEED,E.PRESETS.prevent);
 let viewer=null,cursor=0,selectedWorld="A",selectedPerson=50,lifeWorld="A",layer="people",focus=-1;
 let chartKey="totalCrime",timer=null,running=false,busy=false,shocks=[],logs=[],replications=null,repsRunning=false;
+const cinema={weather:"night",lowPower:false,traffic:true,patrol:true,signals:true,stars:true,streams:true};
 const duration={recession:24,festival:3,opioid:12,outage:6};
 const shockText={recession:"Economic shock: hypothetical loss of opportunity and increased property exposure",festival:"Festival: short period of increased crowding",opioid:"Overdose pressure: synthetic health emergency shock",outage:"Observation outage: recorded data temporarily attenuated"};
 const explanations={
@@ -177,6 +178,31 @@ function renderDistrict(){
  ])createCard(root,name,v);
 }
 function renderScene(){if(viewer)viewer.update(world(selectedWorld),cursor,selectedPerson,layer,focus)}
+function syncVisualControls(){
+ for(const button of document.querySelectorAll("[data-weather]")){
+  const selected=button.dataset.weather===cinema.weather;
+  button.classList.toggle("chosen",selected);
+  button.setAttribute("aria-pressed",String(selected));
+ }
+ for(const button of document.querySelectorAll("[data-fx]")){
+  const enabled=!!cinema[button.dataset.fx];
+  button.classList.toggle("chosen",enabled);
+  button.setAttribute("aria-pressed",String(enabled));
+ }
+ $("fxPerformance").classList.toggle("chosen",cinema.lowPower);
+ $("fxPerformance").setAttribute("aria-pressed",String(cinema.lowPower));
+ const fx=viewer?.effectsStatus?.();
+ $("fxStatus").textContent=viewer?.type==="webgl"?
+   "WEBGL ACTIVE · "+(fx?.patrolDrones??0)+" PATROL BEACONS":
+   viewer?.type==="fallback"?"ISOMETRIC FALLBACK · EFFECTS ENABLED":"AWAITING RENDERER";
+}
+function restoreVisualSettings(){
+ if(!viewer)return;
+ viewer.setAtmosphere?.(cinema.weather);
+ viewer.setQuality?.(cinema.lowPower);
+ for(const key of ["traffic","patrol","signals","stars","streams"])viewer.setEffects?.(key,cinema[key]);
+ syncVisualControls();
+}
 function renderMetrics(){
  const a=cursor?A.history[cursor-1]:null,b=cursor?B.history[cursor-1]:null;
  $("dateMetric").textContent=cursor?date(cursor):"JAN 2027";
@@ -346,6 +372,21 @@ function bind(){
  $("exportCSV").addEventListener("click",exportCSV);
  $("exportJSON").addEventListener("click",exportJSON);
  $("exportLife").addEventListener("click",exportLife);
+ for(const button of document.querySelectorAll("[data-weather]"))button.addEventListener("click",()=>{
+  cinema.weather=button.dataset.weather;
+  viewer?.setAtmosphere?.(cinema.weather);
+  syncVisualControls();
+ });
+ for(const button of document.querySelectorAll("[data-fx]"))button.addEventListener("click",()=>{
+  const key=button.dataset.fx;cinema[key]=!cinema[key];
+  viewer?.setEffects?.(key,cinema[key]);syncVisualControls();
+ });
+ $("fxPerformance").addEventListener("click",()=>{
+  cinema.lowPower=!cinema.lowPower;
+  viewer?.setQuality?.(cinema.lowPower);
+  if(!cinema.lowPower)restoreVisualSettings();
+  else syncVisualControls();
+ });
  for(const [button,mode]of [["camOrbit","orbit"],["camTop","top"],["camStreet","street"]])$(button).addEventListener("click",()=>viewer?.setCamera(mode));
  $("autoOrbit").addEventListener("click",()=>$("autoOrbit").classList.toggle("chosen",!!viewer?.toggleOrbit()));
  $("photo").addEventListener("click",()=>{
@@ -361,10 +402,10 @@ function bind(){
   if(e.key===" "){e.preventDefault();togglePlay()}else if(e.key==="ArrowLeft"){pause();timeTo(cursor-1)}else if(e.key==="ArrowRight"){pause();timeTo(cursor+1)}
  });
 }
-bind();evidence();putConfig();log("GENESIS created: two fictional cities with identical initial agents and documented model mechanisms.");render();
+bind();evidence();putConfig();syncVisualControls();log("GENESIS created: two fictional cities with identical initial agents and documented model mechanisms.");render();
 View.create($("scene3d"),{
  status:text=>$("engineStatus").textContent=text,
  selectPerson:choosePerson,
  selectDistrict:chooseDistrict
-}).then(v=>{viewer=v;renderScene();log(v.type==="webgl"?"Living 3D metropolis online. Follow any resident.":"Isometric fallback online; controls and person histories remain available.")}).catch(error=>{console.error(error);$("engineStatus").textContent="3D VIEW UNAVAILABLE; MODEL CONTROLS STILL AVAILABLE";log("Visual renderer failed: "+error.message)});
+}).then(v=>{viewer=v;restoreVisualSettings();renderScene();syncVisualControls();log(v.type==="webgl"?"Restored cinematic 3D city online: traffic, patrol beacons, weather and event signals.":"Animated isometric fallback online; controls and person histories remain available.")}).catch(error=>{console.error(error);$("engineStatus").textContent="3D VIEW UNAVAILABLE; MODEL CONTROLS STILL AVAILABLE";log("Visual renderer failed: "+error.message)});
 })();
