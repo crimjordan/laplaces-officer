@@ -20,9 +20,11 @@ function heatValue(d,mode,focus,baseline){
 function rgb(hex){const n=parseInt(hex.replace("#",""),16);return[(n>>16)&255,(n>>8)&255,n&255]}
 async function create(container,callbacks={}){
   const status=callbacks.status||(()=>{});
+  let unfinishedRenderer=null;
   try{
     const THREE=await import("https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js");
     const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true,powerPreference:"high-performance"});
+    unfinishedRenderer=renderer;
     renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.75));
     renderer.outputColorSpace=THREE.SRGBColorSpace;
     renderer.toneMapping=THREE.ACESFilmicToneMapping;
@@ -192,6 +194,7 @@ async function create(container,callbacks={}){
     return{type:"webgl",update,setCamera,setAtmosphere,toggleOrbit,capture(){renderer.render(scene,camera);return renderer.domElement.toDataURL("image/png")},
       dispose(){disposed=true;cancelAnimationFrame(raf);observer?.disconnect();global.removeEventListener("resize",resize);renderer.dispose();renderer.domElement.remove()}};
   }catch(error){
+    try{unfinishedRenderer?.domElement?.remove();unfinishedRenderer?.dispose()}catch(_ignored){}
     status("ISOMETRIC BACKUP · WEBGL / CDN UNAVAILABLE");
     return fallback(container,callbacks,error);
   }
