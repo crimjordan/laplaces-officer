@@ -10,7 +10,7 @@ function heatValue(d,mode,focus,baseline){
   if(mode==="truth")return baseline?s(d.base||[]):s(d.truth);
   if(mode==="recorded")return baseline? s((d.base||[]).map((v,i)=>v*([.54,.64,.79,.60,.49,.67,.96,.29,.33,.11,.38,.87][i]||.5))):s(d.recorded);
   if(mode==="gap")return baseline?0:Math.max(0,s(d.truth)-s(d.recorded));
-  if(mode==="predicted")return s(d.score);
+  if(mode==="predicted")return s(d.priorScore||d.score);
   if(mode==="delta")return d.delta||0;
   if(mode==="patrol")return d.patrol||0;
   if(mode==="trust")return d.trust||.65;
