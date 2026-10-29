@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050d19"><meta name="description" content="GENESIS: an agent-based synthetic city with matched policy worlds, evolving life histories, empirical evidence anchors, 3D visualization, and repeated experiments.">
+<title>GENESIS — A City of Possible Futures | Laplace's Officer</title>
+<link rel="stylesheet" href="genesis.css"></head><body>
+<div class="sitebar">
+ <div class="brand"><span class="glyph">✳</span><div><div class="eyebrow">LAPLACE'S OFFICER / LIFECOURSE LAB</div><strong>GENESIS <span class="muted thin">/ A CITY OF POSSIBLE FUTURES</span></strong></div></div>
+ <nav aria-label="Site navigation"><a href="index.html">Home</a><a href="omega.html">OMEGA 3D</a><a href="prevention-futures.html">Prevention Lab</a><a href="arcade.html">Arcade</a><a href="#evidence">Evidence ledger</a></nav>
+ <span class="systemstatus"><i></i> SYNTHETIC WORLD · LOCAL ENGINE</span>
+</div>
+<section class="masthead">
+ <div><div class="eyebrow">AN EXPERIMENT IN INDIVIDUAL LIVES, INSTITUTIONS AND PUBLIC POLICY</div><h1>LET A CITY <em>BECOME.</em></h1><p>Follow fictional residents across two futures. Make interventions, let years unfold, and ask whether prevention changes trajectories—or merely changes what institutions record.</p></div>
+ <div class="mastchips"><span>1,152 SYNTHETIC RESIDENTS</span><span>144 DISTRICTS</span><span>20 YEARS</span><span>12 CRIME &amp; HARM OUTCOMES</span><small>Empirical anchors ≠ a calibrated forecast.</small></div>
+</section>
+<main>
+<section class="metrics" aria-label="Citywide simulation performance">
+ <div class="metric"><span>SIMULATION DATE</span><strong id="dateMetric">JAN 2027</strong></div>
+ <div class="metric"><span>WORLD A · UNDERLYING OFFENSES</span><strong id="crimeAMetric">—</strong></div>
+ <div class="metric"><span>WORLD B · UNDERLYING OFFENSES</span><strong id="crimeBMetric">—</strong></div>
+ <div class="metric"><span>WORLD A · RECORDED OFFENSES</span><strong id="recordAMetric">—</strong></div>
+ <div class="metric"><span>ACTIVE RESIDENTS · A</span><strong id="livingMetric">1,152</strong></div>
+ <div class="metric"><span>MEAN MODELED TRUST · A</span><strong id="trustMetric">—</strong></div>
+</section>
+<section class="workspace">
+ <aside class="controlscol">
+  <div class="panel">
+   <div class="eyebrow">01 / THE DIRECTOR'S CHAIR</div><h2>Control time</h2>
+   <div class="buttons"><button id="play" class="mainbtn">▶ PLAY</button><button id="step">+ MONTH</button><button id="year">+ YEAR</button><button id="decade">+ 5 YEARS</button></div>
+   <label class="flexlabel" for="speed">PLAYBACK SPEED <output id="speedValue">1×</output></label><input id="speed" type="range" min="1" max="5" value="2">
+   <div class="buttons"><button id="reset">↺ RESET</button><button id="branch">⌁ BRANCH AT CURSOR</button></div>
+   <p class="fine">History is replayable. Branching reconstructs the exact simulated past using its recorded policy settings, then lets a new future emerge.</p>
+  </div>
+  <div class="panel scenario a">
+   <div class="worldhead"><div class="worldid">A</div><div><h2>WORLD A</h2><small>The police-first universe</small></div></div>
+   <label for="policyA">ALLOCATION ALGORITHM</label><select id="policyA">
+    <option value="predictive">Prediction from recorded activity</option><option value="equal">Rotating equal patrol</option>
+    <option value="problem">Problem-oriented patrol</option><option value="needs">Needs-targeted support</option>
+    <option value="random">Random patrol</option><option value="oracle">Oracle (unobservable)</option></select>
+   <label class="flexlabel" for="preventionA">PREVENTION SHARE <output id="preventionAOut">12%</output></label><input id="preventionA" type="range" min="0" max="100" step="2" value="12">
+   <label class="flexlabel" for="budgetA">CITY BUDGET <output id="budgetAOut">$12M</output></label><input id="budgetA" type="range" min="3" max="24" value="12">
+   <label class="flexlabel" for="surveillanceA">SURVEILLANCE COVERAGE <output id="surveillanceAOut">80%</output></label><input id="surveillanceA" type="range" min="0" max="100" step="5" value="80">
+   <label class="flexlabel" for="patrolEffectA">PATROL EFFECT <output id="patrolEffectAOut">35%</output></label><input id="patrolEffectA" type="range" min="0" max="100" step="5" value="35">
+   <label for="procedureA">ENCOUNTER STYLE</label><select id="procedureA"><option value="intensive">Intensive enforcement</option><option value="procedural">Procedural-justice oriented</option></select>
+   <div class="studyflag">PATROL EFFECT IS HYPOTHETICAL, NOT FROM A STUDY.</div>
+  </div>
+  <div class="panel scenario b">
+   <div class="worldhead"><div class="worldid">B</div><div><h2>WORLD B</h2><small>The prevention-oriented universe</small></div></div>
+   <label for="policyB">ALLOCATION ALGORITHM</label><select id="policyB">
+    <option value="predictive">Prediction from recorded activity</option><option value="equal">Rotating equal patrol</option>
+    <option value="problem">Problem-oriented patrol</option><option value="needs">Needs-targeted support</option>
+    <option value="random">Random patrol</option><option value="oracle">Oracle (unobservable)</option></select>
+   <label class="flexlabel" for="preventionB">PREVENTION SHARE <output id="preventionBOut">78%</output></label><input id="preventionB" type="range" min="0" max="100" step="2" value="78">
+   <label class="flexlabel" for="budgetB">CITY BUDGET <output id="budgetBOut">$12M</output></label><input id="budgetB" type="range" min="3" max="24" value="12">
+   <label class="flexlabel" for="surveillanceB">SURVEILLANCE COVERAGE <output id="surveillanceBOut">25%</output></label><input id="surveillanceB" type="range" min="0" max="100" step="5" value="25">
+   <label class="flexlabel" for="patrolEffectB">PATROL EFFECT <output id="patrolEffectBOut">35%</output></label><input id="patrolEffectB" type="range" min="0" max="100" step="5" value="35">
+   <label for="procedureB">ENCOUNTER STYLE</label><select id="procedureB"><option value="intensive">Intensive enforcement</option><option value="procedural">Procedural-justice oriented</option></select>
+   <div class="studyflag">REACH, DOSE AND TRUST EFFECTS ARE MODEL ASSUMPTIONS.</div>
+  </div>
+ </aside>
+ <div class="centercol">
+  <div class="scene panel">
+    <div class="scenehead"><div><div class="eyebrow">02 / THE LIVING DIGITAL TWIN</div><h2>METROPOLIS <span class="muted">/ 144 DISTRICTS</span></h2></div>
+      <div class="toggle" role="group" aria-label="Visualized policy universe"><button id="viewA" class="selected" aria-pressed="true">◈ WORLD A</button><button id="viewB" aria-pressed="false">◈ WORLD B</button></div></div>
+    <div id="scene3d" class="scene3d"><canvas id="fallback" width="1200" height="760" hidden aria-label="2D isometric fallback map of the fictional metropolis"></canvas>
+     <div class="hud top"><span>GENESIS / PARTICLE CITY</span><strong>ONE CITY. TWO FATES.</strong><small id="engineStatus">INITIALIZING WORLD...</small></div>
+     <div class="hud bottom">DRAG TO ORBIT · SCROLL TO ZOOM · CLICK A BUILDING OR RESIDENT<br><span id="selectionHint">CLICK A DISTRICT TO FOLLOW A RANDOM SYNTHETIC RESIDENT</span></div>
+    </div>
+    <div class="buttons displaybtns"><button id="camOrbit">◈ ORBIT</button><button id="camTop">⌂ TOP VIEW</button><button id="camStreet">↗ STREET</button><button id="autoOrbit">⟳ AUTO ORBIT</button><button id="photo">▣ SAVE IMAGE</button></div>
+    <div class="separator"></div><div class="eyebrow">LENS / WHAT THE CITY SHOWS</div>
+    <div class="buttons lenses"><button data-layer="people" class="chosen">✳ RESIDENTS</button><button data-layer="crime">◇ UNDERLYING CRIME</button><button data-layer="recorded">◉ RECORDED CRIME</button><button data-layer="patrol">⌖ PATROL</button><button data-layer="school">▤ SCHOOLS</button><button data-layer="treatment">✚ TREATMENT</button><button data-layer="trust">♡ TRUST</button><button data-layer="development">▥ DEVELOPMENT</button></div>
+    <p class="fine" id="layerExplainer">Every moving point represents a fictional resident. There are no real people or precise locations in this city.</p>
+  </div>
+  <div class="panel timebox">
+   <div class="between"><div><div class="eyebrow">03 / THE TIME MACHINE</div><strong id="timelineLabel">JAN 2027 · MONTH 0</strong></div><span class="small muted">REPLAY ANY MONTH · BRANCH HISTORY</span></div>
+   <input id="timeline" type="range" min="0" max="0" value="0" aria-label="Simulation month replay position">
+   <div class="between fine"><span>2027</span><span id="latestLabel">LATEST: 2027</span><span>2046</span></div>
+  </div>
+  <div class="panel presets">
+    <div class="eyebrow">04 / EXPERIMENTAL UNIVERSES</div><h2>Rewrite the city's institutions.</h2>
+    <div class="presetgrid"><button data-preset="clash">⚡ Patrol vs. prevention</button><button data-preset="identical">⌁ Identical-world control</button><button data-preset="feedback">◎ Recording-bias feedback</button><button data-preset="youth">✷ Summer jobs experiment</button><button data-preset="care">✚ Treatment and reentry</button><button data-preset="equity">◇ Equal vs needs-based</button></div>
+    <p class="fine">Presets reset the simulation and use matched initial residents. A perfect matched-world control should produce identical results when its inputs remain identical.</p>
+  </div>
+  <div class="panel chartbox">
+   <div class="eyebrow">05 / CAUSAL QUESTIONS, MODEL-GENERATED ANSWERS</div><h2>Compare the trajectories</h2>
+   <div class="buttons chartbuttons"><button data-chart="totalCrime" class="chosen">CRIME</button><button data-chart="recordedCrime">RECORDED</button><button data-chart="violentArrests">VIOLENT ARRESTS</button><button data-chart="overdoseDeaths">OVERDOSE DEATHS</button><button data-chart="employed">EMPLOYMENT</button><button data-chart="trust">TRUST</button></div>
+   <canvas id="chart" width="1100" height="420" aria-label="Synthetic monthly outcomes for both policy worlds"></canvas>
+   <div class="chartLegend"><span><i class="a"></i> WORLD A</span><span><i class="b"></i> WORLD B</span><small>Repeated-run variation is available in Experiment Lab.</small></div>
+  </div>
+ </div>
+ <aside class="peoplecol">
+  <div class="panel citizen">
+   <div class="eyebrow">06 / THE LIFE OF A RESIDENT</div><h2>Meet a possible person.</h2>
+   <div class="personface"><span id="avatar">✳</span><div><strong id="personName">—</strong><small id="personSubtitle">Synthetic person · no real identity</small></div></div>
+   <div class="buttons"><button id="randomPerson">↻ NEW RESIDENT</button><button id="personA" class="chosen">LIFE A</button><button id="personB">LIFE B</button></div>
+   <label for="personId">DIRECT RESIDENT LOOKUP · 0–1151</label><input id="personId" type="number" min="0" max="1151" step="1" value="50">
+   <button id="lookupPerson">FOLLOW RESIDENT</button>
+   <div class="lifegrid" id="lifeStats"></div>
+   <div class="separator"></div><h3>A life in two worlds</h3>
+   <div id="lifeComparison" class="lifeComparison"></div>
+   <div class="separator"></div><h3>Key life events</h3>
+   <div id="lifeEvents" class="lifeEvents"></div>
+   <div class="buttons"><button id="exportLife">↓ EXPORT PAIRED LIFE</button></div>
+   <p class="fine">A selected resident's life is a fictional path, not an individualized risk prediction. One story cannot establish a program effect.</p>
+  </div>
+  <div class="panel">
+   <div class="eyebrow">07 / SOCIAL FABRIC</div><h2>Relationships and opportunity</h2>
+   <canvas id="social" width="440" height="235" aria-label="Schematic synthetic network of household and peer relationships"></canvas>
+   <div id="socialDetails" class="fine">Family and friendship links are invented. Their model influences are modest and hypothetical.</div>
+  </div>
+  <div class="panel">
+   <div class="eyebrow">08 / LOCAL OBSERVATORY</div><h2 id="districtTitle">District overview</h2>
+   <canvas id="minimap" width="288" height="288" aria-label="Clickable 12 by 12 synthetic district map"></canvas>
+   <div id="districtInfo" class="districtInfo"></div>
+  </div>
+ </aside>
+</section>
+<section class="lower">
+ <div class="panel experiment">
+   <div class="eyebrow">09 / THE EXPERIMENT LAB</div><h2>Don't trust a single simulated future.</h2>
+   <p>Run paired replications with fresh synthetic random seeds. Each pair uses identical initial conditions but different policy choices. These intervals reflect <strong>Monte Carlo variation inside this model</strong>—not uncertainty about real-world treatment effects.</p>
+   <div class="repControls"><label for="repCount">REPLICATION PAIRS</label><select id="repCount"><option value="5">5 — quick check</option><option value="20" selected>20 — exploratory</option><option value="40">40 — detailed</option></select>
+    <label for="repYears">TIME HORIZON</label><select id="repYears"><option value="2">2 years</option><option value="5" selected>5 years</option><option value="10">10 years</option></select>
+    <button id="runReplications" class="mainbtn">◆ RUN EXPERIMENT</button><button id="exportReplications" disabled>↓ EXPORT RESULTS</button></div>
+   <div class="repProgress"><div id="repBar"></div></div>
+   <p class="fine" id="repStatus" role="status" aria-live="polite">Ready to run paired simulations on a smaller 384-resident synthetic cohort for responsiveness.</p>
+   <div id="repResults"></div>
+ </div>
+ <div class="panel interventions">
+   <div class="eyebrow">10 / PUBLIC INVESTMENT DIRECTOR</div><h2>What should a city fund?</h2>
+   <p class="fine">These weights divide the prevention allocation in <em>both</em> universes. Program take-up, housing development, school quality and other mechanisms are illustrative. Three narrow empirical anchors apply to specific outcomes only.</p>
+   <label class="flexlabel" for="mixJobs">SUMMER YOUTH JOBS <output id="mixJobsOut">30</output></label><input id="mixJobs" type="range" min="0" max="100" value="30">
+   <label class="flexlabel" for="mixSchool">SCHOOL INVESTMENT <output id="mixSchoolOut">20</output></label><input id="mixSchool" type="range" min="0" max="100" value="20">
+   <label class="flexlabel" for="mixTreatment">OPIOID TREATMENT <output id="mixTreatmentOut">20</output></label><input id="mixTreatment" type="range" min="0" max="100" value="20">
+   <label class="flexlabel" for="mixHousing">HOUSING SUPPORT <output id="mixHousingOut">20</output></label><input id="mixHousing" type="range" min="0" max="100" value="20">
+   <label class="flexlabel" for="mixReentry">CORRECTIONAL EDUCATION <output id="mixReentryOut">10</output></label><input id="mixReentry" type="range" min="0" max="100" value="10">
+   <div class="disclosure"><strong>EMPIRICAL GUARDRAIL</strong><p>Youth jobs modify only the violent-arrest outcome for offered eligible youth; treatment modifies modeled overdose death conditional on survival and treatment; correctional education modifies post-release recidivism odds. No imported effect is assumed to reduce all crimes.</p></div>
+  </div>
+  <div class="panel eventdirector">
+   <div class="eyebrow">11 / THE CITY IS NOT STATIC</div><h2>Inject historical shocks</h2>
+   <p class="fine">These shocks are hypothetical scenarios and apply symmetrically to both worlds.</p>
+   <div class="shockgrid"><button data-shock="recession">⌁ ECONOMIC SHOCK <small>24 months</small></button><button data-shock="festival">✺ COMMUNITY FESTIVAL <small>3 months</small></button><button data-shock="opioid">✚ OVERDOSE PRESSURE <small>12 months</small></button><button data-shock="outage">◉ OBSERVATION OUTAGE <small>6 months</small></button></div>
+   <h3>Event stream</h3><div id="eventLog" class="eventLog"></div>
+   <div class="separator"></div>
+   <div class="eyebrow">12 / RESEARCH OUTPUTS</div><h2>Export what happened</h2>
+   <div class="buttons"><button id="generateReport" class="mainbtn" disabled>▣ RESEARCH REPORT</button><button id="exportCSV" disabled>↓ MONTHLY CSV</button><button id="exportJSON" disabled>↓ MODEL JSON</button></div>
+   <div id="exportStatus" class="fine" role="status" aria-live="polite">Advance the world to enable reports.</div>
+  </div>
+</section>
+<section class="panel evidencesection" id="evidence">
+ <div class="eyebrow">13 / THE EVIDENCE LEDGER</div><h2>Where the science ends—and the simulation begins.</h2>
+ <p>Every major intervention comes with a source, population, outcome, study design and explicit transportability warning. Clicking an evidence card reveals how GENESIS actually uses that finding.</p>
+ <div class="legendlabs"><span class="pill verified">NARROW EMPIRICAL ANCHOR</span><span class="pill model">MODEL-INSPIRED MECHANISM</span><span class="pill hypot">HYPOTHETICAL PARAMETER</span></div>
+ <div id="evidenceCards" class="evidenceCards"></div>
+ <div class="disclosure">
+  <h3>What GENESIS does <em>not</em> claim</h3>
+  <p>No geographic coordinates, names, identities, or personal histories represent actual individuals. It is a closed synthetic cohort, not a demographic forecast. No parameters are fitted to a real city's baseline incidence, crime reporting, policing exposure, employment, or education. Changes in observed counts do not prove policy effectiveness. A repeated-run distribution describes uncertainty given the invented model, not uncertainty over real-world causal effects. Policies here cannot establish reasonable suspicion or individual risk, and the interface must not be used for operational deployment.</p>
+ </div>
+</section>
+</main><footer><span>LAPLACE'S OFFICER / GENESIS <small>© SYNTHETIC RESEARCH ENVIRONMENT</small></span><span>SCIENCE IS A CONSTRAINT, NOT A SPECIAL EFFECT.</span></footer>
+<script src="genesis-evidence.js"></script><script src="genesis-engine.js"></script><script src="genesis-3d.js"></script><script src="genesis-report.js"></script><script defer src="genesis-app.js"></script>
+</body></html>
