@@ -1,6 +1,6 @@
 # LAPLACE // GENESIS — Model card and research methodology
 
-**Version:** GENESIS v1 · **Status:** educational, synthetic, uncalibrated agent-based model.
+**Version:** GENESIS v2.0 · **Status:** educational, synthetic, uncalibrated agent-based model. The original [GENESIS v1 simulation remains available](https://crimjordan.github.io/laplaces-officer/genesis-legacy.html) for replication of earlier reports.
 
 ## What this is
 
@@ -29,12 +29,62 @@ The clickable in-app evidence ledger contains the full source links and model in
 - **Offenses / outcomes:** theft, burglary, vehicle theft, robbery, aggravated assault, gun violence, homicide, sexual assault, fraud, drug-market offenses, disorder complaints, and a **separate noncriminal overdose emergency outcome**.
 - **Event generation:** each active resident and category has an invented monthly probability that varies with synthetic personal exposure, district opportunity, specified shocks, housing/school inputs, and patrol deterrence. The baseline rates and all these coefficients are **hypothetical**, not fitted to data.
 - **Observation / recording:** police-recorded counts are a probabilistic subset of underlying events. Observation is separately affected by reporting, hypothetical trust response, surveillance availability and patrol presence. The drug-market category has a deliberately enforcement-sensitive discovery mechanism.
-- **Predictive allocation:** patrol can be based on a smoothed score of previously recorded events (0.70 prior score + 0.30 new observation), or equal, random, needs-based, problem-oriented, or intentionally non-realistic oracle allocation. This is an illustrative feedback system, **not a fitted predictive algorithm**.
-- **Summer jobs:** program offers at synthetic summer times for individuals aged 14–21, with the study's narrow 16-month violent-arrest-intensity contrast. Program offers do not automatically change their underlying crime exposure or long-term employment.
+- **Predictive allocation:** patrol can be based on a smoothed score of previously recorded events (0.70 prior score + 0.30 new observation), or equal, random, needs-based, problem-oriented, or intentionally non-realistic oracle allocation. **Version 2 removes the automatic minimum patrol floor**: 100% prevention allocation gives no funded patrol districts. This is an illustrative feedback system, **not a fitted predictive algorithm**.
+- **Summer jobs:** program offers at synthetic summer times for individuals aged 14–21, with the study's narrow 16-month violent-arrest-intensity contrast. **Version 2 removes the old unfunded 4% baseline offer rate; at 0% prevention, funded job offers are zero.** Program offers do not automatically change underlying crime exposure or long-term employment.
 - **Medication treatment:** an invented pathway into treatment for residents surviving nonfatal overdose, with a distinct monthly mortality hazard. An invented untreated baseline hazard (0.0018 / month) is multiplied by 0.41 during a modeled treatment episode. The study did **not** establish that a treatment program would produce this effect in the invented population.
 - **Correctional education:** hypothetical untreated three-year recidivism probability is 0.40; with an illustrative odds ratio of 0.57, the treated probability is computed as `0.57 × 0.40 / (1 − 0.40 + 0.57 × 0.40)`, then a constant monthly hazard is derived as `1 − (1 − p)^(1 / 36)`. The baseline probability is **not taken from RAND**.
 - **Built environment:** school quality, clinic access, and building-development indexes evolve according to invented incremental rules. The evolving 3D skyline is an illustration, not a prediction of the physical built environment.
 - **Interactions / network:** simple synthetic household and peer links influence a limited number of opportunity states. They do not identify real associations or people.
+
+
+## GENESIS v2: Mechanism audit and sensitivity design
+
+The earlier v1 model often generated similar aggregate crime counts under different policy settings. This was not evidence that prevention is ineffective. It reflected limited links between evolving social states and the incident generator, small assumed coefficients, and missing exposure diagnostics. The v1 program-offer and minimum-patrol floors also obscured zero-budget experiments. All original source code and report code remain preserved as `genesis-engine-legacy.js`, `genesis-app-legacy.js`, `genesis-report-legacy.js` and `genesis-legacy.html`.
+
+### Funding rules corrected
+
+- At **0% prevention**, the funded youth-job offer probability is exactly zero; there is no automatically funded program.
+- At **100% prevention**, the patrol-allocation count is exactly zero. The value is not constrained by the previous lower bound.
+- *These are bookkeeping constraints*, not newly established empirical policy relationships.
+
+### Conditional risk equation
+
+For resident (i), outcome type (k), district (d) and month (t), GENESIS first computes a hypothetical *reference* incidence probability based on the current population state, spatial exposure and external scenario shocks. The final probability is a product of several adjustments:
+
+```text
+P(event_ikt | current state)
+  = reference_probability_ikt
+    × district_investment_multiplier_dkt
+    × optional_structural_multiplier_ikt
+    × hypothetical_patrol_multiplier_dkt
+```
+
+All probabilities are bounded between 0 and 1. The three independently adjustable **structural-link controls** represent invented, sensitivity-only links from *newly attained* employment, improved housing stability, and educational gains to specified offense exposures. **Each defaults to 0**, removing its direct influence. The displayed slider is not a percentage reduction in crime or an evidence-derived coefficient: it scales a category-specific hypothetical equation. The three pathways do not automatically change the empirical narrow-outcome anchors for youth arrests, medication-associated mortality, or correctional-education recidivism.
+
+For auditability the engine sums the event probabilities each month rather than relying only on realized 0/1 event draws.
+
+### What the Mechanism Observatory reports
+
+For **each** world and every selected historical period, the dashboard exports:
+
+- Criminal incidents: realized underlying counts, recorded counts, conditional expected counts, and expected counts after removing current-month policy multipliers;
+- Cumulative changes in **conditional** expected event probability separated into district, structural-link and patrol components;
+- Youth job opportunities, expected offers, actual offers, program exposure person-months, expected arrests with and without the eligible youth-program modifier, and realized violent arrests;
+- Treatment start/renewal events, treatment person-months, prior-overdose survivor risk months, risk months during medication, expected opioid mortality with and without the current medication multiplier, and realized mortality;
+- Custody and reentry person-months, education enrollment events, expected recidivism with and without the current correctional-education modifier, and realized recidivism;
+- Housing assistance, educational exposure and employed person-months.
+
+Use the **Export Mechanism CSV** action for a machine-readable monthly file. The same diagnostic groups are incorporated into the printable v2 research report.
+
+**Critical inferential limitation:** The "reference expected" value uses residents' *already altered* current states while suppressing only same-month policy exposure multipliers. Because prior interventions might already have changed homes, survival, employment or schooling, this reference is **not** an independent untreated counterfactual, a full causal policy effect, or an empirical estimate. Comparisons between worlds and across random seeds are conditional explorations of this synthetic model. Reports must not call these results causal impacts, validated treatment effects, real-world forecast accuracy, or confidence intervals for real policies.
+
+### Replications and comparisons
+
+The Experiment Lab still runs paired seeds with common initial conditions. Version 2 adds mean differences in *conditional expected crime* and *expected opioid mortality*, complementing realized incident counts. These diagnostics help separate a change in event probability from stochastic realization but **do not** create real-world validity.
+
+### Model limitations unchanged
+
+The simulator has **not been calibrated to observed incident rates, age structures, treatment eligibility and retention, education/justice-system exposures, police recording probabilities, mortality hazards or budgets**. Most effect pathways remain hypothetical. The site is appropriate for conceptual teaching, mechanisms research, sensitivity testing and debugging—but not decision support for deploying policing resources or making claims about the measured effects of actual prevention programs.
 
 ## Reading reports responsibly
 
@@ -52,9 +102,10 @@ Run from a local copy of the repository (requires a current Node.js version):
 
 ```bash
 node scripts/test-genesis.cjs
+node scripts/test-genesis-visuals.cjs
 ```
 
-The GitHub Pages workflow runs this check before deploying. It verifies script syntax, referenced page assets and DOM controls, deterministic identical-world comparisons, offense-count consistency, historical branching and report generation.
+The GitHub Pages workflow runs both checks before deploying. It verifies script syntax, referenced page assets and DOM controls, deterministic identical-world comparisons, offense-count consistency, historical branching and report generation.
 
 ## References
 
