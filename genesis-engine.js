@@ -82,7 +82,8 @@ function create(seed=314159,config={},population=POP,{track=true}={}){
  }
  const state=people.map(newState);
  const city=Array.from({length:D},(_,id)=>initialDistrict(id,seed));
- for(const s of state){if(s.alive){city[s.home].residents++;city[s.home].trust+=(s.trust-.66)/Math.max(1,people.length/D)}}
+ for(const s of state){if(s.alive){city[s.home].residents++;city[s.home].trustAccumulator=(city[s.home].trustAccumulator||0)+s.trust}}
+ city.forEach(d=>{if(d.residents)d.trust=d.trustAccumulator/d.residents;delete d.trustAccumulator})
  const initialState=state.map(s=>({...s}));
  const initialCity=city.map(d=>({...d,underlying:d.underlying.slice(),reported:d.reported.slice()}));
  return{seed,month:0,config:{...DEFAULTS,...config},people,state,city,initialState,initialCity,history:[],lifeFrames:[],events:[],
