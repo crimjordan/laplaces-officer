@@ -108,7 +108,7 @@ function create(THREE,scene,centers,lights,options={}){
   if(lights.accent)lights.accent.intensity=dawn?13:storm?64:original.accent;
   if(lights.bloom)lights.bloom.intensity=dawn?12:storm?55:original.bloom;
   if(lights.renderer)lights.renderer.toneMappingExposure=dawn?1.70:storm?1.23:1.48;
-  stars.visible=night&&state.stars;
+  stars.visible=night&&state.stars&&!state.lowPower;
   rain.visible=storm&&!state.lowPower;
   return mode;
  }
@@ -116,10 +116,10 @@ function create(THREE,scene,centers,lights,options={}){
   if(!(name in state)||["atmosphere","lowPower"].includes(name))return false;
   state[name]=!!enabled;
   if(name==="traffic")traffic.visible=state.traffic;
-  if(name==="stars")stars.visible=state.stars&&state.atmosphere==="night";
+  if(name==="stars")stars.visible=state.stars&&state.atmosphere==="night"&&!state.lowPower;
   if(name==="patrol")droneRoot.visible=state.patrol;
   if(name==="signals")beaconRoot.visible=state.signals;
-  if(name==="streams")pathLines.visible=state.streams;
+  if(name==="streams")pathLines.visible=state.streams&&!state.lowPower;
   return state[name];
  }
  function setQuality(low){
@@ -211,11 +211,9 @@ function create(THREE,scene,centers,lights,options={}){
  function snapshot(){return{...state,lastAt,patrolDrones:patrolDistricts.length}}
  function dispose(){
   for(const obj of made){scene.remove(obj)}
-  for(const mat of [droneMat,rotorMat,beamMat,schoolMat]){if(mat?.dispose)mat.dispose()}
+  for(const mat of [droneMat,rotorMat,beamMat]){if(mat?.dispose)mat.dispose()}
   for(const g of [starsGeom,trafficGeo,droneGeo,rotorGeo,beamGeo,cylinder,ring,pathGeom,rainGeom,meteorGeo]){if(g?.dispose)g.dispose()}
  }
- // Prevent an unbound reference in disposal in older browsers.
- const schoolMat=null;
  setAtmosphere("night");
  return{update,animate,setAtmosphere,setFX,setQuality,snapshot,dispose};
 }
