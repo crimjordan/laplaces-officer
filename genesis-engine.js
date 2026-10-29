@@ -82,7 +82,10 @@ function create(seed=314159,config={},population=POP,{track=true}={}){
  }
  const state=people.map(newState);
  const city=Array.from({length:D},(_,id)=>initialDistrict(id,seed));
- return{seed,month:0,config:{...DEFAULTS,...config},people,state,city,history:[],lifeFrames:[],events:[],
+ for(const s of state){if(s.alive){city[s.home].residents++;city[s.home].trust+=(s.trust-.66)/Math.max(1,people.length/D)}}
+ const initialState=state.map(s=>({...s}));
+ const initialCity=city.map(d=>({...d,underlying:d.underlying.slice(),reported:d.reported.slice()}));
+ return{seed,month:0,config:{...DEFAULTS,...config},people,state,city,initialState,initialCity,history:[],lifeFrames:[],events:[],
    track,population,policyHistory:[],shockHistory:[]};
 }
 const exposures=(config)=>{
@@ -142,7 +145,7 @@ function snapshot(world){const persons=world.state,n=persons.length;
  return{month:world.month,people:columns,districts};
 }
 function stateOf(world,id,month){
- if(month<1){const s=world.state[id];return{...s,age:Math.floor(world.people[id].birthAgeMonths/12),month:0}};
+ if(month<1){const s=world.initialState[id];return{...s,age:Math.floor(world.people[id].birthAgeMonths/12),month:0}};
  const frame=world.lifeFrames[Math.min(month,world.month)-1];if(!frame)return null;const a=frame.people;
  return{id,month:frame.month,home:a.home[id],education:a.education[id],employed:!!a.employed[id],trust:a.trust[id]/100,
  housing:a.housing[id]/100,healthRisk:a.health[id]/100,graduated:!!a.graduated[id],alive:!!a.alive[id],
