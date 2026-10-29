@@ -12,10 +12,12 @@ const duration={recession:12,festival:3,outage:4,opioid:9,reform:8};
 const tag={recession:"Economic pressure increased",festival:"City festival began",outage:"Observation network disrupted",opioid:"Overdose pressure increased",reform:"Procedural trust reform launched"};
 const layerText={
  truth:"UNDERLYING ACTIVITY",recorded:"RECORDED POLICE SIGNAL",gap:"OBSERVATION GAP",
- patrol:"PATROL DEPLOYMENTS",trust:"HYPOTHETICAL TRUST",prevention:"PREVENTION REACH"
+ patrol:"PATROL DEPLOYMENTS",trust:"HYPOTHETICAL TRUST",prevention:"PREVENTION REACH",predicted:"ALGORITHM BELIEF",delta:"A − B UNDERLYING DIFFERENCE"
 };
 const layerDescription={
  truth:"Underlying activity is directly visible only because this is a simulation. Real incident records do not contain the complete ground truth.",
+ predicted:"The predictive risk score is an exponential moving average of recorded incidents. It is not a validated forecast of crime.",
+ delta:"For the chosen category, positive values mean more simulated events in A than B; negative values mean more events in B than A. The difference is synthetic.",
  recorded:"The recorded signal is influenced by reports, enforcement, camera coverage, and trust. Police data are not interchangeable with all incidents.",
  gap:"How many generated incidents were not recorded? This is visible only within the fictional simulation.",
  patrol:"Highlight districts that receive patrol resources. A predictive algorithm can reinforce its own discovery pattern.",
@@ -57,7 +59,7 @@ function play(){if(running){pause();return}if(A.month===M.MAX_MONTHS&&cursor===A
  running=true;$("play").textContent="Ⅱ PAUSE";loop=setInterval(()=>advance(1),interval)}
 function reset(){startConfig({...A.settings},{...B.settings})}
 function currentSnapshot(world){return M.shown(world,cursor)}
-function worldDistricts(world){return currentSnapshot(world)||world.cells}
+function worldDistricts(world){const districts=currentSnapshot(world)||world.cells;if(layer!=="delta"||cursor===0)return districts;const a=currentSnapshot(A),b=currentSnapshot(B);return districts.map((d,i)=>({...d,delta:valueByFocus(a[i].truth)-valueByFocus(b[i].truth)}))}
 function currentMetrics(world){return cursor>0?world.history[Math.min(cursor,world.history.length)-1]:null}
 function valueByFocus(values){if(!values)return 0;if(focus>=0)return values[focus]||0;if(focus===-2)return M.sum(values.slice(0,-1));return M.sum(values)}
 function selectDistrict(id){selectedDistrict=id;updateScene();updateInspector();drawMini()}
@@ -74,16 +76,16 @@ function updateCrimeList(){const root=$("crimeList"),metrics=currentMetrics(worl
  const value=document.createElement("span");value.className="cvalue";value.textContent=metrics?fmt((layer==="recorded"?metrics.recordedByType:metrics.trueByType)[i]):"—";
  b.append(color,name,value);b.addEventListener("click",()=>selectFocus(i));root.append(b)})}
 function drawMini(){const canvas=$("miniMap"),ctx=canvas.getContext("2d"),data=worldDistricts(worldOf(selectedWorld));if(!ctx)return;
- const v=data.map(d=>V.heatValue(d,layer,focus,cursor===0));const max=Math.max(.01,...v);ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle="#071521";ctx.fillRect(0,0,288,288);
+ const v=data.map(d=>V.heatValue(d,layer,focus,cursor===0));const max=Math.max(.01,...v.map(Math.abs));ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle="#071521";ctx.fillRect(0,0,288,288);
  const rgb=V.palette[layer]||"#43edd5";const color=parseInt(rgb.slice(1),16),r=(color>>16)&255,g=(color>>8)&255,b=color&255;
- for(let i=0;i<144;i++){const x=i%12,y=Math.floor(i/12),val=v[i];let n=layer==="trust"?M.clamp((val-.2)/.75,0,1):layer==="prevention"?M.clamp(val/.65,0,1):layer==="patrol"?val:Math.pow(val/max,.75);
- ctx.fillStyle="rgb("+Math.round(18+n*r*.75)+","+Math.round(33+n*g*.68)+","+Math.round(48+n*b*.68)+")";ctx.fillRect(x*24+1,y*24+1,22,22);
+ for(let i=0;i<144;i++){const x=i%12,y=Math.floor(i/12),val=v[i];let n=layer==="trust"?M.clamp((val-.2)/.75,0,1):layer==="prevention"?M.clamp(val/.65,0,1):layer==="patrol"?val:Math.pow(Math.abs(val)/max,.75);
+ const tone=layer==="delta"&&val<0?0x43edd5:color;const rr=tone>>16&255,gg=tone>>8&255,bb=tone&255;ctx.fillStyle="rgb("+Math.round(18+n*rr*.75)+","+Math.round(33+n*gg*.68)+","+Math.round(48+n*bb*.68)+")";ctx.fillRect(x*24+1,y*24+1,22,22);
  if(i===selectedDistrict){ctx.strokeStyle="#fff";ctx.lineWidth=2;ctx.strokeRect(x*24+2,y*24+2,20,20)}
  }}
 function updateInspector(){const district=worldDistricts(worldOf(selectedWorld))[selectedDistrict],base=worldOf(selectedWorld).cells[selectedDistrict],id=selectedDistrict;
  $("districtName").textContent="DISTRICT "+String.fromCharCode(65+Math.floor(id/12))+"-"+String(id%12+1).padStart(2,"0");
  $("districtInfo").textContent="Synthetic district "+(id+1)+" · land-use features: commerce "+Math.round(base.commerce*100)+"%, transit "+Math.round(base.transit*100)+"%, unmet-needs index "+Math.round(base.need*100)+"%. These characteristics are invented.";
- const arr=[["Underlying",cursor?fmt(valueByFocus(district.truth)):"—"],["Recorded",cursor?fmt(valueByFocus(district.recorded)):"—"],["Patrol",Math.round((district.patrol||0)*100)+"%"],["Trust",Math.round((district.trust||.65)*100)+"%"],["Prevention",Math.round((Object.values(district.stock||{}).reduce((a,b)=>a+b,0)/4)*100)+"%"],["View","WORLD "+selectedWorld]];
+ const arr=[["Underlying",cursor?fmt(valueByFocus(district.truth)):"—"],["Recorded",cursor?fmt(valueByFocus(district.recorded)):"—"],["Patrol",Math.round((district.patrol||0)*100)+"%"],["Trust",Math.round((district.trust||.65)*100)+"%"],["Prevention",Math.round((Object.values(district.stock||{}).reduce((a,b)=>a+b,0)/4)*100)+"%"],["View","WORLD "+selectedWorld],["A − B",cursor?fmt(valueByFocus(currentSnapshot(A)[id].truth)-valueByFocus(currentSnapshot(B)[id].truth)):"—"]];
  const root=$("districtValues");root.replaceChildren();arr.forEach(([label,value])=>{const div=document.createElement("div"),span=document.createElement("span"),strong=document.createElement("strong");span.textContent=label;strong.textContent=value;div.append(span,strong);root.append(div)})}
 function updateKPIs(){const a=currentMetrics(A),b=currentMetrics(B);
  $("kpiDate").textContent=cursor?monthLabel(cursor):"JAN 2027";
