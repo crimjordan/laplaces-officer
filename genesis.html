@@ -68,6 +68,7 @@
     <div class="buttons displaybtns"><button id="camOrbit">◈ ORBIT</button><button id="camTop">⌂ TOP VIEW</button><button id="camStreet">↗ STREET</button><button id="autoOrbit">⟳ AUTO ORBIT</button><button id="photo">▣ SAVE IMAGE</button></div>
     <div class="separator"></div><div class="eyebrow">LENS / WHAT THE CITY SHOWS</div>
     <div class="buttons lenses"><button data-layer="people" class="chosen">✳ RESIDENTS</button><button data-layer="crime">◇ UNDERLYING CRIME</button><button data-layer="recorded">◉ RECORDED CRIME</button><button data-layer="patrol">⌖ PATROL</button><button data-layer="school">▤ SCHOOLS</button><button data-layer="treatment">✚ TREATMENT</button><button data-layer="trust">♡ TRUST</button><button data-layer="development">▥ DEVELOPMENT</button></div>
+    <div class="focusControls"><label for="crimeFocus">OFFENSE / HARM FILTER</label><select id="crimeFocus" aria-label="Choose which crime or health outcome to visualize"><option value="-1">All criminal offenses (excludes overdose health events)</option></select></div>
     <p class="fine" id="layerExplainer">Every moving point represents a fictional resident. There are no real people or precise locations in this city.</p>
   </div>
   <div class="panel timebox">
@@ -82,7 +83,7 @@
   </div>
   <div class="panel chartbox">
    <div class="eyebrow">05 / CAUSAL QUESTIONS, MODEL-GENERATED ANSWERS</div><h2>Compare the trajectories</h2>
-   <div class="buttons chartbuttons"><button data-chart="totalCrime" class="chosen">CRIME</button><button data-chart="recordedCrime">RECORDED</button><button data-chart="violentArrests">VIOLENT ARRESTS</button><button data-chart="overdoseDeaths">OVERDOSE DEATHS</button><button data-chart="employed">EMPLOYMENT</button><button data-chart="trust">TRUST</button></div>
+   <div class="buttons chartbuttons"><button data-chart="totalCrime" class="chosen">CRIME</button><button data-chart="recordedCrime">RECORDED</button><button data-chart="category">OFFENSE FILTER</button><button data-chart="violentArrests">VIOLENT ARRESTS</button><button data-chart="overdoseDeaths">OVERDOSE DEATHS</button><button data-chart="employed">EMPLOYMENT</button><button data-chart="trust">TRUST</button></div>
    <canvas id="chart" width="1100" height="420" aria-label="Synthetic monthly outcomes for both policy worlds"></canvas>
    <div class="chartLegend"><span><i class="a"></i> WORLD A</span><span><i class="b"></i> WORLD B</span><small>Repeated-run variation is available in Experiment Lab.</small></div>
   </div>
