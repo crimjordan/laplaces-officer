@@ -108,6 +108,7 @@ function chooseWorld(letter){
 }
 function chooseLife(letter){lifeWorld=letter;$("personA").classList.toggle("chosen",letter==="A");$("personB").classList.toggle("chosen",letter==="B");renderPerson()}
 function choosePerson(id){selectedPerson=E.clamp(Math.floor(Number(id)||0),0,A.population-1);$("personId").value=selectedPerson;
+ const w=world(selectedWorld),frame=cursor?w.lifeFrames[cursor-1]:null;selectedDistrict=frame?frame.people.home[selectedPerson]:w.people[selectedPerson].initial;
  renderPerson();renderSocial();renderScene();$("selectionHint").textContent="FOLLOWING RESIDENT #"+selectedPerson+" · MATCHED IN BOTH WORLDS";}
 function chooseDistrict(id){const w=world(selectedWorld),frame=cursor?w.lifeFrames[cursor-1]:null;selectedDistrict=E.clamp(Math.floor(id),0,E.D-1);
  const candidates=[];for(let i=0;i<w.people.length;i++){const home=frame?frame.people.home[i]:w.people[i].initial;if(home===selectedDistrict)candidates.push(i)}
@@ -151,9 +152,9 @@ function renderSocial(){
  for(const p of points){ctx.beginPath();ctx.fillStyle=p.id===selectedPerson?"#65f3d0":"#82bde2";ctx.arc(p.x,p.y,p.id===selectedPerson?18:12,0,7);ctx.fill();ctx.fillStyle="#071b29";ctx.textAlign="center";ctx.font="bold 10px system-ui";ctx.fillText(String(p.id),p.x,p.y+4)}
  $("socialDetails").textContent="Showing synthetic links for resident "+selectedPerson+" and "+ids.length+" household/peer contacts. The modeled influence of peer employment on job access and education is hypothetical, not a finding about these fictional individuals.";
 }
-function frameDistricts(w){return cursor?w.lifeFrames[cursor-1]?.districts:w.city}
+function frameDistricts(w){return cursor?w.lifeFrames[cursor-1]?.districts:w.initialCity}
 function getMetricDistrict(d){
- return View.dimValue(d,layer);
+ return View.dimValue(d,layer,focus);
 }
 function drawMini(){
  const canvas=$("minimap"),ctx=canvas.getContext("2d");if(!ctx)return;const w=world(selectedWorld),data=frameDistricts(w);const values=data.map(d=>getMetricDistrict(d)),max=Math.max(1,...values);const color=parseInt((View.palettes[layer]||"#65f3d0").slice(1),16);
@@ -168,13 +169,14 @@ function renderDistrict(){
  const w=world(selectedWorld),d=frameDistricts(w)[selectedDistrict],root=$("districtInfo");root.replaceChildren();
  $("districtTitle").textContent="District "+String.fromCharCode(65+Math.floor(selectedDistrict/12))+"-"+String(selectedDistrict%12+1).padStart(2,"0");
  const truth=d.true||d.underlying,observed=d.recorded||d.reported;
+ const actual=focus>=0?truth[focus]:sum(truth.slice(0,11)),recorded=focus>=0?observed[focus]:sum(observed.slice(0,11));
  for(const [name,v]of [
- ["Residents",d.residents||0],["Underlying",sum(truth.slice(0,11))],["Recorded",sum(observed.slice(0,11))],
+ ["Residents",d.residents||0],["Underlying",actual],["Recorded",recorded],
  ["Patrol",d.patrol?"PRESENT":"NONE"],["School quality",Math.round(d.schoolQuality*100)+"%"],["Clinic access",Math.round(d.clinic*100)+"%"],
  ["Trust",pct(d.trust)],["Development",Math.round(d.development*100)+"%"]
  ])createCard(root,name,v);
 }
-function renderScene(){if(viewer)viewer.update(world(selectedWorld),cursor,selectedPerson,layer)}
+function renderScene(){if(viewer)viewer.update(world(selectedWorld),cursor,selectedPerson,layer,focus)}
 function renderMetrics(){
  const a=cursor?A.history[cursor-1]:null,b=cursor?B.history[cursor-1]:null;
  $("dateMetric").textContent=cursor?date(cursor):"JAN 2027";
@@ -184,12 +186,13 @@ function renderMetrics(){
  $("timeline").max=A.month;$("timeline").value=cursor;$("timelineLabel").textContent=(cursor?date(cursor):"JAN 2027")+" · MONTH "+cursor;
  $("latestLabel").textContent="LATEST: "+(A.month?date(A.month):"JAN 2027")+" · "+A.month+" MONTHS";
  for(const id of ["generateReport","exportCSV","exportJSON"])$(id).disabled=cursor<1;
- $("layerExplainer").textContent=explanations[layer];
+ $("layerExplainer").textContent=explanations[layer]+(["crime","recorded"].includes(layer)&&focus>=0?" Filtered to "+E.TYPES[focus].name+".":"");
 }
 function drawChart(){
  const canvas=$("chart"),ctx=canvas.getContext("2d");if(!ctx)return;const w=canvas.width,h=canvas.height;
  ctx.fillStyle="#091c2a";ctx.fillRect(0,0,w,h);
- const a=A.history.map(x=>x[chartKey]),b=B.history.map(x=>x[chartKey]),n=A.month;
+ const series=rows=>rows.map(x=>chartKey==="category"?(focus>=0?x.trueByType[focus]:x.totalCrime):x[chartKey]);
+ const a=series(A.history),b=series(B.history),n=A.month;
  const max=chartKey==="trust"?1:Math.max(1,...a,...b)*1.12;
  const padding={l:65,t:29,r:24,b:43},W=w-padding.l-padding.r,H=h-padding.t-padding.b;
  const xx=i=>padding.l+(i/Math.max(1,n))*W,yy=v=>padding.t+H*(1-v/max);
@@ -203,6 +206,7 @@ function drawChart(){
 }
 function render(){renderMetrics();renderScene();renderPerson();renderSocial();drawMini();renderDistrict();drawChart()}
 function evidence(){
+ const picker=$("crimeFocus");for(const [i,t]of E.TYPES.entries()){const opt=document.createElement("option");opt.value=String(i);opt.textContent=t.name+(t.health?" [HEALTH / NOT CRIME]":"");picker.append(opt)}
  const root=$("evidenceCards");root.replaceChildren();
  for(const e of EV){
   const article=append("article",root),pill=append("span",article,e.classification,"pill"),title=append("h3",article,e.title);
@@ -323,6 +327,7 @@ function bind(){
  for(const button of document.querySelectorAll("[data-layer]"))button.addEventListener("click",()=>{
   layer=button.dataset.layer;document.querySelectorAll("[data-layer]").forEach(b=>b.classList.toggle("chosen",b===button));render()
  });
+ $("crimeFocus").addEventListener("change",e=>{focus=+e.target.value;render()});
  for(const button of document.querySelectorAll("[data-chart]"))button.addEventListener("click",()=>{
   chartKey=button.dataset.chart;document.querySelectorAll("[data-chart]").forEach(b=>b.classList.toggle("chosen",b===button));drawChart()
  });
