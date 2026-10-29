@@ -60,7 +60,7 @@ function createDistrict(id,seed){
   return type.rate*environment*(.78+u(k+20)*.46);
  });
  return{id,x,y,commerce,nightlife,transit,need,housing,base,trust:clamp(.64+(u(66)-.5)*.14,.30,.9),
-  score:base.map((v,k)=>v*TYPES[k].report*.9),patrol:0,tower:u(88)<.2,
+  score:base.map((v,k)=>poisson(v*TYPES[k].report,rng(seed,-1,id,k))),patrol:0,tower:u(88)<.2,
   stock:{treat:0,educate:0,house:0,outreach:0},queue:Array(19).fill(0),
   truth:Array(TYPES.length).fill(0),recorded:Array(TYPES.length).fill(0),totalTruth:0,totalRecorded:0,prev:0};
 }
@@ -74,7 +74,7 @@ function pickPatrol(world,opts){
  const available=Math.min(105,Math.round((1-cfg.prevention/100)*Math.sqrt(cfg.budget/10)*70));
  const order=Array.from({length:COUNT},(_,i)=>i);
  const policy=cfg.policy;
- if(policy==="predictive")order.sort((a,b)=>w[b].score.reduce((s,v,k)=>s+v*(opts.focus<0?1:opts.focus===k?4:.18),0)-w[a].score.reduce((s,v,k)=>s+v*(opts.focus<0?1:opts.focus===k?4:.18),0)||a-b);
+ if(policy==="predictive")order.sort((a,b)=>w[b].score.reduce((s,v,k)=>s+v*(opts.focus===-2?(k===TYPES.length-1?0:1):opts.focus<0?1:opts.focus===k?4:.18),0)-w[a].score.reduce((s,v,k)=>s+v*(opts.focus<0?1:opts.focus===k?4:.18),0)||a-b);
  else if(policy==="oracle")order.sort((a,b)=>sum(w[b].base)-sum(w[a].base)||a-b);
  else if(policy==="problem")order.sort((a,b)=>sum(w[b].score)*.6+w[b].need*4-(sum(w[a].score)*.6+w[a].need*4)||a-b);
  else if(policy==="needs")order.sort((a,b)=>w[b].need-w[a].need||a-b);
@@ -90,6 +90,7 @@ function stepWorld(world,opts={}){
  if(world.month>=MAX_MONTHS)return null;
  const t=world.month,cfg=world.settings,focus=Number.isInteger(opts.focus)?opts.focus:-1,shocks=opts.shocks||[];
  const patrolCount=pickPatrol(world,{focus});
+ const priorScores=world.cells.map(c=>c.score.slice());
  const mix=opts.mix||{treat:35,educate:20,house:25,outreach:20};
  const mixSum=Math.max(1,sum(Object.values(mix)));
  const marketShock=activeShock(shocks,t,"recession"),festival=activeShock(shocks,t,"festival");
@@ -159,7 +160,7 @@ function stepWorld(world,opts={}){
   cell.truth=trueCounts;cell.recorded=recCounts;cell.totalTruth=sum(trueCounts);cell.totalRecorded=sum(recCounts);
   cell.score=cell.score.map((score,k)=>.68*score+.32*recCounts[k]);
   next.push({truth:trueCounts.slice(),recorded:recCounts.slice(),patrol:cell.patrol,trust:cell.trust,
-    stock:{...cell.stock},queue:cell.queue.slice(),score:cell.score.slice(),prev:prevCounts.slice()});
+    stock:{...cell.stock},queue:cell.queue.slice(),score:cell.score.slice(),priorScore:priorScores[cell.id],prev:prevCounts.slice()});
  }
  const trueCrime=sum(totalTrue.slice(0,-1)),recordedCrime=sum(totalRecorded.slice(0,-1));
  const result={
