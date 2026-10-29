@@ -1,8 +1,8 @@
 /* LAPLACE OMEGA | Interactive cockpit
    Important: every number is synthetic and coefficient values are illustrative. */
 "use strict";
-const M=window.LaplaceOmegaEngine,V=window.OmegaView3D;
-if(!M||!V)throw Error("OMEGA requires omega-engine.js and omega-3d.js");
+const M=window.LaplaceOmegaEngine,V=window.OmegaView3D,R=window.LaplaceOmegaReport;
+if(!M||!V||!R)throw Error("OMEGA requires omega-engine.js, omega-3d.js and omega-report.js");
 const $=id=>document.getElementById(id),fmt=n=>Number(n||0).toLocaleString("en-US",{maximumFractionDigits:0});
 const compact=n=>Number(n||0).toLocaleString("en-US",{maximumFractionDigits:1});
 const MONTHS=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
@@ -96,6 +96,8 @@ function updateKPIs(){const a=currentMetrics(A),b=currentMetrics(B);
  $("timeline").max=String(A.month);$("timeline").value=String(cursor);
  $("timelineLabel").textContent=monthLong(cursor);
  $("timelineLatest").textContent="LATEST: "+(A.month?monthLabel(A.month):"2027")+" · "+A.month+" MONTHS";
+ $("generateReport").disabled=cursor<1;
+ $("reportStatus").textContent=cursor<1?"Run the simulation for at least one month to enable reporting.":"Ready: report will analyze months 1–"+cursor+" ("+monthLabel(cursor)+"). "+(cursor<A.month?"The later simulated months are excluded.":"This is the latest simulated month.");
  $("viewInfo").textContent=viewer?.type==="webgl"?"DRAG TO ORBIT · SCROLL TO ZOOM · CLICK A BLOCK":"CLICK A BLOCK · FALLBACK ISOMETRIC VIEW";
 }
 function drawComparison(){const canvas=$("comparisonChart"),ctx=canvas.getContext("2d");if(!ctx)return;
@@ -135,6 +137,17 @@ function updateAll(){updateKPIs();updateScene();updateCrimeList();updateInspecto
 function addShock(type){if(!duration[type])return;if(cursor<A.month)branch();const item={type,start:A.month,duration:duration[type],magnitude:1};shocks.push(item);addEvent(tag[type]+" in both worlds; lasts "+duration[type]+" months.");updateAll()}
 function timeTo(n){cursor=M.clamp(Math.round(n),0,A.month);updateAll()}
 function exportText(file,contents,type){const url=URL.createObjectURL(new Blob([contents],{type}));const a=document.createElement("a");a.download=file;a.href=url;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1800);$("exportStatus").textContent="Prepared "+file+" (synthetic research data)."}
+function generateReport(){
+ pause();
+ if(cursor<1){$("reportStatus").textContent="Run at least one month before generating a report.";return}
+ try{
+  const report=R.open({A,B,months:cursor,types:M.TYPES,shocks:shocks,profile:$("reportProfile").value,seed:A.seed,mix:getMix(),spillover:+$("spillover").value});
+  $("reportStatus").textContent=report.method==="new_tab"?
+    "Research report for months 1–"+cursor+" opened in a new tab. Use Print / Save PDF, or download the standalone HTML.":
+    "Pop-up blocked: downloaded "+report.filename+" instead. Open that file to print or save as PDF.";
+  addEvent("Generated "+report.reportTitle+" for "+cursor+" synthetic months.");
+ }catch(error){console.error(error);$("reportStatus").textContent="Report could not be generated: "+String(error.message)}
+}
 function exportCSV(){const header=["month","date","policy_A","policy_B","underlying_A","underlying_B","recorded_A","recorded_B","overdose_A","overdose_B","trust_A","trust_B","patrol_A","patrol_B","observation_share_A","observation_share_B"];
  for(const t of M.TYPES)header.push(t.id+"_underlying_A",t.id+"_underlying_B",t.id+"_recorded_A",t.id+"_recorded_B");
  const rows=[header];for(let i=0;i<A.month;i++){const a=A.history[i],b=B.history[i];const row=[i+1,monthLabel(i+1),a.policy,b.policy,a.trueCrime,b.trueCrime,a.recordedCrime,b.recordedCrime,a.overdose,b.overdose,a.trust.toFixed(4),b.trust.toFixed(4),a.patrolCount,b.patrolCount,a.observation.toFixed(4),b.observation.toFixed(4)];for(let j=0;j<M.TYPES.length;j++)row.push(a.trueByType[j],b.trueByType[j],a.recordedByType[j],b.recordedByType[j]);rows.push(row)}
@@ -162,6 +175,7 @@ for(const [id,type] of [["camOrbit","orbit"],["camTop","top"],["camStreet","stre
 for(const [id,mode] of [["weatherNeon","neon"],["weatherDawn","dawn"],["weatherStorm","storm"]])$(id).addEventListener("click",()=>{viewer?.setAtmosphere?.(mode);for(const target of ["weatherNeon","weatherDawn","weatherStorm"])$(target).classList.toggle("chosen",target===id)});
 $("autoOrbit").addEventListener("click",()=>{const active=viewer?.toggleOrbit?.();$("autoOrbit").classList.toggle("chosen",!!active)});
 $("photo").addEventListener("click",()=>{if(!viewer)return;try{const data=viewer.capture(),a=document.createElement("a");a.href=data;a.download="laplace-omega-3d-synthetic-city.png";a.click()}catch(e){$("engineStatus").textContent="IMAGE CAPTURE UNAVAILABLE: "+e.message}});
+$("generateReport").addEventListener("click",generateReport);
 $("exportCSV").addEventListener("click",exportCSV);$("exportJSON").addEventListener("click",exportJSON);$("shareScenario").addEventListener("click",share);
 document.addEventListener("keydown",e=>{const node=e.target?.tagName;if(node==="INPUT"||node==="SELECT"||node==="TEXTAREA"||e.ctrlKey||e.altKey||e.metaKey)return;
  if(e.key===" "){e.preventDefault();play()}if(e.key==="ArrowLeft"&&cursor>0){pause();timeTo(cursor-1)}if(e.key==="ArrowRight"&&cursor<A.month){pause();timeTo(cursor+1)}if(e.key==="1")selectWorld("A");if(e.key==="2")selectWorld("B")});
