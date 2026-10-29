@@ -19,3 +19,25 @@
 .scene3d{box-shadow:inset 0 0 52px #000b,0 5px 35px #0cfad210;border-color:#3c6974}
 @media(max-width:560px){.cinemaPanel{padding:10px}.cinemaPanel .cinemaModes button{min-width:75px;font-size:9px}.cinemaPanel .cinemaToggles button{min-width:76px;font-size:9px}}
 @media(prefers-reduced-motion:reduce){.scene3d:before{opacity:.045}}
+
+/* GENESIS v2 / auditability */
+.diagnostics{margin-top:14px;padding:20px;border-color:#347681;background:linear-gradient(140deg,#0b2030,#142e38)}
+.diagnostics .eyebrow{color:#74f4d9}
+.diagnostics>p{max-width:980px}
+.diagnosticTable{border-collapse:collapse;display:table;width:100%;font-size:11.3px;margin:13px 0 20px}
+.diagnosticTable td,.diagnosticTable th{padding:9px 10px;border-bottom:1px solid #254c5a;vertical-align:middle}
+.diagnosticTable thead th{text-align:right;color:#afdfdb;background:#142f3f;font-size:11px;position:sticky;top:0}
+.diagnosticTable thead th:first-child{text-align:left;width:50%}
+.diagnosticTable tr.groupHead th{color:#73edce;background:#143c47;font-size:11px;letter-spacing:.07em;text-align:left;padding:11px 9px}
+.diagnosticTable td.numeric{text-align:right;font-variant-numeric:tabular-nums;color:#e3fcf5}
+.diagnosticTable tbody tr:not(.groupHead):nth-of-type(2n){background:#10283a}
+.diagnosticTable td:first-child{color:#bcd4d9}
+.diagnostics .between{align-items:center;flex-wrap:wrap}
+.diagnostics .between button{white-space:nowrap;font-weight:850}
+#diagnosticStatus{border-left:2px solid #61eac9;background:#122f3a;padding:10px;margin:12px 0}
+@media(max-width:680px){
+ .diagnostics{padding:13px;overflow-x:auto}
+ .diagnosticTable{min-width:590px;font-size:10px}
+ .diagnosticTable td,.diagnosticTable th{padding:8px 6px}
+}
+@media print{.diagnosticTable tr{break-inside:avoid}}
