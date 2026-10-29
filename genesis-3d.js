@@ -87,7 +87,7 @@ async function create(container,callbacks={}){
   select.rotation.x=-Math.PI/2;select.rotation.z=Math.PI/5;scene.add(select);
   const raycaster=new THREE.Raycaster();raycaster.params.Points.threshold=1.5;
   const pointer=new THREE.Vector2(),intersection=new THREE.Vector3(),plane=new THREE.Plane(new THREE.Vector3(0,1,0),0);
-  let current=null,month=0,sel=-1,layer="people",focus=-1,lastCoords=[],lastFrame=null;
+  let current=null,month=0,sel=-1,layer="people",focus=-1,lastCoords=new Float32Array(MAX*3),lastFrame=null;
   function size(){const rect=container.getBoundingClientRect();if(rect.width<20||rect.height<20)return;
    renderer.setSize(rect.width,rect.height,false);camera.aspect=rect.width/rect.height;camera.updateProjectionMatrix()}
   const observer=typeof ResizeObserver!=="undefined"?new ResizeObserver(size):null;if(observer)observer.observe(container);root.addEventListener("resize",size);size();
@@ -138,6 +138,7 @@ async function create(container,callbacks={}){
       const home=pa?pa.home[id]:world.people[id].initial,b=blocks[home];
       const xOffset=(Math.sin(id*16.27)*.5+.5)*6-3,zOffset=(Math.cos(id*23.18)*.5+.5)*6-3;
       positions[id*3]=b.x+xOffset;positions[id*3+1]=alive?2.6+((id*7)%7)*.13:-500;positions[id*3+2]=b.z+zOffset;
+      lastCoords[id*3]=positions[id*3];lastCoords[id*3+1]=positions[id*3+1];lastCoords[id*3+2]=positions[id*3+2];
       const emp=pa?!!pa.employed[id]:world.initialState[id].employed,treated=pa?!!pa.treatment[id]:false,flag=pa?pa.flags[id]:0;
       const color=new THREE.Color(id===sel?"#ffffff":!alive?"#193345":treated?"#a0ffb7":flag&2?"#ff8ca3":emp?"#65f3d0":"#85b4ef");
       personColors[id*3]=color.r;personColors[id*3+1]=color.g;personColors[id*3+2]=color.b;
@@ -165,8 +166,15 @@ async function create(container,callbacks={}){
     if(!reduceMotion){
       const t=time*.001;
       for(let k=0;k<pulses.length;k++)if(pulses[k].visible){const phase=(t*.55+k*.16)%1;pulses[k].scale.setScalar(1+phase*.75);pulses[k].material.opacity=.50*(1-phase)}
-      // Shimmer without changing identities or geographic assignment.
-      peoplePoints.position.y=Math.sin(t*.6)*.16;
+      // Decorative movement within each resident's home block, not a measured
+      // trajectory or empirically modeled commute. Exact identities remain fixed.
+      const count=current?.people?.length||0;
+      for(let id=0;id<count;id++){
+        positions[id*3]=lastCoords[id*3]+Math.sin(t*(.35+(id%5)*.045)+id*.83)*.75;
+        positions[id*3+1]=lastCoords[id*3+1];
+        positions[id*3+2]=lastCoords[id*3+2]+Math.cos(t*(.32+(id%7)*.03)+id*.61)*.75;
+      }
+      if(count)peopleGeo.attributes.position.needsUpdate=true;
     }
     renderer.render(scene,camera);
   }
