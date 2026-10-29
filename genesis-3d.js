@@ -29,7 +29,7 @@ async function create(container,callbacks={}){
   const keydown=e=>{if(["INPUT","TEXTAREA","SELECT"].includes(e.target?.tagName))return;if(["w","a","s","d","shift"].includes(e.key.toLowerCase())){pressed.add(e.key.toLowerCase());if(walking)e.preventDefault()}};
   const keyup=e=>pressed.delete(e.key.toLowerCase());
   const blur=()=>pressed.clear();root.addEventListener("keydown",keydown);root.addEventListener("keyup",keyup);root.addEventListener("blur",blur);
-  scene.add(new THREE.HemisphereLight(0x9bfcfa,0x061226,1.9));
+  const hemi=new THREE.HemisphereLight(0x9bfcfa,0x061226,1.9);scene.add(hemi);
   const key=new THREE.DirectionalLight(0xe3fef6,2.2);key.position.set(-55,115,44);scene.add(key);
   const accent=new THREE.PointLight(0x35c5aa,42,135);accent.position.set(-30,45,-32);scene.add(accent);
   const bloom=new THREE.PointLight(0xff8c93,35,140);bloom.position.set(46,38,43);scene.add(bloom);
@@ -85,6 +85,12 @@ async function create(container,callbacks={}){
     m.rotation.x=-Math.PI/2;m.visible=false;incidentGroup.add(m);return m});
   const select=new THREE.Mesh(new THREE.RingGeometry(4.15,4.47,5),new THREE.MeshBasicMaterial({color:"#ffffff",transparent:true,opacity:.96,depthWrite:false,side:THREE.DoubleSide}));
   select.rotation.x=-Math.PI/2;select.rotation.z=Math.PI/5;scene.add(select);
+  // Visual FX are deliberately separated from the agent-based model.
+  // An effect failure cannot erase the metropolis or its research controls.
+  let fx=null,fxError=null;
+  try{
+    if(root.GenesisFX?.create)fx=root.GenesisFX.create(THREE,scene,blocks,{hemi,key,accent,bloom,renderer},{spacing:S,reducedMotion:root.matchMedia?.("(prefers-reduced-motion: reduce)").matches});
+  }catch(error){fxError=error;console.warn("Optional cinematic effects disabled",error)}
   const raycaster=new THREE.Raycaster();raycaster.params.Points.threshold=1.5;
   const pointer=new THREE.Vector2(),intersection=new THREE.Vector3(),plane=new THREE.Plane(new THREE.Vector3(0,1,0),0);
   let current=null,month=0,sel=-1,layer="people",focus=-1,lastCoords=new Float32Array(MAX*3),lastFrame=null;
@@ -148,11 +154,14 @@ async function create(container,callbacks={}){
     select.visible=sel>=0&&sel<crowd;
     if(select.visible){const b=blocks[residentHome(world,sel,month)];select.position.set(b.x,.65,b.z);}
     schools.visible=layer==="school"||layer==="people";health.visible=layer==="treatment"||layer==="people";
+    try{fx?.update(world,month,layer,focus)}catch(error){if(!fxError){console.warn("GENESIS effects update error",error);fxError=error}}
+
   }
   const reduceMotion=root.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
   function animate(time){
     if(disposed)return;
     raf=requestAnimationFrame(animate);if(document.hidden)return;
+    const frameDelta=lastTick?time-lastTick:16.67;
     if(walking){
       const dt=clamp((time-lastTick)/1000,0,.05),speed=(pressed.has("shift")?17:8)*dt;
       const forward=(pressed.has("w")?1:0)-(pressed.has("s")?1:0),side=(pressed.has("d")?1:0)-(pressed.has("a")?1:0);
@@ -176,15 +185,20 @@ async function create(container,callbacks={}){
       }
       if(count)peopleGeo.attributes.position.needsUpdate=true;
     }
+    try{fx?.animate(time,frameDelta)}catch(error){if(!fxError){console.warn("GENESIS FX frame error",error);fxError=error}}
     renderer.render(scene,camera);
   }
+  function setAtmosphere(type){return fx?.setAtmosphere(type)||"night"}
+  function setEffects(name,enabled){return !!fx?.setFX(name,enabled)}
+  function setQuality(low){return !!fx?.setQuality(low)}
+  function effectsStatus(){return fx?.snapshot()||{atmosphere:"unavailable",error:String(fxError?.message||"Visual FX module missing")}}
   function capture(){renderer.render(scene,camera);return renderer.domElement.toDataURL("image/png")}
   function toggleOrbit(){walking=false;autoOrbit=!autoOrbit;return autoOrbit}
-  function dispose(){disposed=true;cancelAnimationFrame(raf);observer?.disconnect();root.removeEventListener("resize",size);root.removeEventListener("keydown",keydown);root.removeEventListener("keyup",keyup);root.removeEventListener("blur",blur);renderer.dispose();renderer.domElement.remove()}
-  status("WEBGL ACTIVE · "+buildingCount+" BUILDINGS / "+POP_TEXT()+" PEOPLE");
+  function dispose(){disposed=true;cancelAnimationFrame(raf);observer?.disconnect();root.removeEventListener("resize",size);root.removeEventListener("keydown",keydown);root.removeEventListener("keyup",keyup);root.removeEventListener("blur",blur);try{fx?.dispose()}catch(_){}renderer.dispose();renderer.domElement.remove()}
+  status("WEBGL ACTIVE · "+buildingCount+" BUILDINGS · "+(fx?"CINEMATIC FX ACTIVE":"BASIC FX") );
   function POP_TEXT(){return current?.people?.length||"1,152"}
   animate(0);
-  return{type:"webgl",update,setCamera,capture,toggleOrbit,dispose};
+  return{type:"webgl",update,setCamera,setAtmosphere,setEffects,setQuality,effectsStatus,capture,toggleOrbit,dispose};
  }catch(error){
   try{startedRenderer?.domElement?.remove();startedRenderer?.dispose()}catch(_){}
   status("ISOMETRIC BACKUP · FULL SIMULATOR AVAILABLE");
@@ -194,7 +208,8 @@ async function create(container,callbacks={}){
 function fallback(container,callbacks,error){
  const canvas=document.getElementById("fallback");canvas.hidden=false;
  const ctx=canvas.getContext("2d");
- let world=null,month=0,sel=-1,layer="people",focus=-1,zoom=1,rot=0;
+ let world=null,month=0,sel=-1,layer="people",focus=-1,zoom=1,rot=0,atmosphere="night",lowQuality=false,fallbackRAF=0;
+ const effectFlags={traffic:true,patrol:true,signals:true,stars:true,streams:true};
  const project=(x,y,h=0)=>({x:600+(x-y)*30*zoom,y:185+(x+y)*15*zoom-h*7*zoom});
  function draw(){
   if(!ctx)return;
@@ -229,7 +244,7 @@ function fallback(container,callbacks,error){
    for(let id=0;id<D;id++){const p=project((id%N-5.5)*1.1,(Math.floor(id/N)-5.5)*1.1);const d=Math.hypot(mx-p.x,my-p.y);if(d<dist){dist=d;selected=id}}
    if(selected>=0&&dist<38)callbacks.selectDistrict?.(selected);
  });
- return{type:"fallback",update(w,m,s,l,f=-1){world=w;month=m;sel=s;layer=l;focus=f;draw()},setCamera(type){zoom=type==="street"?1.2:type==="top"?.85:1;draw()},capture(){draw();return canvas.toDataURL("image/png")},toggleOrbit(){return false},dispose(){canvas.hidden=true}};
+ return{type:"fallback",update(w,m,s,l,f=-1){world=w;month=m;sel=s;layer=l;focus=f;draw()},setCamera(type){zoom=type==="street"?1.2:type==="top"?.85:1;draw()},setAtmosphere(type){atmosphere=type;draw();return type},setEffects(name,on){effectFlags[name]=on;draw();return on},setQuality(low){lowQuality=low;draw();return low},effectsStatus(){return{atmosphere,...effectFlags,lowPower:lowQuality}},capture(){draw();return canvas.toDataURL("image/png")},toggleOrbit(){return false},dispose(){canvas.hidden=true;cancelAnimationFrame(fallbackRAF)}};
 }
 root.Genesis3D={create,dimValue,palettes};
 })(window);
