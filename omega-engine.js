@@ -171,7 +171,16 @@ function stepWorld(world,opts={}){
    supportReach:programTotal/COUNT,budgetMillions:cfg.budget,prevention:cfg.prevention,
    preventionExpected:next.reduce((s,c)=>s+sum(c.prev),0),
    observation:sum(totalTrue)>0?sum(totalRecorded)/sum(totalTrue):0,
-   category:focus,policy:cfg.policy
+   category:focus,policy:cfg.policy,
+   // Capture the settings actually used in this month. Reports must not assume
+   // that the controls' final state applied to the entire simulation history.
+   settingsSnapshot:{
+     policy:cfg.policy,prevention:cfg.prevention,budget:cfg.budget,
+     surveillance:cfg.surveillance,tactics:cfg.tactics
+   },
+   mixSnapshot:{treat:+mix.treat||0,educate:+mix.educate||0,house:+mix.house||0,outreach:+mix.outreach||0},
+   spilloverSnapshot:opts.spillover??-20,
+   shocksActive:shocks.filter(s=>t>=s.start&&t<s.start+s.duration).map(s=>s.type)
  };
  world.month++;
  world.history.push(result);
