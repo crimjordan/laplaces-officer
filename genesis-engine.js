@@ -232,22 +232,31 @@ function shift(world,options={}){
       d.underlying[k]++;typesT[k]++;
       if(k===11){
         p.overdoses++;nonfatalOverdose++;overdosed=true;p.lastFlags|=BIT.OVERDOSE;p.overdoseSurvivor=true;
-        if(world.track)event(world,p,"overdose","Survived a synthetic nonfatal overdose emergency.");
+        // Record survival or mortality only after the hypothetical mortality draw below.
         // Mortality association only applies to overdose death, never overdose event rates.
         const baseDeath=.02;
         const isTreated=t<p.treatmentUntil;
         if(u(seed,t,id,290)<baseDeath*(isTreated?.41:1)){
           p.alive=false;overdoseDeaths++;p.lastFlags|=BIT.DEATH;
-          if(world.track)event(world,p,"death","Synthetic opioid-overdose death (an outcome of the mortality scenario, not an individual prediction).");
-        }
+          if(world.track)event(world,p,"death","Synthetic fatal opioid overdose (model-generated, not an individual prediction).");
+        }else if(world.track)event(world,p,"overdose","Survived a synthetic nonfatal overdose emergency.");
       }else if(k!==9){p.victimizations++;anyVictim=true;p.lastFlags|=BIT.VICTIM;
-        if(world.track&&u(seed,t,id,300+k)<.50)event(world,p,"victim","Experienced a synthetic "+type.name.toLowerCase()+" incident.");
+        if(k===6){
+          p.alive=false;p.lastFlags|=BIT.DEATH;
+          if(world.track)event(world,p,"death","Synthetic homicide death (fictional event, not an individualized prediction).");
+        }else if(world.track&&u(seed,t,id,300+k)<.50)event(world,p,"victim","Experienced a synthetic "+type.name.toLowerCase()+" incident.");
       }
       let detect=type.reported+(p.trust-.6)*.15+cfg.surveillance/100*type.detected*.12+d.patrol*type.detected*.56;
       if(k===11)detect=type.reported;
       if(climate.reporting)detect*=.32;
       if(u(seed,t,id,400+k)<prob(detect)){d.reported[k]++;typesR[k]++}
+      if(!p.alive)break;
     }
+  }
+  if(!p.alive){
+    if(anyVictim)victims++;
+    if(p.employed){employed=Math.max(0,employed-1);p.employed=false}
+    continue;
   }
   if(anyVictim)victims++;
   if(overdosed){
