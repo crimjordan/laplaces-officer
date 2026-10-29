@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050b14"><meta name="description" content="Laplace OMEGA: a cinematic 3D synthetic-city laboratory for predictive policing, crime observation feedback, and alternative public policy futures.">
+<title>OMEGA — The City Remembers | Laplace's Officer</title>
+<link rel="stylesheet" href="omega.css"></head>
+<body>
+<header class="topbar">
+ <div class="identity"><span class="mark">∴</span><div><div class="eyebrow">LAPLACE'S OFFICER / LAB 09</div><strong>OMEGA <span class="weak">/ THE CITY REMEMBERS</span></strong></div></div>
+ <nav aria-label="Platform navigation"><a href="index.html">Home</a><a href="neon-city.html">Neon City</a><a href="simulation-zero.html">Simulation Zero</a><a href="prevention-futures.html">Prevention Futures</a><a href="#methods">Methods</a></nav>
+ <div class="status"><span class="pulse"></span> SIMULATED SYSTEM ONLINE</div>
+</header>
+<section class="intro">
+ <div><div class="eyebrow">AN INTERACTIVE EXPERIMENT IN PREDICTION, POWER & PREVENTION</div><h1>THE CITY <em>REMEMBERS.</em></h1><p>Build two futures for the same city. Watch algorithms learn from what police record, interventions change what happens, and yesterday's decisions alter tomorrow's data.</p></div>
+ <div class="intro-note"><span class="pill">144 DISTRICTS</span><span class="pill">12 OUTCOME TYPES</span><span class="pill">20 SIMULATED YEARS</span><span class="pill">TWO PARALLEL WORLDS</span><p class="small">A fictional city. Real methodological questions. <strong>Never a real-world forecast.</strong></p></div>
+</section>
+<main>
+ <section class="cockpit" aria-label="OMEGA simulation cockpit">
+  <aside class="leftstack">
+   <div class="panel">
+    <div class="eyebrow">01 / MISSION COMMAND</div><h2>Run the future</h2>
+    <div class="buttonrow"><button id="play" class="primary">▶ RUN</button><button id="step">+1 MONTH</button><button id="plusYear">+1 YEAR</button><button id="plusFive">+5 YEARS</button></div>
+    <label class="sliderlabel" for="speed">SIMULATION SPEED <output id="speedOut">1×</output></label><input id="speed" type="range" min="1" max="5" value="2">
+    <div class="buttonrow"><button id="reset" class="subtle">↺ RESET</button><button id="branch" class="subtle">⌁ BRANCH AT CURSOR</button></div>
+    <div class="separator"></div>
+    <div class="eyebrow">POLICY SCENARIOS</div>
+    <p class="small muted">Load a pair of policy futures or configure each world independently.</p>
+    <div class="presetgrid">
+      <button data-preset="clash">⚡ Patrol vs prevention</button>
+      <button data-preset="bias">◎ Feedback experiment</button>
+      <button data-preset="equity">◇ Equity experiment</button>
+      <button data-preset="random">⟲ Randomized patrol</button>
+    </div>
+   </div>
+   <div class="panel configpanel a">
+    <div class="paneltitle"><span class="worldglyph">A</span><div><h2>WORLD A</h2><span class="muted small">The intervention</span></div></div>
+    <label for="policyA">DEPLOYMENT STRATEGY</label><select id="policyA">
+      <option value="predictive">Predictive hot spots</option><option value="equal">Rotating equal coverage</option><option value="problem">Problem-oriented targeting</option><option value="needs">Needs-based allocation</option><option value="random">Random allocation</option><option value="oracle">Oracle (unobservable)</option>
+    </select>
+    <label for="preventionA" class="sliderlabel">PREVENTION BUDGET <output id="preventionAOut">18%</output></label><input id="preventionA" type="range" min="0" max="100" step="5" value="18">
+    <label for="budgetA" class="sliderlabel">MONTHLY TOTAL BUDGET <output id="budgetAOut">$10M</output></label><input id="budgetA" type="range" min="3" max="25" step="1" value="10">
+    <label for="surveillanceA" class="sliderlabel">SURVEILLANCE COVERAGE <output id="surveillanceAOut">65%</output></label><input id="surveillanceA" type="range" min="0" max="100" step="5" value="65">
+    <label for="tacticsA">ENFORCEMENT STYLE</label><select id="tacticsA"><option value="intensive">Intensive enforcement (hypothetical trust cost)</option><option value="procedural">Procedural-justice oriented</option></select>
+   </div>
+   <div class="panel configpanel b">
+    <div class="paneltitle"><span class="worldglyph">B</span><div><h2>WORLD B</h2><span class="muted small">The alternative future</span></div></div>
+    <label for="policyB">DEPLOYMENT STRATEGY</label><select id="policyB">
+      <option value="predictive">Predictive hot spots</option><option value="equal">Rotating equal coverage</option><option value="problem">Problem-oriented targeting</option><option value="needs">Needs-based allocation</option><option value="random">Random allocation</option><option value="oracle">Oracle (unobservable)</option>
+    </select>
+    <label for="preventionB" class="sliderlabel">PREVENTION BUDGET <output id="preventionBOut">60%</output></label><input id="preventionB" type="range" min="0" max="100" step="5" value="60">
+    <label for="budgetB" class="sliderlabel">MONTHLY TOTAL BUDGET <output id="budgetBOut">$10M</output></label><input id="budgetB" type="range" min="3" max="25" step="1" value="10">
+    <label for="surveillanceB" class="sliderlabel">SURVEILLANCE COVERAGE <output id="surveillanceBOut">35%</output></label><input id="surveillanceB" type="range" min="0" max="100" step="5" value="35">
+    <label for="tacticsB">ENFORCEMENT STYLE</label><select id="tacticsB"><option value="intensive">Intensive enforcement (hypothetical trust cost)</option><option value="procedural">Procedural-justice oriented</option></select>
+   </div>
+  </aside>
+  <div class="middle">
+   <div class="metricbar">
+    <div class="metric"><span>SIMULATION DATE</span><strong id="kpiDate">JAN 2027</strong></div>
+    <div class="metric"><span>UNDERLYING CRIME <small>/ A</small></span><strong id="kpiUnderlying">—</strong></div>
+    <div class="metric"><span>RECORDED CRIME <small>/ A</small></span><strong id="kpiRecorded">—</strong></div>
+    <div class="metric"><span>A vs B <small>/ underlying</small></span><strong id="kpiDifference">—</strong></div>
+    <div class="metric"><span>TRUST <small>/ A</small></span><strong id="kpiTrust">—</strong></div>
+   </div>
+   <div class="viewportbox">
+    <div id="viewport" role="img" aria-label="Orbitable WebGL 3D model of a fictional city with colored crime heat, patrol drones, incident pulses and night lighting">
+      <canvas id="fallbackCanvas" width="1160" height="750" hidden aria-label="Fallback isometric synthetic city rendering"></canvas>
+    </div>
+    <div class="floating top-left"><div class="eyebrow">LIVE HOLOGRAPHIC DIGITAL TWIN</div><strong>OMEGA<span class="blink">_</span></strong><div id="engineStatus">3D ENGINE INITIALIZING</div></div>
+    <div class="floating top-right"><div class="worldtoggle"><button id="showA" class="selected" aria-pressed="true">◈ WORLD A</button><button id="showB" aria-pressed="false">◈ WORLD B</button></div><div class="modepill" id="layerLabel">UNDERLYING ACTIVITY</div></div>
+    <div class="floating bottom-left"><span id="viewInfo">DRAG TO ORBIT · SCROLL TO ZOOM · CLICK A BLOCK</span><div id="sceneMessage">SYNTHETIC // NOT A DEPLOYMENT TOOL</div></div>
+    <div class="floating bottom-right"><div class="buttonrow"><button id="camOrbit" title="Orbit view">◈ ORBIT</button><button id="camTop" title="Overhead view">⬡ TOP</button><button id="camStreet" title="Street-level view">↗ STREET</button><button id="photo" title="Save scene screenshot">◧ PNG</button></div></div>
+    <div class="tip" id="tooltip" hidden></div>
+   </div>
+   <div class="panel timelinepanel">
+     <div class="timelinehead"><div><div class="eyebrow">02 / THE TIME MACHINE</div><strong id="timelineLabel">JAN 2027 · MONTH 0</strong></div><span class="muted small">Scrub past months · branch to rewrite future</span></div>
+     <input id="timeline" type="range" min="0" max="0" value="0" aria-label="Replay timeline">
+     <div class="timelinefoot"><span>2027</span><span id="timelineLatest">LATEST: 2027</span><span>2046</span></div>
+   </div>
+   <div class="panel scenecontrols"><div class="eyebrow">03 / WHAT ARE YOU SEEING?</div>
+    <div class="buttonrow"><button data-layer="truth" class="chosen">◇ UNDERLYING</button><button data-layer="recorded">◉ RECORDED</button><button data-layer="gap">◈ OBSERVATION GAP</button><button data-layer="patrol">✧ DEPLOYMENTS</button><button data-layer="trust">♡ LEGITIMACY</button><button data-layer="prevention">✳ PREVENTION</button></div>
+    <p class="small muted" id="layerExplain">Underlying incidents are visible only because this is a simulation. Real police databases cannot show every event.</p>
+   </div>
+  </div>
+  <aside class="rightstack">
+    <div class="panel">
+      <div class="eyebrow">04 / CRIME-SIGNAL SPECTRUM</div><h2>Filter the city</h2>
+      <div class="buttonrow"><button id="focusAll" class="chosen">ALL CATEGORIES</button><button id="focusCrime">CRIME ONLY</button><button id="focusHarm">HARM ONLY</button></div>
+      <div id="crimeList" class="crimeList" aria-label="Crime and harm outcome filters"></div>
+      <p class="small muted">Overdose emergencies are a health outcome, not a criminal offense. A recorded drug offense may be discovered through enforcement.</p>
+    </div>
+    <div class="panel">
+      <div class="eyebrow">05 / DISTRICT INSPECTOR</div><h2 id="districtName">Select a district</h2>
+      <p class="small muted" id="districtInfo">Click a building or a location in the minimap to inspect the fictional district's observations, patrol allocation, support, and trust.</p>
+      <canvas id="miniMap" width="288" height="288" aria-label="Clickable top-down city minimap"></canvas>
+      <div id="districtValues" class="districtValues"></div>
+    </div>
+    <div class="panel"><div class="eyebrow">06 / CITY SIGNAL</div><h2 id="insightTitle">Awaiting the future</h2><p id="insightBody" class="small muted">Advance the timeline to reveal discrepancies between events, recording, and resources.</p></div>
+  </aside>
+ </section>
+ <section class="analysis">
+  <div class="panel chartpanel">
+   <div class="eyebrow">07 / THE COUNTERFACTUAL OBSERVATORY</div><h2>Two futures. One fictional city.</h2>
+   <p class="small muted">Matched random seeds; different policies. The trajectories are generated by explicit assumptions, not empirical forecasts.</p>
+   <div class="buttonrow chartbuttons"><button data-chart="trueCrime" class="chosen">UNDERLYING CRIME</button><button data-chart="recordedCrime">RECORDED CRIME</button><button data-chart="trust">PUBLIC TRUST</button><button data-chart="overdose">OVERDOSE HARM</button><button data-chart="observation">OBSERVABILITY</button></div>
+   <canvas id="comparisonChart" width="1100" height="400" aria-label="Line chart comparing the two fictional policy futures"></canvas>
+   <div class="chartlegend"><span><i class="legendmark a"></i> WORLD A</span><span><i class="legendmark b"></i> WORLD B</span><span id="chartHint" class="muted">Drag the timeline above to inspect a particular month.</span></div>
+  </div>
+  <div class="panel director">
+   <div class="eyebrow">08 / EVENTS DIRECTOR</div><h2>Make history go wrong.</h2><p class="small muted">Inject shared shocks into both worlds. These are hypothetical, explicitly labeled mechanisms.</p>
+   <div class="eventgrid"><button data-shock="recession"><strong>◫ ECONOMIC SHOCK</strong><span>Property-crime pressure · 12 months</span></button><button data-shock="festival"><strong>✺ CITY FESTIVAL</strong><span>Temporary crowding · 3 months</span></button><button data-shock="outage"><strong>◉ DATA BLACKOUT</strong><span>Disrupt recording · 4 months</span></button><button data-shock="opioid"><strong>✚ OVERDOSE WAVE</strong><span>Health emergency · 9 months</span></button><button data-shock="reform"><strong>♡ TRUST REFORM</strong><span>Illustrative reporting change · 8 months</span></button></div>
+   <div class="separator"></div><div class="eyebrow">09 / PREVENTION ENGINE</div><h3>How the prevention share is allocated</h3>
+   <p class="small muted">Mix sliders distribute each world's prevention budget. Education benefits have an illustrative 19-month lag; other programs build gradually. Values are model assumptions.</p>
+   <label class="sliderlabel" for="mixTreat">TREATMENT ACCESS <output id="mixTreatOut">35</output></label><input id="mixTreat" type="range" min="0" max="100" value="35">
+   <label class="sliderlabel" for="mixEducate">EDUCATION <output id="mixEducateOut">20</output></label><input id="mixEducate" type="range" min="0" max="100" value="20">
+   <label class="sliderlabel" for="mixHouse">HOUSING SUPPORT <output id="mixHouseOut">25</output></label><input id="mixHouse" type="range" min="0" max="100" value="25">
+   <label class="sliderlabel" for="mixOutreach">VIOLENCE INTERRUPTION <output id="mixOutreachOut">20</output></label><input id="mixOutreach" type="range" min="0" max="100" value="20">
+   <label class="sliderlabel" for="spillover">SPATIAL SPILLOVER <output id="spilloverOut">Diffusion 20%</output></label><input id="spillover" type="range" min="-100" max="100" step="10" value="-20">
+   <p class="small muted">Negative = hypothetical diffusion of benefits. Positive = hypothetical displacement. A 2019 review found diffusion generally more common than displacement.</p>
+  </div>
+  <div class="panel ledger">
+   <div class="eyebrow">10 / INSTRUMENT PANEL</div><h2>Monthly comparison</h2><div id="scorecard" class="scorecard"></div>
+   <div class="separator"></div><h3>LIVE EVENT LOG</h3><div class="eventlog" id="eventLog" aria-live="off"></div>
+   <div class="separator"></div><div class="buttonrow"><button id="exportCSV">↓ CSV</button><button id="exportJSON">↓ JSON</button><button id="shareScenario">⧉ COPY SETTINGS</button></div><p class="small muted" id="exportStatus">Exports are synthetic. A snapshot preserves settings and the shock schedule.</p>
+  </div>
+ </section>
+ <section class="methodology panel" id="methods">
+  <div class="eyebrow">MODEL CITIZENSHIP / EVIDENCE & METHODS</div><h2>This is an experiment—not an oracle.</h2>
+  <p>The <strong>3D geometry, neighborhoods, populations, event counts, policy impacts, legitimacy dynamics, budgets and model coefficients are fictional.</strong> The engine uses reproducible random-number streams, seasonal intensities, recorded-versus-underlying event distinctions, policy-dependent patrol allocation, an intervention pipeline, and user-adjustable shock scenarios. It permits mechanistic thought experiments; it does not estimate the future of any actual city.</p>
+  <div class="evidencegrid">
+   <article><span class="pill">EMPIRICAL FINDING</span><h3>Focused hot-spots policing</h3><p>A Campbell review of 65 studies found small but meaningful crime reductions, with spatial diffusion of benefits more common than displacement. <strong>No universal effectiveness percentage is imported into OMEGA.</strong></p><a href="https://www.campbellcollaboration.org/review/effects-of-hot-spots-policing-on-crime/" target="_blank" rel="noopener">Braga et al., 2019</a></article>
+   <article><span class="pill">MECHANISM</span><h3>Prediction feedback loops</h3><p>Learning from police-discovered incidents can reinforce patrol concentration even when observed incident counts do not reveal the underlying distribution. OMEGA deliberately simulates that distinction.</p><a href="https://proceedings.mlr.press/v81/ensign18a.html" target="_blank" rel="noopener">Ensign et al., 2018</a> · <a href="https://doi.org/10.1111/j.1740-9713.2016.00960.x" target="_blank" rel="noopener">Lum & Isaac, 2016</a></article>
+   <article><span class="pill">EMPIRICAL FINDING</span><h3>Correctional education</h3><p>A RAND meta-analysis reported 43% lower odds of recidivism among correctional-education participants. OMEGA's education pipeline is a <strong>stylized investment model</strong>, not an application of that odds ratio to citywide crime.</p><a href="https://www.justice.gov/archives/opa/pr/justice-and-education-departments-announce-new-research-showing-prison-education-reduces" target="_blank" rel="noopener">DOJ / RAND, 2013</a></article>
+   <article><span class="pill">EMPIRICAL CONTEXT</span><h3>Treatment and overdose outcomes</h3><p>The CDC reports medication treatment for opioid use disorder is associated with reduced overdose and all-cause mortality. Overdoses here are modeled as <strong>health emergencies, not offenses</strong>. Intervention coefficients are not treatment effect estimates.</p><a href="https://www.cdc.gov/overdose-prevention/hcp/clinical-care/opioid-use-disorder-treating.html" target="_blank" rel="noopener">CDC clinical overview</a></article>
+  </div><p class="muted small">Model limitations: no fitted parameters, no empirical exposure denominators, no estimated uncertainty intervals, no validated resource-to-crime response function, no person-level data, no demographic profiling, no realistic policing legality assessment, and simplified spatial/temporal dependencies. The oracle option uses unobservable baseline conditions as a benchmark. Do not use OMEGA for real deployment or impact forecasts.</p>
+ </section>
+</main><footer>OMEGA / A DIGITAL WORLD WITH AN EXPLICIT EPISTEMOLOGY <span>© LAPLACE'S OFFICER · SYNTHETIC RESEARCH GAME</span></footer>
+<script src="omega-engine.js"></script><script type="module" src="omega-app.js"></script>
+</body></html>
