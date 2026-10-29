@@ -97,6 +97,7 @@ function updateKPIs(){const a=currentMetrics(A),b=currentMetrics(B);
  $("timelineLabel").textContent=monthLong(cursor);
  $("timelineLatest").textContent="LATEST: "+(A.month?monthLabel(A.month):"2027")+" · "+A.month+" MONTHS";
  $("generateReport").disabled=cursor<1;
+ $("quickReport").disabled=cursor<1;
  $("reportStatus").textContent=cursor<1?"Run the simulation for at least one month to enable reporting.":"Ready: report will analyze months 1–"+cursor+" ("+monthLabel(cursor)+"). "+(cursor<A.month?"The later simulated months are excluded.":"This is the latest simulated month.");
  $("viewInfo").textContent=viewer?.type==="webgl"?"DRAG TO ORBIT · SCROLL TO ZOOM · CLICK A BLOCK":"CLICK A BLOCK · FALLBACK ISOMETRIC VIEW";
 }
@@ -176,6 +177,7 @@ for(const [id,mode] of [["weatherNeon","neon"],["weatherDawn","dawn"],["weatherS
 $("autoOrbit").addEventListener("click",()=>{const active=viewer?.toggleOrbit?.();$("autoOrbit").classList.toggle("chosen",!!active)});
 $("photo").addEventListener("click",()=>{if(!viewer)return;try{const data=viewer.capture(),a=document.createElement("a");a.href=data;a.download="laplace-omega-3d-synthetic-city.png";a.click()}catch(e){$("engineStatus").textContent="IMAGE CAPTURE UNAVAILABLE: "+e.message}});
 $("generateReport").addEventListener("click",generateReport);
+$("quickReport").addEventListener("click",generateReport);
 $("exportCSV").addEventListener("click",exportCSV);$("exportJSON").addEventListener("click",exportJSON);$("shareScenario").addEventListener("click",share);
 document.addEventListener("keydown",e=>{const node=e.target?.tagName;if(node==="INPUT"||node==="SELECT"||node==="TEXTAREA"||e.ctrlKey||e.altKey||e.metaKey)return;
  if(e.key===" "){e.preventDefault();play()}if(e.key==="ArrowLeft"&&cursor>0){pause();timeTo(cursor-1)}if(e.key==="ArrowRight"&&cursor<A.month){pause();timeTo(cursor+1)}if(e.key==="1")selectWorld("A");if(e.key==="2")selectWorld("B")});
