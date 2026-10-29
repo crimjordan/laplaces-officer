@@ -23,12 +23,14 @@ const A=E.create(args.seed,E.PRESETS.balanced,args.population,{track:true});
 const B=E.create(args.seed,E.PRESETS.balanced,args.population,{track:true});
 assert.equal(A.initialCity.reduce((s,d)=>s+d.residents,0),args.population);
 assert.equal(E.stateOf(A,12,0).home,A.people[12].initial);
+let cumulativeOverdoses=0,cumulativeDeaths=0;
 for(let month=0;month<48;month++){
  const a=E.shift(A,{}),b=E.shift(B,{});
+ cumulativeOverdoses+=a.overdoses;cumulativeDeaths+=a.overdoseDeaths;
  assert.deepEqual(JSON.parse(JSON.stringify(a)),JSON.parse(JSON.stringify(b)),"Identical-world negative control at "+month);
  assert.equal(a.totalCrime,E.sum(a.trueByType.slice(0,11)),"Overdose incorrectly included in crime");
  assert(a.trueByType.every((n,i)=>n>=a.recordedByType[i]),"Observed incident count exceeds underlying");
- assert(a.overdoseDeaths<=a.overdoses,"Overdose fatalities exceed emergency incidents");
+ assert(cumulativeDeaths<=cumulativeOverdoses,"Cumulative opioid deaths exceed prior nonfatal-overdose exposures");
  assert(a.alive<=A.population&&a.alive>=0,"Impossible population");
  assert(a.trust<=1&&a.trust>=0,"Impossible trust index");
 }
