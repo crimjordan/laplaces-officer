@@ -120,7 +120,23 @@
   <div class="panel ledger">
    <div class="eyebrow">10 / INSTRUMENT PANEL</div><h2>Monthly comparison</h2><div id="scorecard" class="scorecard"></div>
    <div class="separator"></div><h3>LIVE EVENT LOG</h3><div class="eventlog" id="eventLog" aria-live="off"></div>
-   <div class="separator"></div><div class="buttonrow"><button id="exportCSV">↓ CSV</button><button id="exportJSON">↓ JSON</button><button id="shareScenario">⧉ COPY SETTINGS</button></div><p class="small muted" id="exportStatus">Exports are synthetic. A snapshot preserves settings and the shock schedule.</p>
+   <div class="separator"></div>
+   <div class="eyebrow">11 / RESEARCH REPORT GENERATOR</div>
+   <h3>Turn this simulation into a report.</h3>
+   <p class="small muted">Choose a research focus, run the city, and generate a publication-style report using the currently selected timeline month.</p>
+   <label for="reportProfile">REPORT TEMPLATE</label>
+   <select id="reportProfile" aria-label="Research report template">
+    <option value="full">Comprehensive research report</option>
+    <option value="trends">Crime and harm trends</option>
+    <option value="audit">Prediction &amp; observation audit</option>
+    <option value="prevention">Prevention and policy investment</option>
+   </select>
+   <button id="generateReport" class="reportcta" disabled>▣ GENERATE RESEARCH REPORT</button>
+   <p id="reportStatus" class="small muted" role="status" aria-live="polite">Run the simulation for at least one month to enable reporting.</p>
+   <p class="small muted">Reports open in a new tab. Use <strong>Print / Save PDF</strong> in the report, or download its standalone HTML. A blocked pop-up will trigger an HTML download instead.</p>
+   <div class="separator"></div>
+   <div class="buttonrow"><button id="exportCSV">↓ CSV</button><button id="exportJSON">↓ JSON</button><button id="shareScenario">⧉ COPY SETTINGS</button></div>
+   <p class="small muted" id="exportStatus">Exports are synthetic. A snapshot preserves settings and the shock schedule.</p>
   </div>
  </section>
  <section class="methodology panel" id="methods">
@@ -134,5 +150,5 @@
   </div><p class="muted small">Model limitations: no fitted parameters, no empirical exposure denominators, no estimated uncertainty intervals, no validated resource-to-crime response function, no person-level data, no demographic profiling, no realistic policing legality assessment, and simplified spatial/temporal dependencies. The oracle option uses unobservable baseline conditions as a benchmark. Do not use OMEGA for real deployment or impact forecasts.</p>
  </section>
 </main><footer>OMEGA / A DIGITAL WORLD WITH AN EXPLICIT EPISTEMOLOGY <span>© LAPLACE'S OFFICER · SYNTHETIC RESEARCH GAME</span></footer>
-<script src="omega-engine.js"></script><script src="omega-3d.js"></script><script type="module" src="omega-app.js"></script>
+<script src="omega-engine.js"></script><script src="omega-3d.js"></script><script src="omega-report.js"></script><script type="module" src="omega-app.js"></script>
 </body></html>
