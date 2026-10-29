@@ -3,8 +3,8 @@
 (function(root){"use strict";
 const N=12,D=144,S=9.8,clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const palettes={people:"#65f3d0",crime:"#ff668e",recorded:"#ffb98e",patrol:"#ffc675",school:"#77d6ff",treatment:"#8cf2b6",trust:"#adabff",development:"#fbc5ff"};
-function dimValue(d,layer){
- const total=arr=>Array.isArray(arr)?arr.slice(0,11).reduce((s,n)=>s+(+n||0),0):0;
+function dimValue(d,layer,focus=-1){
+ const total=arr=>Array.isArray(arr)?(focus>=0?(+arr[focus]||0):arr.slice(0,11).reduce((s,n)=>s+(+n||0),0)):0;
  return layer==="crime"?total(d.true||d.underlying):layer==="recorded"?total(d.recorded||d.reported):
  layer==="patrol"?d.patrol||0:layer==="school"?d.schoolQuality||0:layer==="treatment"?d.clinic||0:
  layer==="trust"?d.trust||0:layer==="development"?d.development||0:layer==="people"?d.residents||0:0
@@ -82,7 +82,7 @@ async function create(container,callbacks={}){
   select.rotation.x=-Math.PI/2;select.rotation.z=Math.PI/5;scene.add(select);
   const raycaster=new THREE.Raycaster();raycaster.params.Points.threshold=1.5;
   const pointer=new THREE.Vector2(),intersection=new THREE.Vector3(),plane=new THREE.Plane(new THREE.Vector3(0,1,0),0);
-  let current=null,month=0,sel=-1,layer="people",lastCoords=[],lastFrame=null;
+  let current=null,month=0,sel=-1,layer="people",focus=-1,lastCoords=[],lastFrame=null;
   function size(){const rect=container.getBoundingClientRect();if(rect.width<20||rect.height<20)return;
    renderer.setSize(rect.width,rect.height,false);camera.aspect=rect.width/rect.height;camera.updateProjectionMatrix()}
   const observer=typeof ResizeObserver!=="undefined"?new ResizeObserver(size):null;if(observer)observer.observe(container);root.addEventListener("resize",size);size();
@@ -110,11 +110,11 @@ async function create(container,callbacks={}){
     let v=layer==="people"?Math.min(1,value/20):layer==="crime"||layer==="recorded"?Math.pow(value/Math.max(1,max),.7):clamp(value,0,1);
     return baseColor.clone().lerp(color,.14+v*.80);
   }
-  function update(world,at,selected,mode){
-    current=world;month=Math.max(0,Math.min(at,world.month));sel=selected;layer=mode;
+  function update(world,at,selected,mode,offenseFocus=-1){
+    current=world;month=Math.max(0,Math.min(at,world.month));sel=selected;layer=mode;focus=offenseFocus;
     const frame=month?world.lifeFrames[month-1]:null;lastFrame=frame;
-    const districts=frame?.districts||world.city;
-    const values=districts.map(d=>dimValue(d,mode)),max=Math.max(1,...values);
+    const districts=frame?.districts||world.initialCity;
+    const values=districts.map(d=>dimValue(d,mode,focus)),max=Math.max(1,...values);
     for(let i=0;i<D;i++){
       const d=districts[i],tint=colorFor(layer,values[i],max);foundations[i].material.color.copy(tint);
       foundations[i].material.opacity=.17+Math.min(1,values[i]/max)*.48;
@@ -129,11 +129,11 @@ async function create(container,callbacks={}){
     }buildings.instanceMatrix.needsUpdate=true;buildings.instanceColor.needsUpdate=true;
     const crowd=world.people.length,pa=frame?.people;
     for(let id=0;id<crowd;id++){
-      const alive=pa?!!pa.alive[id]:world.state[id].alive;
+      const alive=pa?!!pa.alive[id]:world.initialState[id].alive;
       const home=pa?pa.home[id]:world.people[id].initial,b=blocks[home];
       const xOffset=(Math.sin(id*16.27)*.5+.5)*6-3,zOffset=(Math.cos(id*23.18)*.5+.5)*6-3;
       positions[id*3]=b.x+xOffset;positions[id*3+1]=alive?2.6+((id*7)%7)*.13:-500;positions[id*3+2]=b.z+zOffset;
-      const emp=pa?!!pa.employed[id]:world.state[id].employed,treated=pa?!!pa.treatment[id]:false,flag=pa?pa.flags[id]:0;
+      const emp=pa?!!pa.employed[id]:world.initialState[id].employed,treated=pa?!!pa.treatment[id]:false,flag=pa?pa.flags[id]:0;
       const color=new THREE.Color(id===sel?"#ffffff":!alive?"#193345":treated?"#a0ffb7":flag&2?"#ff8ca3":emp?"#65f3d0":"#85b4ef");
       personColors[id*3]=color.r;personColors[id*3+1]=color.g;personColors[id*3+2]=color.b;
     }peopleGeo.setDrawRange(0,crowd);peopleGeo.attributes.position.needsUpdate=true;peopleGeo.attributes.color.needsUpdate=true;
@@ -143,7 +143,6 @@ async function create(container,callbacks={}){
     if(select.visible){const b=blocks[residentHome(world,sel,month)];select.position.set(b.x,.65,b.z);}
     schools.visible=layer==="school"||layer==="people";health.visible=layer==="treatment"||layer==="people";
   }
-  const rm=globalThis??root;
   const reduceMotion=root.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
   function animate(time){
     if(disposed)return;
@@ -174,14 +173,14 @@ async function create(container,callbacks={}){
 function fallback(container,callbacks,error){
  const canvas=document.getElementById("fallback");canvas.hidden=false;
  const ctx=canvas.getContext("2d");
- let world=null,month=0,sel=-1,layer="people",zoom=1,rot=0;
+ let world=null,month=0,sel=-1,layer="people",focus=-1,zoom=1,rot=0;
  const project=(x,y,h=0)=>({x:600+(x-y)*30*zoom,y:185+(x+y)*15*zoom-h*7*zoom});
  function draw(){
   if(!ctx)return;
   ctx.fillStyle="#061623";ctx.fillRect(0,0,1200,760);
   if(!world)return;
-  const f=month?world.lifeFrames[month-1]:null,ds=f?.districts||world.city;
-  const vals=ds.map(d=>dimValue(d,layer)),max=Math.max(1,...vals);
+  const f=month?world.lifeFrames[month-1]:null,ds=f?.districts||world.initialCity;
+  const vals=ds.map(d=>dimValue(d,layer,focus)),max=Math.max(1,...vals);
   const ids=Array.from({length:D},(_,id)=>id).sort((a,b)=>(a%N+Math.floor(a/N))-(b%N+Math.floor(b/N)));
   for(const id of ids){
     const x=(id%N-5.5)*1.1,y=(Math.floor(id/N)-5.5)*1.1,d=ds[id],q=project(x,y),h=5+d.development*27+(id*19)%7;
@@ -194,9 +193,9 @@ function fallback(container,callbacks,error){
   }
   const a=f?.people,limit=world.people.length;
   for(let id=0;id<limit;id++){
-    const alive=a?!!a.alive[id]:world.state[id].alive;if(!alive)continue;
+    const alive=a?!!a.alive[id]:world.initialState[id].alive;if(!alive)continue;
     const home=a?a.home[id]:world.people[id].initial,x=(home%N-5.5)*1.1,y=(Math.floor(home/N)-5.5)*1.1,q=project(x,y,2.7);
-    ctx.fillStyle=id===sel?"#fff":(a?.employed[id]??world.state[id].employed)?"#65f3d0":"#94beec";
+    ctx.fillStyle=id===sel?"#fff":(a?.employed[id]??world.initialState[id].employed)?"#65f3d0":"#94beec";
     ctx.globalAlpha=.75;ctx.fillRect(q.x+Math.sin(id*19)*6,q.y+Math.cos(id*13)*3,2.5,2.5);
   }
   ctx.globalAlpha=1;ctx.fillStyle="#a3c9d5";ctx.font="14px ui-monospace,monospace";
@@ -209,7 +208,7 @@ function fallback(container,callbacks,error){
    for(let id=0;id<D;id++){const p=project((id%N-5.5)*1.1,(Math.floor(id/N)-5.5)*1.1);const d=Math.hypot(mx-p.x,my-p.y);if(d<dist){dist=d;selected=id}}
    if(selected>=0&&dist<38)callbacks.selectDistrict?.(selected);
  });
- return{type:"fallback",update(w,m,s,l){world=w;month=m;sel=s;layer=l;draw()},setCamera(type){zoom=type==="street"?1.2:type==="top"?.85:1;draw()},capture(){draw();return canvas.toDataURL("image/png")},toggleOrbit(){return false},dispose(){canvas.hidden=true}};
+ return{type:"fallback",update(w,m,s,l,f=-1){world=w;month=m;sel=s;layer=l;focus=f;draw()},setCamera(type){zoom=type==="street"?1.2:type==="top"?.85:1;draw()},capture(){draw();return canvas.toDataURL("image/png")},toggleOrbit(){return false},dispose(){canvas.hidden=true}};
 }
 root.Genesis3D={create,dimValue,palettes};
 })(window);
