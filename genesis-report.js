@@ -36,16 +36,16 @@ function metrics(rows,types){
  return{crime:total(rows.map(r=>r.totalCrime)),recorded:total(rows.map(r=>r.recordedCrime)),arrests:total(rows.map(r=>r.violentArrests)),overdoses:total(rows.map(r=>r.overdoses)),deaths:total(rows.map(r=>r.overdoseDeaths)),recidivism:total(rows.map(r=>r.recidivism)),offers:total(rows.map(r=>r.offeredJobs)),meanEmployed:avg(rows.map(r=>r.employed)),trust:avg(rows.map(r=>r.trust)),byType:types.map((_,i)=>total(rows.map(r=>r.trueByType[i]))),byRecorded:types.map((_,i)=>total(rows.map(r=>r.recordedByType[i])))}
 }
 function build(opts){
- const{A,B,types,evidence,months,selected=50,replications=null,shocks=[]}=opts;
+ const{A,B,types,evidence,diagnostics=null,months,selected=50,replications=null,shocks=[]}=opts;
  const n=Math.min(Math.floor(months||0),A?.history.length||0,B?.history.length||0);
  if(n<1)throw Error("Run at least one synthetic month before generating a report.");
  const a=A.history.slice(0,n),b=B.history.slice(0,n),va=metrics(a,types),vb=metrics(b,types);
  const generated=new Date().toISOString().slice(0,16).replace("T"," ")+" UTC";
  const s=[];
- s.push("<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>GENESIS / Research Report</title><style>"+css+"</style></head><body>");
+ s.push("<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>GENESIS v2 / Research Mechanism Report</title><style>"+css+"</style></head><body>");
  s.push("<div class='toolbar'><span class='brand'>LAPLACE / GENESIS RESEARCH OUTPUT</span><div><button onclick='window.print()'>Print / Save PDF</button> <button id='saveHTML'>Download HTML</button></div></div>");
  s.push("<header class='cover'><div class='brand'>LAPLACE'S OFFICER / SCIENTIFIC SIMULATOR</div><h1>The Life of a City</h1><p>Paired synthetic policy worlds, individual life histories, offense decomposition, intervention outcomes and evidence provenance.</p>");
- s.push("<div class='tags'><span>JAN 2027 – "+esc(date(n))+"</span><span>"+n+" MONTHS</span><span>"+A.population+" MATCHED SYNTHETIC RESIDENTS</span><span>144 DISTRICTS</span><span>SEED "+A.seed+"</span><span>"+esc(generated)+"</span></div></header>");
+ s.push("<div class='tags'><span>JAN 2027 – "+esc(date(n))+"</span><span>"+n+" MONTHS</span><span>"+A.population+" MATCHED SYNTHETIC RESIDENTS</span><span>144 DISTRICTS</span><span>SEED "+A.seed+"</span><span>MODEL "+esc(a[0].modelVersion||"unknown")+"</span><span>"+esc(generated)+"</span></div></header>");
  s.push("<div class='warning'><strong>INTERPRETATION WARNING:</strong> All crime counts, individual life outcomes, investment levels and policy trajectories in this report are fictitious model outputs. They are <strong>not observed data, real-world forecasts, calibrated causal effects, or individual risk assessments</strong>. Published studies inform narrowly specified pathways; they do not validate the wider model.</div>");
  s.push("<section class='section'><div class='eyebrow'>01 / EXECUTIVE SUMMARY</div><h2>What happened in the synthetic city?</h2><div class='kpis'>");
  for(const [title,v,note]of [["Underlying crime A",fmt(va.crime),"Simulated incidents"],["Underlying crime B",fmt(vb.crime),"Simulated incidents"],["A minus B",(va.crime-vb.crime>0?"+":"")+fmt(va.crime-vb.crime),"Not a causal estimate"],["Recorded crime A",fmt(va.recorded),"Observation is incomplete"]])s.push("<div><small>"+esc(title)+"</small><strong>"+esc(v)+"</strong><em>"+esc(note)+"</em></div>");
@@ -59,13 +59,31 @@ function build(opts){
  s.push(table(["Outcome category","Underlying A","Underlying B","Recorded A","Recorded B"],types.map((t,i)=>[t.name,fmt(va.byType[i]),fmt(vb.byType[i]),fmt(va.byRecorded[i]),fmt(vb.byRecorded[i])])));
  s.push("<p class='fine'>Overdose is a noncriminal health outcome, not included in cumulative criminal totals. Drug-market offenses include enforcement-sensitive discovery. Recorded offenses are never assumed to exhaust underlying incidents.</p></section>");
  s.push("<section class='section'><div class='eyebrow'>04 / POLICY HISTORY</div><h2>Actual policy settings applied during the run</h2>");
- const policyKeys=[["Deployment","policy"],["Prevention share","prevention"],["Surveillance coverage","surveillance"],["Patrol effect (hypothetical)","patrolEffect"],["City budget (hypothetical)","budget"],["Encounter style","procedure"]];
+ const policyKeys=[["Deployment","policy"],["Prevention share","prevention"],["Surveillance coverage","surveillance"],["Patrol effect (hypothetical)","patrolEffect"],["City budget (hypothetical)","budget"],["Encounter style","procedure"],["Summer youth jobs weight","jobs"],["School investment weight","school"],["Treatment weight","treatment"],["Housing weight","housing"],["Correctional education weight","reentry"],["Assumed employment exposure link (0=off)","employmentLink"],["Assumed housing exposure link (0=off)","housingLink"],["Assumed education exposure link (0=off)","educationLink"]];
  s.push(table(["Setting","A first","A last","B first","B last"],policyKeys.map(([name,key])=>[name,String(a[0].policiesUsed[key]),String(a.at(-1).policiesUsed[key]),String(b[0].policiesUsed[key]),String(b.at(-1).policiesUsed[key])])));
  const changes=rows=>rows.slice(1).filter((r,i)=>JSON.stringify(r.policiesUsed)!==JSON.stringify(rows[i].policiesUsed)).length;
  s.push("<p>Recorded monthly policy changes: <strong>"+changes(a)+"</strong> in A; <strong>"+changes(b)+"</strong> in B. The graphs reflect month-by-month policy histories rather than applying final settings retrospectively.</p>");
  const shocksInPeriod=shocks.filter(k=>k.start<n);
  s.push("<p>Shared scenario shocks: "+esc(shocksInPeriod.length?shocksInPeriod.map(k=>k.type+" (month "+(k.start+1)+", "+k.duration+" months)").join("; "):"None recorded")+".</p>");
  s.push("<div class='twocol'><div><h3>WORLD A</h3><p>Mean modeled trust: "+pct(va.trust)+". Average employed residents: "+fmt(va.meanEmployed)+". Youth-job offers: "+fmt(va.offers)+".</p></div><div><h3>WORLD B</h3><p>Mean modeled trust: "+pct(vb.trust)+". Average employed residents: "+fmt(vb.meanEmployed)+". Youth-job offers: "+fmt(vb.offers)+".</p></div></div></section>");
+
+ const audit=diagnostics||root.GenesisDiagnostics;
+ if(audit&&a[0].modelVersion?.startsWith("genesis-v2")){
+  const auditData=audit.summarize(A,B,n);
+  s.push("<section class='section'><div class='eyebrow'>04B / MECHANISM AUDIT</div><h2>Was the intervention actually delivered?</h2>");
+  s.push("<p>Counts distinguish eligibility, realized offers, person-months of service exposure, conditional model expectations, and realized outcomes. Large budgets do not guarantee large effects without program reach, duration, and an outcome-specific pathway.</p>");
+  for(const [group,items] of audit.fields){
+    s.push("<h3>"+esc(group)+"</h3>");
+    s.push(table(["Diagnostic","World A","World B","A − B"],items.map(([label,key,format])=>{
+      const v=auditData.rows.find(r=>r.key===key);
+      const f=n=>(format==="decimal"?fix(n,2):fmt(n));
+      return[label,f(v?.a||0),f(v?.b||0),(v.a-v.b>0?"+":"")+f(v.a-v.b)];
+    })));
+  }
+  s.push("<p class='caution'><strong>Conditional expectations, not causal effect estimates.</strong> These reference expectations remove current-month probability adjustments while holding the already modified synthetic population and neighborhood conditions fixed. They do not describe an independently simulated no-treatment world, nor confidence intervals for real-world policies.</p>");
+  s.push("<p>The optional employment, housing, and education exposure links default to zero. When activated, they remain hypothetical and should be analyzed with sensitivity tests, including the zero-effect scenario. Patrol and district-level coefficients are likewise not calibrated to actual jurisdictions.</p></section>");
+ }
+
  s.push("<section class='section'><div class='eyebrow'>05 / A LIFE IN TWO WORLDS</div><h2>"+esc(A.people[selected]?.name||"Synthetic resident")+"</h2>");
  s.push("<p class='fine'>A single fictional path is an illustration, not an estimated person-level effect. Both worlds share initial conditions and individual identifiers.</p>");
  const lA=root.GenesisEngine.stateOf(A,selected,n),lB=root.GenesisEngine.stateOf(B,selected,n);
@@ -99,7 +117,7 @@ function build(opts){
  for(const item of [
  "All agents, names, districts, events, housing and school characteristics, city budgets and numerical baseline rates are invented.",
  "Only three numerical study findings have narrowly scoped outcome uses: youth-job offers and violent arrests; treatment association and opioid-overdose mortality; correctional education and post-release recidivism odds.",
- "Employment, housing, trust, police deterrence, school quality, residential mobility and network influence coefficients are hypothetical.",
+ "Employment, housing, trust, police deterrence, school quality, residential mobility and network influence coefficients are hypothetical; optional structural exposure links default to zero.",
  "Cohort is closed, with no demographic births or migration calibration. Simulated counts are not rates per 100,000 residents.",
  "A common seed and initial population make in-model comparisons more interpretable, but do not establish causal identification or external validity.",
  "Individual outcomes are fictitious and must not be used as risk assessments. No police stop or enforcement action can be justified by a model score.",
