@@ -21,6 +21,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Check GENESIS engine, reports and navigation
         run: node scripts/test-genesis.cjs
+      - name: Check GENESIS cinematic rendering and fallback
+        run: node scripts/test-genesis-visuals.cjs
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload static website
