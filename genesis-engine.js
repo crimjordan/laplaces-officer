@@ -101,7 +101,7 @@ function cellPolicies(world,month){
  else if(cfg.policy==="equal")ids.sort((a,b)=>((a-month*11+D*300)%D)-((b-month*11+D*300)%D));
  else if(cfg.policy==="random")ids.sort((a,b)=>u(world.seed,month,a,915)-u(world.seed,month,b,915));
  else if(cfg.policy==="oracle")ids.sort((a,b)=>city[b].commerce+city[b].need-city[a].commerce-city[a].need||a-b);
- city.forEach(d=>{d.patrol=0;d.residents=0;d.underlying.fill(0);d.reported.fill(0);d.events=0});
+ city.forEach(d=>{d.patrol=0;d.residents=0;d.trustAccumulator=0;d.underlying.fill(0);d.reported.fill(0);d.events=0});
  for(const id of ids.slice(0,count))city[id].patrol=1;
  city.forEach(d=>{
   // Local public-service accessibility and redevelopment are invented policy functions.
@@ -288,13 +288,12 @@ function shift(world,options={}){
   if(age>=18&&p.alive&&p.treatmentUntil>t)treatment++;
   if(p.incarcerated>0)custody++;
   if(p.graduated)graduated++;
-  if(p.alive){trustSum+=p.trust;aliveCount++;city[p.home].residents++}
+  if(p.alive){trustSum+=p.trust;aliveCount++;city[p.home].residents++;city[p.home].trustAccumulator+=p.trust}
  }
  city.forEach(d=>{
    const policeDiscover=d.reported[9]+d.reported[10];
    d.score=clamp(.70*d.score+.30*(sum(d.reported.slice(0,11))+.5*policeDiscover),0,200);
-   const residentTrust=state.reduce((s,p)=>s+(p.alive&&p.home===d.id?p.trust:0),0);
-   d.trust=d.residents?residentTrust/d.residents:d.trust;
+   d.trust=d.residents?d.trustAccumulator/d.residents:d.trust;
  });
  world.month++;
  const crime=sum(typesT.slice(0,11)),recorded=sum(typesR.slice(0,11));
