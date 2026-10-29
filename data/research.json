@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-28T18:53:13.757855+00:00",
+  "updated": "2026-10-29T16:13:50.858325+00:00",
   "items": [
     {
       "title": "Predictive Policing",
@@ -224,14 +224,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "AI-Driven Policing and Intelligent Network Governance",
-      "url": "https://doi.org/10.4018/979-8-2600-1533-9.ch003",
+      "title": "Police Surveillance and Use of Facial Recognition Technology: Charter Issues, Legal Frameworks and Oversight Mechanisms",
+      "url": "https://openalex.org/W7162610109",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "Police Surveillance and Use of Facial Recognition Technology: Charter Issues, Legal Frameworks and Oversight Mechanisms",
-      "url": "https://openalex.org/W7162610109",
+      "title": "AI-Driven Policing and Intelligent Network Governance",
+      "url": "https://doi.org/10.4018/979-8-2600-1533-9.ch003",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -242,8 +242,8 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Internal Supervision in Handling Domestic Violence by Police Members: The Role of Investigation Supervisory Officers from the Perspective of Accountability and Conflicts of Interest",
-      "url": "https://doi.org/10.62885/legisci.v4i2.1216",
+      "title": "Resisting Surveillance AI: Mechanisms of Accountability Evasion and Community Engagement",
+      "url": "https://doi.org/10.1609/aies.v9i4.43360",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -368,14 +368,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "ALGORITHMIC POLICING AND DUE PROCESS IN CYBERCRIME INVESTIGATIONS: A CONSTITUTIONAL ANALYSIS UNDER ARTICLES 14, 19 AND 21 OF THE INDIAN CONSTITUTION",
-      "url": "https://doi.org/10.29121/shodhsamajik.v2.i2.2025.57",
+      "title": "Facial Recognition and the U.S. Fourth Amendment: Defining Reasonable Expectations of Privacy in Algorithmic Policing",
+      "url": "https://doi.org/10.31703/gpr.2025(x-iii).19",
       "year": 2025,
       "source": "OpenAlex"
     },
     {
-      "title": "Facial Recognition and the U.S. Fourth Amendment: Defining Reasonable Expectations of Privacy in Algorithmic Policing",
-      "url": "https://doi.org/10.31703/gpr.2025(x-iii).19",
+      "title": "ALGORITHMIC POLICING AND DUE PROCESS IN CYBERCRIME INVESTIGATIONS: A CONSTITUTIONAL ANALYSIS UNDER ARTICLES 14, 19 AND 21 OF THE INDIAN CONSTITUTION",
+      "url": "https://doi.org/10.29121/shodhsamajik.v2.i2.2025.57",
       "year": 2025,
       "source": "OpenAlex"
     },
@@ -632,12 +632,6 @@
       "source": "OpenAlex"
     },
     {
-      "title": "THE MERITS AND ETHICAL CONUNDRUMS OF PREDICTIVE POLICING",
-      "url": "https://doi.org/10.33807/monte.20243099",
-      "year": 2024,
-      "source": "OpenAlex"
-    },
-    {
       "title": "Algorithmic Police Reform: 'Reading' a Police Early Intervention Algorithm",
       "url": "https://doi.org/10.1007/978-3-031-68326-8_10",
       "year": 2024,
@@ -812,6 +806,12 @@
       "source": "OpenAlex"
     },
     {
+      "title": "Artificial Intelligence Adoption in Predictive Policing to Predict Crime Mitigation Performance",
+      "url": "https://doi.org/10.30880/ijscet.2023.14.03.025",
+      "year": 2023,
+      "source": "OpenAlex"
+    },
+    {
       "title": "Algorithmic policing accountability: eight sociotechnical challenges",
       "url": "https://doi.org/10.1080/10439463.2023.2241965",
       "year": 2023,
@@ -826,6 +826,12 @@
     {
       "title": "Big data policing: The use of big data and algorithms by the Netherlands Police",
       "url": "https://doi.org/10.1093/police/paad061",
+      "year": 2023,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Policing by algorithm: NSW Police\u2019s Suspect Target Management Plan",
+      "url": "https://doi.org/10.1177/1037969x221147745",
       "year": 2023,
       "source": "OpenAlex"
     },
