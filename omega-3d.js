@@ -32,7 +32,7 @@ async function create(container,callbacks={}){
     scene.background=new THREE.Color(0x050c17);scene.fog=new THREE.FogExp2(0x06101c,.0054);
     const camera=new THREE.PerspectiveCamera(49,1,.1,900);
     const target=new THREE.Vector3(0,0,0);
-    let yaw=.71,pitch=.78,distance=170,disposed=false,frame=null,mode="truth",focus=-2,selected=-1,activeMonth=0;
+    let yaw=.71,pitch=.78,distance=170,disposed=false,frame=null,mode="truth",focus=-2,selected=-1,activeMonth=0,weather="neon",autoOrbit=false;
     scene.add(new THREE.HemisphereLight(0x7ecfe8,0x061b2f,2));
     const sun=new THREE.DirectionalLight(0x9ccdec,2.1);sun.position.set(-40,100,55);scene.add(sun);
     const lightA=new THREE.PointLight(0x35c9c7,35,115,2);lightA.position.set(-32,42,24);scene.add(lightA);
@@ -109,6 +109,10 @@ async function create(container,callbacks={}){
       const v=new THREE.Mesh(lightGeometry,new THREE.MeshBasicMaterial({color:hue}));
       trafficGroup.add(v);traffic.push({mesh:v,vertical:i%2===0,lane:i%DIM,progress:(i*37%97)/97,speed:.01+(i%8)*.002});
     }
+    const rainGeo=new THREE.BufferGeometry(),rainPos=new Float32Array(540*3);
+    for(let i=0;i<540;i++){rainPos[i*3]=((i*71)%211-105)*.68;rainPos[i*3+1]=4+(i*47)%125;rainPos[i*3+2]=((i*59)%199-99)*.69}
+    rainGeo.setAttribute("position",new THREE.BufferAttribute(rainPos,3));
+    const rain=new THREE.Points(rainGeo,new THREE.PointsMaterial({color:0x8ce2ff,size:.37,transparent:true,opacity:.64,depthWrite:false}));rain.visible=false;scene.add(rain);
     const starsGeometry=new THREE.BufferGeometry(),starPositions=[];
     for(let i=0;i<750;i++){
       const a=i*2.39996,r=120+(i*53%250),y=65+(i*47%180);
@@ -138,6 +142,8 @@ async function create(container,callbacks={}){
     renderer.domElement.addEventListener("pointerup",e=>{if(!dragging)return;const moved=Math.hypot(e.clientX-dragging.x,e.clientY-dragging.y);dragging=null;if(moved<7){const id=pick(e);if(id>=0)callbacks.select?.(id)}});
     renderer.domElement.addEventListener("pointercancel",()=>{dragging=null});
     renderer.domElement.addEventListener("wheel",e=>{e.preventDefault();distance=clamp(distance*(e.deltaY>0?1.095:.91),35,330)},{passive:false});
+    function setAtmosphere(type){weather=type;rain.visible=type==="storm";if(type==="dawn"){scene.background.set(0x3f4c68);scene.fog.color.set(0x46586d);sun.intensity=3.5;renderer.toneMappingExposure=1.75;lightA.intensity=5;lightB.intensity=4;stars.visible=false}else if(type==="storm"){scene.background.set(0x020910);scene.fog.color.set(0x081522);sun.intensity=.65;renderer.toneMappingExposure=1.1;lightA.intensity=75;lightB.intensity=42;stars.visible=false}else{scene.background.set(0x050c17);scene.fog.color.set(0x06101c);sun.intensity=2.1;renderer.toneMappingExposure=1.35;lightA.intensity=35;lightB.intensity=22;stars.visible=true}}
+    function toggleOrbit(){autoOrbit=!autoOrbit;return autoOrbit}
     function setCamera(type){if(type==="top"){pitch=1.48;distance=185;yaw=.0}else if(type==="street"){pitch=.23;distance=108;yaw=.62}else{pitch=.78;distance=170;yaw=.71};target.set(0,0,0)}
     function update(data,layer,focusType,index,month=0,baseline=false){
       viewState=data;mode=layer;focus=focusType;selected=index;activeMonth=month;
@@ -168,7 +174,7 @@ async function create(container,callbacks={}){
     let frames=0,raf=0;
     function animate(timestamp){if(disposed)return;raf=requestAnimationFrame(animate);if(document.hidden)return;cameraPosition();
       if(!reduced){
-        const t=timestamp*.001;for(let i=0;i<visibleDrones.length;i++){const targetId=visibleDrones[i].id,base=districtCenters[targetId],d=dronePool[i],phase=t*1.2+i*2.7;
+        const t=timestamp*.001;if(autoOrbit&&!dragging)yaw+=.0012;if(rain.visible){for(let j=0;j<540;j++){const q=j*3+1;rainPos[q]-=.55+(j%9)*.13;if(rainPos[q]<0)rainPos[q]=105+(j%17)}rainGeo.attributes.position.needsUpdate=true}for(let i=0;i<visibleDrones.length;i++){const targetId=visibleDrones[i].id,base=districtCenters[targetId],d=dronePool[i],phase=t*1.2+i*2.7;
           d.position.set(base.x+Math.sin(phase)*2.2,10+Math.cos(phase*1.5)*1.4,base.z+Math.cos(phase)*2.2);d.rotation.y=phase*.3;
         }
         for(const vehicle of traffic){const fraction=(vehicle.progress+t*vehicle.speed)%1,axis=(fraction-.5)*DIM*PITCH,lane=(vehicle.lane-(DIM-1)/2)*PITCH;
@@ -183,7 +189,7 @@ async function create(container,callbacks={}){
     const lost=e=>{e.preventDefault();status("WEBGL CONTEXT LOST — RELOAD TO RESTORE")};renderer.domElement.addEventListener("webglcontextlost",lost,false);
     status("WEBGL 3D ACTIVE · "+buildingCount+" BUILDINGS");
     animate(0);
-    return{type:"webgl",update,setCamera,capture(){renderer.render(scene,camera);return renderer.domElement.toDataURL("image/png")},
+    return{type:"webgl",update,setCamera,setAtmosphere,toggleOrbit,capture(){renderer.render(scene,camera);return renderer.domElement.toDataURL("image/png")},
       dispose(){disposed=true;cancelAnimationFrame(raf);observer?.disconnect();global.removeEventListener("resize",resize);renderer.dispose();renderer.domElement.remove()}};
   }catch(error){
     status("ISOMETRIC BACKUP · WEBGL / CDN UNAVAILABLE");
@@ -216,7 +222,7 @@ function fallback(container,callbacks,error){
     if(nearest>=0&&d<38)callbacks.select?.(nearest)
   });
   repaint();
-  return{type:"fallback",update(d,l,f,s,m,bl){data=d;mode=l;focus=f;selected=s;month=m;baseline=bl;repaint()},setCamera(p){zoom=p==="street"?1.25:p==="top"?.8:1;repaint()},capture(){return canvas.toDataURL("image/png")},dispose(){canvas.hidden=true}};
+  return{type:"fallback",update(d,l,f,s,m,bl){data=d;mode=l;focus=f;selected=s;month=m;baseline=bl;repaint()},setCamera(p){zoom=p==="street"?1.25:p==="top"?.8:1;repaint()},setAtmosphere(){repaint()},toggleOrbit(){return false},capture(){return canvas.toDataURL("image/png")},dispose(){canvas.hidden=true}};
 }
 global.OmegaView3D={create,heatValue,palette};
 })(window);
