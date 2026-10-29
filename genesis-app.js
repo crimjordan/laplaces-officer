@@ -1,7 +1,7 @@
 /* GENESIS — application controller. No user data is transmitted by the simulation. */
 (function(){"use strict";
-const E=window.GenesisEngine,EV=window.GenesisEvidence,View=window.Genesis3D,Report=window.GenesisReport;
-if(!E||!EV||!View||!Report)throw Error("GENESIS requires its evidence, engine, viewer and reporter scripts.");
+const E=window.GenesisEngine,EV=window.GenesisEvidence,View=window.Genesis3D,Report=window.GenesisReport,Diagnostics=window.GenesisDiagnostics;
+if(!E||!EV||!View||!Report||!Diagnostics)throw Error("GENESIS requires engine, research diagnostics, evidence, renderer and reporter scripts.");
 const $=id=>document.getElementById(id);
 const MONTHS=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 const date=m=>m?MONTHS[(m-1)%12]+" "+(2027+Math.floor((m-1)/12)):"JAN 2027";
@@ -36,16 +36,26 @@ function readConfig(letter){
    const id=key+letter;const el=$(id);target[key]=["policy","procedure"].includes(key)?el.value:+el.value;
  }
  for(const [key,input] of [["jobs","mixJobs"],["school","mixSchool"],["treatment","mixTreatment"],["housing","mixHousing"],["reentry","mixReentry"]])target[key]=+$(input).value;
+ for(const [key,id] of [["employmentLink","mechanismEmployment"],["housingLink","mechanismHousing"],["educationLink","mechanismEducation"]])target[key]=+$(id).value;
  for(const key of ["prevention","budget","surveillance","patrolEffect"])$(key+letter+"Out").textContent=key==="budget"?"$"+target[key]+"M":target[key]+"%";
 }
 function putConfig(){
  for(const [letter,w]of [["A",A],["B",B]])for(const key of ["policy","prevention","budget","surveillance","patrolEffect","procedure"])$(key+letter).value=w.config[key];
  for(const [key,id]of [["jobs","mixJobs"],["school","mixSchool"],["treatment","mixTreatment"],["housing","mixHousing"],["reentry","mixReentry"]])$(id).value=A.config[key];
+ for(const [key,id]of [["employmentLink","mechanismEmployment"],["housingLink","mechanismHousing"],["educationLink","mechanismEducation"]])$(id).value=A.config[key]??0;
  syncControls();
 }
 function syncControls(){
  readConfig("A");readConfig("B");
  for(const id of ["mixJobs","mixSchool","mixTreatment","mixHousing","mixReentry"])$(id+"Out").textContent=$(id).value;
+ const active=[];
+ for(const [id,label] of [["mechanismEmployment","Employment"],["mechanismHousing","Housing"],["mechanismEducation","Education"]]){
+  $(id+"Out").textContent=$(id).value+"%";
+  if(+$(id).value>0)active.push(label+" "+$(id).value+"%");
+ }
+ $("assumptionStatus").textContent=active.length?
+   "HYPOTHETICAL LINKS ACTIVE: "+active.join(" · ")+". These are NOT effects measured in the cited studies.":
+   "Optional individual-level crime links are all OFF (0%). Other pre-existing fictional assumptions remain.";
 }
 function pause(){if(timer!=null){clearInterval(timer);timer=null}running=false;$("play").textContent="▶ PLAY"}
 function togglePlay(){if(running){pause();return}
@@ -203,6 +213,18 @@ function restoreVisualSettings(){
  for(const key of ["traffic","patrol","signals","stars","streams"])viewer.setEffects?.(key,cinema[key]);
  syncVisualControls();
 }
+function renderDiagnostics(){
+ const data=Diagnostics.render($("diagnosticSummary"),A,B,cursor);
+ $("exportDiagnostics").disabled=cursor<1;
+ if(cursor<1){$("diagnosticStatus").textContent="Advance at least one month to inspect eligibility, actual program reach, and expected versus realized outcomes.";return}
+ $("diagnosticStatus").textContent="Through month "+cursor+", estimated within-month policy risk adjustments sum to "+
+  number(data.referenceA-data.expectedA,2)+" conditional expected offenses in A and "+
+  number(data.referenceB-data.expectedB,2)+" in B. These are NOT full causal effects; past interventions may already have changed the synthetic population.";
+}
+function exportDiagnostics(){
+ if(cursor<1)return;
+ download("genesis-v2-mechanism-diagnostics.csv",Diagnostics.toCSV(A,B,cursor),"text/csv");
+}
 function renderMetrics(){
  const a=cursor?A.history[cursor-1]:null,b=cursor?B.history[cursor-1]:null;
  $("dateMetric").textContent=cursor?date(cursor):"JAN 2027";
@@ -211,7 +233,7 @@ function renderMetrics(){
  $("livingMetric").textContent=a?fmt(a.alive):fmt(A.population);$("trustMetric").textContent=a?pct(a.trust):"—";
  $("timeline").max=A.month;$("timeline").value=cursor;$("timelineLabel").textContent=(cursor?date(cursor):"JAN 2027")+" · MONTH "+cursor;
  $("latestLabel").textContent="LATEST: "+(A.month?date(A.month):"JAN 2027")+" · "+A.month+" MONTHS";
- for(const id of ["generateReport","exportCSV","exportJSON"])$(id).disabled=cursor<1;
+ for(const id of ["generateReport","exportCSV","exportJSON","exportDiagnostics"])$(id).disabled=cursor<1;
  $("layerExplainer").textContent=explanations[layer]+(["crime","recorded"].includes(layer)&&focus>=0?" Filtered to "+E.TYPES[focus].name+".":"");
 }
 function drawChart(){
@@ -230,7 +252,7 @@ function drawChart(){
  line(a,"#65f3d0");line(b,"#ffc48d");
  if(cursor){ctx.strokeStyle="#e8fcf6";ctx.lineWidth=1;ctx.setLineDash([4,5]);ctx.beginPath();ctx.moveTo(xx(cursor),padding.t);ctx.lineTo(xx(cursor),h-padding.b);ctx.stroke();ctx.setLineDash([])}
 }
-function render(){renderMetrics();renderScene();renderPerson();renderSocial();drawMini();renderDistrict();drawChart()}
+function render(){renderMetrics();renderDiagnostics();renderScene();renderPerson();renderSocial();drawMini();renderDistrict();drawChart()}
 function evidence(){
  const picker=$("crimeFocus");for(const [i,t]of E.TYPES.entries()){const opt=document.createElement("option");opt.value=String(i);opt.textContent=t.name+(t.health?" [HEALTH / NOT CRIME]":"");picker.append(opt)}
  const root=$("evidenceCards");root.replaceChildren();
@@ -263,7 +285,7 @@ function exportCSV(){
 }
 function exportJSON(){
  if(cursor<1)return;
- const payload={title:"LAPLACE / GENESIS",synthetic:true,modelVersion:"genesis-v1",seed:SEED,month:cursor,population:A.population,
+ const payload={title:"LAPLACE / GENESIS",synthetic:true,modelVersion:E.VERSION,seed:SEED,month:cursor,population:A.population,
   disclaimer:"No real people, city data or calibrated causal estimates. All baselines and most mechanisms hypothetical.",
   types:E.TYPES,sourceRegistry:EV,shocks,configurations:{A:A.config,B:B.config},
   history:{A:A.history.slice(0,cursor),B:B.history.slice(0,cursor)},
@@ -284,7 +306,7 @@ function genReport(){
  if(cursor<1)return;
  pause();
  try{
-  const out=Report.open({A,B,types:E.TYPES,evidence:EV,selected:selectedPerson,months:cursor,shocks,replications});
+  const out=Report.open({A,B,types:E.TYPES,evidence:EV,diagnostics:Diagnostics,selected:selectedPerson,months:cursor,shocks,replications});
   $("exportStatus").textContent=out.method==="tab"?"Report opened in a new tab. Use Print / Save PDF or Download HTML.":"Pop-up blocked: downloaded the standalone report HTML; open it to print or save PDF.";
   log("Generated evidence-conscious report for "+cursor+" simulated months.");
  }catch(error){console.error(error);$("exportStatus").textContent="Report generation failed: "+error.message}
@@ -304,6 +326,8 @@ function renderReplications(){
  repResult(root,"Violent-crime arrests",replications.map(r=>r.arrestsA-r.arrestsB),"arrests");
  repResult(root,"Overdose fatalities",replications.map(r=>r.deathsA-r.deathsB),"deaths");
  repResult(root,"Mean modeled trust",replications.map(r=>r.trustA-r.trustB),"index units");
+ repResult(root,"Conditional expected crime",replications.map(r=>r.expectedCrimeA-r.expectedCrimeB),"events");
+ repResult(root,"Expected overdose deaths",replications.map(r=>r.expectedDeathsA-r.expectedDeathsB),"deaths");
 }
 async function experiment(){
  if(repsRunning||busy)return;
@@ -319,7 +343,9 @@ async function experiment(){
    const metric=(w,k)=>sum(w.history.map(x=>x[k]));
    results.push({seed,years:months/12,population:384,crimeA:metric(a,"totalCrime"),crimeB:metric(b,"totalCrime"),
     arrestsA:metric(a,"violentArrests"),arrestsB:metric(b,"violentArrests"),deathsA:metric(a,"overdoseDeaths"),deathsB:metric(b,"overdoseDeaths"),
-    trustA:mean(a.history.map(x=>x.trust)),trustB:mean(b.history.map(x=>x.trust))});
+    trustA:mean(a.history.map(x=>x.trust)),trustB:mean(b.history.map(x=>x.trust)),
+    expectedCrimeA:metric(a,"expectedCrime"),expectedCrimeB:metric(b,"expectedCrime"),
+    expectedDeathsA:metric(a,"expectedMortality"),expectedDeathsB:metric(b,"expectedMortality")});
    $("repBar").style.width=Math.round((seedIdx+1)/amount*100)+"%";
    $("repStatus").textContent="Completed "+(seedIdx+1)+" / "+amount+" paired replications.";
    await new Promise(resolve=>setTimeout(resolve,0));
@@ -347,7 +373,10 @@ function bind(){
  for(const letter of ["A","B"])for(const key of ["policy","prevention","budget","surveillance","patrolEffect","procedure"]){
   $(key+letter).addEventListener("input",()=>{syncControls();render()});
  }
- for(const id of ["mixJobs","mixSchool","mixTreatment","mixHousing","mixReentry"])$(id).addEventListener("input",()=>{syncControls();render()});
+ for(const id of ["mixJobs","mixSchool","mixTreatment","mixHousing","mixReentry",
+   "mechanismEmployment","mechanismHousing","mechanismEducation"])$(id).addEventListener("input",()=>{syncControls();render()});
+ $("zeroMechanisms").addEventListener("click",()=>{for(const id of ["mechanismEmployment","mechanismHousing","mechanismEducation"])$(id).value=0;syncControls();render()});
+ $("exploreMechanisms").addEventListener("click",()=>{for(const id of ["mechanismEmployment","mechanismHousing","mechanismEducation"])$(id).value=50;syncControls();render()});
  $("viewA").addEventListener("click",()=>chooseWorld("A"));$("viewB").addEventListener("click",()=>chooseWorld("B"));
  for(const button of document.querySelectorAll("[data-preset]"))button.addEventListener("click",()=>preset(button.dataset.preset));
  for(const button of document.querySelectorAll("[data-layer]"))button.addEventListener("click",()=>{
@@ -371,6 +400,7 @@ function bind(){
  $("generateReport").addEventListener("click",genReport);
  $("exportCSV").addEventListener("click",exportCSV);
  $("exportJSON").addEventListener("click",exportJSON);
+ $("exportDiagnostics").addEventListener("click",exportDiagnostics);
  $("exportLife").addEventListener("click",exportLife);
  for(const button of document.querySelectorAll("[data-weather]"))button.addEventListener("click",()=>{
   cinema.weather=button.dataset.weather;
