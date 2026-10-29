@@ -66,6 +66,23 @@
      <div class="hud bottom">DRAG TO ORBIT · SCROLL TO ZOOM · CLICK TO INSPECT · STREET MODE: W/A/S/D TO WALK, SHIFT TO MOVE FASTER<br><span id="selectionHint">CLICK A DISTRICT TO FOLLOW A RANDOM SYNTHETIC RESIDENT</span></div>
     </div>
     <div class="buttons displaybtns"><button id="camOrbit">◈ ORBIT</button><button id="camTop">⌂ TOP VIEW</button><button id="camStreet" title="First-person walk mode (W A S D + Shift)">↗ STREET / WALK</button><button id="autoOrbit">⟳ AUTO ORBIT</button><button id="photo">▣ SAVE IMAGE</button></div>
+    <div class="cinemaPanel" aria-label="Cinematic city controls">
+      <div class="between"><div class="eyebrow">CINEMATIC VISUAL ENGINE / VISUAL-ONLY EFFECTS</div><span class="fine" id="fxStatus">AWAITING RENDERER</span></div>
+      <div class="buttons cinemaModes" role="group" aria-label="Visual atmosphere">
+        <button data-weather="night" class="chosen" aria-pressed="true">✦ NEON NIGHT</button>
+        <button data-weather="dawn" aria-pressed="false">☀ GOLDEN HOUR</button>
+        <button data-weather="storm" aria-pressed="false">☂ CYBERSTORM</button>
+      </div>
+      <div class="buttons cinemaToggles" role="group" aria-label="Decorative city effects">
+        <button data-fx="traffic" class="chosen" aria-pressed="true">◈ TRAFFIC</button>
+        <button data-fx="patrol" class="chosen" aria-pressed="true">⌖ PATROL BEACONS</button>
+        <button data-fx="signals" class="chosen" aria-pressed="true">◉ EVENT SIGNALS</button>
+        <button data-fx="stars" class="chosen" aria-pressed="true">✧ STARFIELD</button>
+        <button data-fx="streams" class="chosen" aria-pressed="true">⌁ DATA STREAMS</button>
+        <button id="fxPerformance" aria-pressed="false">⚙ LOW-POWER</button>
+      </div>
+      <p class="fine">Transit lights, patrol beacons, weather, and network arcs are artistic depictions, not observed movements or police operations. Scene effects do not change simulation results.</p>
+    </div>
     <div class="separator"></div><div class="eyebrow">LENS / WHAT THE CITY SHOWS</div>
     <div class="buttons lenses"><button data-layer="people" class="chosen">✳ RESIDENTS</button><button data-layer="crime">◇ UNDERLYING CRIME</button><button data-layer="recorded">◉ RECORDED CRIME</button><button data-layer="patrol">⌖ PATROL</button><button data-layer="school">▤ SCHOOLS</button><button data-layer="treatment">✚ TREATMENT</button><button data-layer="trust">♡ TRUST</button><button data-layer="development">▥ DEVELOPMENT</button></div>
     <div class="focusControls"><label for="crimeFocus">OFFENSE / HARM FILTER</label><select id="crimeFocus" aria-label="Choose which crime or health outcome to visualize"><option value="-1">All criminal offenses (excludes overdose health events)</option></select></div>
@@ -158,5 +175,5 @@
  </div>
 </section>
 </main><footer><span>LAPLACE'S OFFICER / GENESIS <small>© SYNTHETIC RESEARCH ENVIRONMENT</small></span><span>SCIENCE IS A CONSTRAINT, NOT A SPECIAL EFFECT.</span></footer>
-<script src="genesis-evidence.js"></script><script src="genesis-engine.js"></script><script src="genesis-3d.js"></script><script src="genesis-report.js"></script><script defer src="genesis-app.js"></script>
+<script src="genesis-evidence.js"></script><script src="genesis-engine.js"></script><script src="genesis-fx.js"></script><script src="genesis-3d.js"></script><script src="genesis-report.js"></script><script defer src="genesis-app.js"></script>
 </body></html>
