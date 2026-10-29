@@ -2,7 +2,7 @@
 (function(global){
 "use strict";
 const DIM=12, PITCH=10.4;
-const palette={truth:"#51e3f5",recorded:"#ff7ba4",gap:"#ffc77d",patrol:"#ffe1a3",trust:"#68eec5",prevention:"#b294ff"};
+const palette={truth:"#51e3f5",recorded:"#ff7ba4",gap:"#ffc77d",patrol:"#ffe1a3",trust:"#68eec5",prevention:"#b294ff",predicted:"#bf9bff",delta:"#ff668c"};
 const clamp=(a,l,h)=>Math.max(l,Math.min(h,a));
 function heatValue(d,mode,focus,baseline){
   if(!d)return 0;
@@ -10,6 +10,8 @@ function heatValue(d,mode,focus,baseline){
   if(mode==="truth")return baseline?s(d.base||[]):s(d.truth);
   if(mode==="recorded")return baseline? s((d.base||[]).map((v,i)=>v*([.54,.64,.79,.60,.49,.67,.96,.29,.33,.11,.38,.87][i]||.5))):s(d.recorded);
   if(mode==="gap")return baseline?0:Math.max(0,s(d.truth)-s(d.recorded));
+  if(mode==="predicted")return s(d.score);
+  if(mode==="delta")return d.delta||0;
   if(mode==="patrol")return d.patrol||0;
   if(mode==="trust")return d.trust||.65;
   if(mode==="prevention")return d.stock?Object.values(d.stock).reduce((x,y)=>x+y,0)/4:0;
@@ -139,17 +141,17 @@ async function create(container,callbacks={}){
     function setCamera(type){if(type==="top"){pitch=1.48;distance=185;yaw=.0}else if(type==="street"){pitch=.23;distance=108;yaw=.62}else{pitch=.78;distance=170;yaw=.71};target.set(0,0,0)}
     function update(data,layer,focusType,index,month=0,baseline=false){
       viewState=data;mode=layer;focus=focusType;selected=index;activeMonth=month;
-      values=data.map(d=>heatValue(d,mode,focus,baseline));maxVal=Math.max(.05,...values);
+      values=data.map(d=>heatValue(d,mode,focus,baseline));maxVal=Math.max(.05,...values.map(Math.abs));
       const accent=new THREE.Color(palette[mode]),baseC=new THREE.Color(0x101b30);
-      data.forEach((d,i)=>{const val=values[i],norm=mode==="trust"?clamp((val-.2)/.75,0,1):mode==="prevention"?clamp(val/.65,0,1):mode==="patrol"?val:Math.pow(val/maxVal,.7);
-        const color=baseC.clone().lerp(accent,.15+norm*.83);
+      data.forEach((d,i)=>{const val=values[i],norm=mode==="trust"?clamp((val-.2)/.75,0,1):mode==="prevention"?clamp(val/.65,0,1):mode==="patrol"?val:Math.pow(Math.abs(val)/maxVal,.7);
+        const color=baseC.clone().lerp(mode==="delta"&&val<0?new THREE.Color("#43edd5"):accent,.15+norm*.83);
         districtMeshes[i].material.color.copy(color);districtMeshes[i].material.opacity=.20+norm*.46;
       });
-      for(let j=0;j<instanceDistrict.length;j++){const id=instanceDistrict[j],norm=mode==="trust"?clamp((values[id]-.2)/.75,0,1):mode==="prevention"?clamp(values[id]/.65,0,1):mode==="patrol"?values[id]:Math.pow(values[id]/maxVal,.7);
-        const c=new THREE.Color(0x26455b).lerp(accent,.13+norm*.66);buildings.setColorAt(j,c);
+      for(let j=0;j<instanceDistrict.length;j++){const id=instanceDistrict[j],norm=mode==="trust"?clamp((values[id]-.2)/.75,0,1):mode==="prevention"?clamp(values[id]/.65,0,1):mode==="patrol"?values[id]:Math.pow(Math.abs(values[id])/maxVal,.7);
+        const c=new THREE.Color(0x26455b).lerp(mode==="delta"&&values[id]<0?new THREE.Color("#43edd5"):accent,.13+norm*.66);buildings.setColorAt(j,c);
       }buildings.instanceColor.needsUpdate=true;
-      const sorted=data.map((d,i)=>({i,v:values[i]})).sort((a,b)=>b.v-a.v);
-      pulses.forEach((ring,j)=>{const district=sorted[j];ring.visible=!!district&&district.v>0&&month>0;if(ring.visible){const center=districtCenters[district.i];ring.position.set(center.x,.15,center.z);ring.material.color.copy(accent)}});
+      const sorted=data.map((d,i)=>({i,v:values[i]})).sort((a,b)=>Math.abs(b.v)-Math.abs(a.v));
+      pulses.forEach((ring,j)=>{const district=sorted[j];ring.visible=!!district&&district.v>0&&month>0;if(ring.visible){const center=districtCenters[district.i];ring.position.set(center.x,.15,center.z);ring.material.color.copy(mode==="delta"&&district.v<0?new THREE.Color("#43edd5"):accent)}});
       selection.visible=selected>=0;if(selection.visible)selection.position.set(districtCenters[selected].x,.38,districtCenters[selected].z);
       visibleDrones=data.map((d,i)=>({id:i,patrol:d.patrol||0})).filter(d=>d.patrol>.05).sort((a,b)=>b.patrol-a.patrol).slice(0,dronePool.length);
       dronePool.forEach((d,i)=>{d.visible=i<visibleDrones.length});
@@ -195,12 +197,12 @@ function fallback(container,callbacks,error){
   function repaint(){
     if(!ctx)return;ctx.fillStyle="#061321";ctx.fillRect(0,0,1160,750);
     if(!data.length)return;
-    const values=data.map(d=>heatValue(d,mode,focus,baseline)),maxVal=Math.max(.01,...values),color=rgb(palette[mode]);
+    const values=data.map(d=>heatValue(d,mode,focus,baseline)),maxVal=Math.max(.01,...values.map(Math.abs)),color=rgb(palette[mode]);
     const order=Array.from({length:144},(_,i)=>i).sort((a,b)=>(Math.floor(a/12)+a%12)-(Math.floor(b/12)+b%12));
-    order.forEach(i=>{const x=i%12-5.5,z=Math.floor(i/12)-5.5,c=project(x*1.5,z*1.5),v=values[i],norm=mode==="trust"?clamp((v-.2)/.75,0,1):Math.pow(v/maxVal,.7);
+    order.forEach(i=>{const x=i%12-5.5,z=Math.floor(i/12)-5.5,c=project(x*1.5,z*1.5),v=values[i],norm=mode==="trust"?clamp((v-.2)/.75,0,1):Math.pow(Math.abs(v)/maxVal,.7);
       const h=3+((i*17)%11)+Math.round(13*Math.exp(-((x*x+z*z)/22)));
       const w=13*zoom,top=c.y-h*zoom;
-      const r=Math.round(18+color[0]*norm*.75),g=Math.round(26+color[1]*norm*.78),b=Math.round(34+color[2]*norm*.82);
+      const tone=mode==="delta"&&v<0?rgb("#43edd5"):color;const r=Math.round(18+tone[0]*norm*.75),g=Math.round(26+tone[1]*norm*.78),b=Math.round(34+tone[2]*norm*.82);
       ctx.fillStyle="rgb("+Math.round(r*.65)+","+Math.round(g*.65)+","+Math.round(b*.65)+")";ctx.fillRect(c.x-w,c.y-w*.6,w*2,5*zoom);
       ctx.fillStyle="rgb("+r+","+g+","+b+")";ctx.fillRect(c.x-w*.8,top,w*1.5,h*zoom);
       ctx.fillStyle="rgba(180,243,250,.22)";for(let floor=0;floor<h*zoom;floor+=7*zoom){ctx.fillRect(c.x-w*.6,top+floor,w*.9,1.2)}
