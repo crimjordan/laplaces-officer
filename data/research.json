@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-30T15:59:53.392043+00:00",
+  "updated": "2026-10-31T15:23:48.000279+00:00",
   "items": [
     {
       "title": "Predictive Policing",
@@ -92,14 +92,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Publicly Disclosed Governance of Private-Sector Automated License Plate Recognition Systems",
-      "url": "https://doi.org/10.5281/zenodo.22182998",
+      "title": "Lab dataset: Covert, Intelligent, Adversarial attack on automated license plate recognition systems using digital license plates",
+      "url": "https://doi.org/10.34728/fk2/gwcq6k",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "Lab dataset: Covert, Intelligent, Adversarial attack on automated license plate recognition systems using digital license plates",
-      "url": "https://doi.org/10.34728/fk2/gwcq6k",
+      "title": "Publicly Disclosed Governance of Private-Sector Automated License Plate Recognition Systems",
+      "url": "https://doi.org/10.5281/zenodo.22182998",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -188,14 +188,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Evolution of AI in Indian Policing and Surveillance: An Analysis",
-      "url": "https://doi.org/10.2991/978-2-38476-547-8_16",
+      "title": "Surveillance, bias, and justice: Ethical implications of predictive policing in India and the United States",
+      "url": "https://doi.org/10.4324/9781003771937-114",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "Surveillance, bias, and justice: Ethical implications of predictive policing in India and the United States",
-      "url": "https://doi.org/10.4324/9781003771937-114",
+      "title": "Evolution of AI in Indian Policing and Surveillance: An Analysis",
+      "url": "https://doi.org/10.2991/978-2-38476-547-8_16",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -206,20 +206,26 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Reality Police Shows as a New Arena of Public Oversight: Mediatized Visibility, Mutual Surveillance in Indonesian Policing Context",
-      "url": "https://doi.org/10.31014/aior.1991.09.01.613",
-      "year": 2026,
-      "source": "OpenAlex"
-    },
-    {
       "title": "Increasing Public Trust Through Police Accountability: A Systematic Literature Review",
       "url": "https://doi.org/10.21203/rs.3.rs-10318568/v1",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
+      "title": "Reality Police Shows as a New Arena of Public Oversight: Mediatized Visibility, Mutual Surveillance in Indonesian Policing Context",
+      "url": "https://doi.org/10.31014/aior.1991.09.01.613",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
       "title": "TOWARDS RESPONSIBLE ARTIFICIAL INTELLIGENCE (AI) GOVERNANCE IN THE MALAYSIAN CRIMINAL JUSTICE SYSTEM: A LEGAL AND ETHICAL APPRAISAL OF PREDICTIVE POLICING AND AI-DRIVEN SURVEILLANCE",
       "url": "https://doi.org/10.33102/5ykncb04",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "About Face: why the police may have fewer surveillance cameras in the future",
+      "url": "https://openalex.org/W7224978990",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -496,12 +502,6 @@
     {
       "title": "Police Facial Recognition Systems, Surveillance, and Racial Differences in Police Lethality in U.S. Cities",
       "url": "https://doi.org/10.21428/cb6ab371.60569323",
-      "year": 2025,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "A Comparative Study On Surveillance Technology Using Machine Learning Models",
-      "url": "https://doi.org/10.63363/aijfr.2025.v06i06.2052",
       "year": 2025,
       "source": "OpenAlex"
     },
