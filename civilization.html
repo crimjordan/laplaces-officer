@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071725">
+<meta name="description" content="GENESIS CIVILIZATION: Interactive 3D procedurally generated national societies with cohort-component demography, constrained budgets, housing markets, social programs, international policy and longitudinal research reports. Synthetic only.">
+<title>GENESIS CIVILIZATION — The Age of Institutions | Laplace's Officer</title>
+<link rel="stylesheet" href="sovereign.css?v=2"><link rel="stylesheet" href="civilization.css?v=2">
+</head><body class="civilization">
+<header class="topbar">
+ <div class="brand"><div class="brandMark">◉</div><div><small>LAPLACE'S OFFICER / GENERATIVE SOCIETIES</small><strong>GENESIS <span>CIVILIZATION</span></strong></div></div>
+ <nav><a href="index.html">HOME</a><a href="genesis.html">GENESIS CITY</a><a href="sovereign.html">SOVEREIGN V1</a><a href="genesis-experiments.html">EXPERIMENT LAB</a><a href="civilization-model-card.html">METHODS</a></nav>
+ <div class="operational"><i></i><span id="systemStatus">INITIALIZING</span></div>
+</header>
+<main class="civilMain">
+<section class="civilHero">
+ <div class="heroContent">
+  <div class="eyebrow">SOVEREIGN SYSTEMS / GENERATION II / EXPERIMENTAL HISTORY</div>
+  <h1>A SOCIETY IS NOT<br><em>A SINGLE EQUATION.</em></h1>
+  <p>Generate an entire civilization. Watch people age, cities spread, housing shortages emerge, debt accumulate, institutions succeed or fail, and policies propagate through radically different environments.</p>
+  <div class="heroMeta"><span>UP TO 200 SIMULATED YEARS</span><span>FOUR AGE COHORTS</span><span>HARD FISCAL CONSTRAINTS</span><span>10 DISTINCT OFFENSE TYPES</span><span>3D GENERATIVE GEOGRAPHY</span></div>
+ </div>
+ <div class="heroRight">
+  <div class="heroOrb"><div class="orbRing ringOne"></div><div class="orbRing ringTwo"></div><div class="orbCenter"><span>GENESIS</span><strong>II</strong><small>CIVILIZATION ENGINE</small></div></div>
+  <div class="boundary"><strong>AN EXPERIMENT IN ASSUMPTIONS — NOT A NATIONAL FORECAST</strong><p>The age-cohort accounting follows a recognized demographic framework, but its fertility, death, migration, budget, crime, and policy-response parameters are synthetic and uncalibrated. A historical policy inspiration is not a transferable causal effect.</p></div>
+ </div>
+</section>
+<section class="genesisSetup">
+ <div><label for="scale">TERRITORIAL SCOPE</label><select id="scale"><option value="state">STATE · 9 REGIONS</option><option value="country" selected>COUNTRY · 16 REGIONS</option><option value="federation">FEDERATION · 24 REGIONS</option></select></div>
+ <div><label for="seed">TERRAIN & COHORT SEED</label><input id="seed" type="number" min="1" max="2000000000" value="303030"></div>
+ <div class="setupActions"><button id="generateWorld" class="btnPrimary">◈ GENERATE NEW WORLD</button><button id="resetWorld">↻ RESET SIMULATION</button></div>
+ <div class="setupMeta"><span>ERA</span><strong id="displayYear">2027</strong><small id="worldSize">Procedural territory initializing</small></div>
+</section>
+<section class="civilKPIs" id="headlineStats" aria-label="National economy, demography and safety"></section>
+<div class="civilLayout">
+<aside class="civilSidebar">
+ <section class="panel">
+  <div class="eyebrow">01 / TEMPORAL ARCHITECT</div><h2>Control the centuries</h2>
+  <div class="yearReadout"><span id="yearElapsed">YEAR ZERO</span><strong id="heroYear">2027</strong></div>
+  <input id="timeline" type="range" min="0" max="200" value="0" aria-label="Years since simulation begins">
+  <div class="timeMeta"><span id="historyCursor">VIEW 2027</span><span id="latestYear">COMPUTED 2027</span></div>
+  <div class="timeButtons">
+   <button id="play" class="btnPrimary">▶ PLAY</button><button id="step">+1 YEAR</button><button id="decade">+10 YEARS</button>
+   <button id="quarter">+25 YEARS</button><button id="century">+100 YEARS</button><button id="branch">↳ BRANCH</button>
+  </div>
+  <button id="pause" class="pauseButton">■ PAUSE / CANCEL ADVANCE</button>
+  <label for="speed">AUTOMATIC PLAY SPEED</label><select id="speed"><option value="1400">CAREFUL</option><option value="850" selected>NORMAL</option><option value="350">FAST</option></select>
+  <p class="fine" id="simProgress" aria-live="polite">Initialize a fictional population with explicit stocks and flows.</p>
+ </section>
+ <section class="panel">
+  <div class="eyebrow">02 / POLITICAL GEOGRAPHY</div><h2>Inspect a civilization</h2>
+  <div class="switchWorld"><button id="showA" class="active">WORLD A</button><button id="showB">WORLD B</button></div>
+  <label for="layer">GEOGRAPHIC DATA LAYER</label><select id="layer">
+   <option value="zoning">Land use & urban structure</option><option value="province">Province boundaries</option>
+   <option value="population">Population density</option><option value="development">Urban development</option>
+   <option value="underlying">Underlying crimes</option><option value="recorded">Police-recorded crimes</option>
+   <option value="offense">Specific offense category</option><option value="housing">Housing stability</option>
+   <option value="employment">Employment</option><option value="education">Education access</option>
+   <option value="health">Health care</option><option value="trust">Institutional trust</option>
+  </select>
+  <label for="offense">OFFENSE-LEVEL CHOROPLETH</label><select id="offense"></select>
+  <div class="btnRow"><button id="camOrbit">◇ ORBIT</button><button id="camTop">⌖ ATLAS</button><button id="camStreet">↗ STREET</button></div>
+  <button id="captureMap">▣ SAVE 3D MAP</button>
+  <p class="fine">Orbit with drag, zoom with scroll, or click to inspect fictional districts. Land-use geometry and animated transport are illustrative.</p>
+ </section>
+ <section class="panel">
+  <div class="eyebrow">03 / SUBNATIONAL INSTITUTIONS</div><h2 id="provinceName">The regional observatory</h2>
+  <label for="provinceSelect">ADMINISTRATIVE PROVINCE</label><select id="provinceSelect"></select>
+  <div id="provinceStats" class="provinceStats"></div>
+  <p class="fine" id="cellInfo">Select a province or geographic cell.</p>
+ </section>
+ <section class="panel">
+  <div class="eyebrow">04 / REGIONAL MORPHOLOGY</div><h2>Different kinds of place</h2>
+  <div id="zoneLegend" class="zoneLegend"></div>
+  <p class="fine">Urban cores, suburbs, commercial districts, industrial areas, rural land, wilderness and waterways are procedurally allocated.</p>
+ </section>
+</aside>
+<div class="civilPrimary">
+ <section class="mapModule">
+  <div class="mapTop"><div><div class="eyebrow">3D / THE NATIONAL DIGITAL TWIN THAT ISN'T REAL</div><h2 id="mapTitle">The birth of a synthetic society</h2></div><div class="mapFlags"><span id="mapMode">3D BOOTING</span><span id="mapLayerName">LAND USE</span></div></div>
+  <div class="worldViewport civilizationViewport" id="worldViewport">
+   <div class="viewportHud top"><span id="mapYear">2027 · WORLD A</span><span id="mapPopulation">GENERATING CENSUS</span><span id="mapProvince">PROVINCE</span></div>
+   <div class="viewportHud bottom"><span>GENERATIVE MAP · NO ACTUAL GEOGRAPHY</span><span id="renderStatus">RENDER ENGINE INITIALIZING</span></div>
+  </div>
+  <div class="mapBottom"><span><i class="legendDot" style="background:#72f7da"></i>A/B share geography and seeded initial conditions</span><span>3D buildings · trade/transport traces · geographical data layers</span></div>
+ </section>
+ <section class="panel fiscalPanel">
+  <div class="between"><div><div class="eyebrow">05 / THE NATIONAL TREASURY</div><h2>Budget constraints are now real <small class="fine">(within the synthetic model)</small></h2></div><label for="fiscalMetric">VIEW <select id="fiscalMetric"><option value="debtGDP">DEBT / GDP</option><option value="gdp">REAL GDP</option><option value="taxRevenue">TAX REVENUE</option><option value="spending">PUBLIC SPENDING</option><option value="deficit">FISCAL DEFICIT</option><option value="effectiveBudget">ACTUALLY DELIVERED SERVICES</option><option value="wastedBudget">FAILED / UNUSED SPENDING</option></select></label></div>
+  <div class="fiscalTiles" id="fiscalTiles"></div>
+  <canvas id="fiscalChart" width="1120" height="230" aria-label="Fiscal outcomes across two simulated governments" role="img"></canvas>
+  <div id="spendingBars" class="spendingBars"></div>
+  <p class="fine">Tax revenue and borrowing capacity constrain spending. Money allocated but not delivered is shown separately. Government spending is measured in fictional constant-2027-dollar equivalents—not real national accounts.</p>
+ </section>
+ <section class="panel demographicPanel">
+  <div class="between"><div><div class="eyebrow">06 / DEMOGRAPHIC ENGINE</div><h2>Generations are born. Generations die.</h2></div><span class="annotation">ACCOUNTING IDENTITIES VERIFIED EACH YEAR</span></div>
+  <div class="demographicGrid">
+   <div><div class="subheading">AGE COHORTS / WORLD A vs WORLD B</div><div id="agePyramid" class="agePyramid"></div></div>
+   <div><div class="subheading">POPULATION FLOW / SELECTED YEAR</div><div id="demographicFlow" class="demographicFlow"></div></div>
+  </div>
+  <p class="fine">Children 0–17, young adults 18–34, middle-aged 35–64, older adults 65+. The sum of births minus deaths plus net external migration must equal population change; internal migration cancels nationally. Cohort rates are invented rather than fitted to census data.</p>
+ </section>
+ <section class="panel nationalChart">
+  <div class="between"><div><div class="eyebrow">07 / TWO LONG HISTORIES</div><h2>Every choice casts a longer shadow.</h2></div><label for="chartMetric">OUTCOME <select id="chartMetric"></select></label></div>
+  <div class="worldKeys"><span><i style="background:#72f7da"></i> WORLD A</span><span><i style="background:#ffca90"></i> WORLD B</span></div>
+  <canvas id="historyChart" width="1150" height="330" aria-label="Longitudinal comparison between synthetic World A and B" role="img"></canvas>
+  <p id="chartSummary" class="fine">Advance the timeline to plot changes across generations.</p>
+ </section>
+ <section class="panel housingPanel">
+  <div class="eyebrow">08 / HOUSING SUPPLY AND INSTITUTIONAL REACH</div><h2>Programs have capacity limits.</h2>
+  <div class="housingStats" id="housingStats"></div>
+  <div class="capacityBars" id="capacityBars"></div>
+  <p class="fine">A promise of a job or housing unit isn't its delivery. Compare actual capacity, unmet need, enrollment, government failure, and cumulative exposure.</p>
+ </section>
+ <section class="panel policyPanel">
+  <div class="eyebrow">09 / GOVERN THE TWO WORLDS</div><h2>Competing governments, finite resources.</h2>
+  <p class="fine">Change policy in either world before advancing the next year. The tax system and debt ceiling constrain the total appropriations, while spending priorities alter capacity. These are theoretical slider experiments, not historical fiscal estimates.</p>
+  <div class="policyWorlds">
+   <div class="worldCard a">
+    <div class="worldCardHeader"><strong>WORLD A</strong><span>REFERENCE GOVERNMENT</span></div>
+    <label for="nationalA">INTERNATIONAL POLICY FRAMEWORK</label><select id="nationalA"></select>
+    <div id="policyA" class="civilPolicyControls"></div>
+   </div>
+   <div class="worldCard b">
+    <div class="worldCardHeader"><strong>WORLD B</strong><span>ALTERNATIVE GOVERNMENT</span></div>
+    <label for="nationalB">INTERNATIONAL POLICY FRAMEWORK</label><select id="nationalB"></select>
+    <div id="policyB" class="civilPolicyControls"></div>
+   </div>
+  </div>
+  <div class="policyExplainer" id="policyExplanation">No real national treatment effect is assumed.</div>
+ </section>
+ <section class="panel provincePolicyPanel">
+  <div class="eyebrow">10 / SUBNATIONAL POLICY LABORATORY</div><h2>One nation. Multiple public institutions.</h2>
+  <p class="fine">Apply a different intervention to one province while other provinces retain their national settings. Future years inherit the override; historical frames remain available for comparison.</p>
+  <div class="provincePolicyControls"><label for="localPolicy">REGIONAL PROGRAM</label><select id="localPolicy"></select>
+    <div class="btnRow"><button id="applyA">TO WORLD A</button><button id="applyB">TO WORLD B</button><button id="clearOverride">REMOVE BOTH</button></div></div>
+  <div class="rolloutList" id="rolloutList"></div><p id="rolloutStatus" class="fine" role="status">No region-specific intervention scheduled.</p>
+ </section>
+ <section class="panel interventions">
+  <div class="eyebrow">11 / SHOCKS AND HISTORICAL CONTINGENCY</div><h2>History fights back.</h2>
+  <div class="shockGrid">
+   <button data-shock="recession">↘ GLOBAL RECESSION<small>10-year productivity shock</small></button>
+   <button data-shock="flood">⌁ CLIMATE DISASTER<small>8-year housing and mortality disruption</small></button>
+   <button data-shock="epidemic">✳ PUBLIC HEALTH CRISIS<small>6-year mortality and service strain</small></button>
+   <button data-shock="migration">↝ MIGRATION SURGE<small>10-year external arrivals</small></button>
+   <button data-shock="institutional">⚖ INSTITUTIONAL CRISIS<small>8-year public-service implementation shock</small></button>
+   <button data-shock="automation">⬡ LABOR-MARKET DISRUPTION<small>10-year job displacement shock</small></button>
+  </div>
+  <div class="shockTarget"><label for="shockScope">GEOGRAPHIC SCOPE</label><select id="shockScope"></select><label for="shockWorld">WHICH WORLD</label><select id="shockWorld"><option value="both">BOTH</option><option value="A">WORLD A</option><option value="B">WORLD B</option></select></div>
+ </section>
+ <section class="panel regionalMatrix">
+  <div class="eyebrow">12 / REGIONAL INEQUALITY</div><h2>Compare every province and land-use type.</h2>
+  <div class="matrixActions"><button id="zoneView" class="selected">BY LAND USE</button><button id="provinceView">BY PROVINCE</button><label for="matrixMetric">MEASURE <select id="matrixMetric"><option value="population">Population</option><option value="underlying">Underlying crime</option><option value="recorded">Recorded crime</option><option value="unhoused">Housing need</option><option value="employment">Working-age employment</option><option value="trust">Institutional trust</option></select></label></div>
+  <div id="regionalTable" class="regionalTable"></div>
+ </section>
+ <section class="panel nationalLab">
+  <div class="eyebrow">13 / PARALLEL NATIONAL HISTORIES</div><h2>Repeat civilization. See what survives randomness.</h2>
+  <p class="fine">Run matched national experiments under both current policy configurations. Report distributions of synthetic policy contrasts, not confidence intervals about real government actions. These are computationally intensive and run in a separate worker.</p>
+  <div class="experimentControls"><div><label for="replicationCount">MATCHED REPLICATIONS</label><select id="replicationCount"><option value="3">3 · CHECK</option><option value="8" selected>8 · EXPLORATORY</option><option value="20">20 · DETAILED</option></select></div>
+    <div><label for="replicationYears">PER-REPLICATION HORIZON</label><select id="replicationYears"><option value="5">5 YEARS</option><option value="15" selected>15 YEARS</option><option value="30">30 YEARS</option><option value="50">50 YEARS</option></select></div>
+    <div><label for="labOutcome">PRIMARY OUTCOME</label><select id="labOutcome"><option value="underlying">UNDERLYING INCIDENTS</option><option value="unhoused">HOUSING NEED</option><option value="debtGDP">DEBT / GDP</option><option value="population">POPULATION</option><option value="overdoseDeaths">OVERDOSE DEATHS</option><option value="recorded">POLICE RECORDINGS</option></select></div></div>
+  <div class="btnRow"><button class="btnPrimary" id="runNationalExperiment">◈ RUN MATCHED NATIONAL EXPERIMENT</button><button id="cancelNationalExperiment" disabled>■ STOP</button><button id="exportNationalExperiment" disabled>↓ EXPORT RESULTS CSV</button></div>
+  <div class="labTrack"><div id="labTrackBar"></div></div>
+  <p class="fine" id="labStatus" role="status">Design is ready. Runs use unchanged synthetic model equations and recorded policy settings.</p>
+  <div id="labResults"></div>
+ </section>
+ <section class="panel exportPanel">
+  <div class="eyebrow">14 / THE HISTORIAN'S DESK</div><h2>Publish the assumptions, not just the outcomes.</h2>
+  <div class="btnRow"><button id="exportReport" class="btnPrimary">▣ CREATE MULTI-PAGE RESEARCH REPORT</button><button id="exportCSV">↓ NATIONAL CSV</button><button id="exportJSON">↓ AUDIT JSON</button></div>
+  <p id="exportStatus" class="fine" role="status">Advance at least one simulated year to enable research exports.</p>
+  <div class="eventLog" id="eventLog"></div>
+ </section>
+ <section class="panel evidencePanel">
+  <div class="eyebrow">15 / WHAT THE RESEARCH REALLY SAYS</div><h2>Empirical inspiration ≠ calibrated simulation.</h2>
+  <div class="evidenceCards" id="evidenceCards"></div>
+  <p class="fine">Demographic stocks use a cohort-component accounting identity described in national projection methods. Specific numerical anchors are restricted to their studied outcomes. Baseline crime rates, housing supply, migration, implementation quality and fiscal responses remain assumptions. <a href="civilization-model-card.html">Full methodology and limitations →</a></p>
+ </section>
+</div></div>
+<footer><span>LAPLACE // GENESIS CIVILIZATION 2.0 · COMPUTATIONAL FICTION / RESEARCH-ORIENTED METHODS</span>
+ <span><a href="civilization-model-card.html">MODEL CARD</a> · <a href="sovereign.html">V1 LEGACY</a> · <a href="genesis-experiments.html">CITY RESEARCH LAB</a></span></footer>
+</main>
+<script src="sovereign-engine.js?v=geo2"></script>
+<script src="civilization-engine.js?v=2"></script>
+<script>window.GenesisSovereign=window.GenesisCivilization;</script>
+<script src="sovereign-view.js?v=2"></script>
+<script src="civilization-report.js?v=2"></script>
+<script src="civilization-experiments.js?v=2"></script>
+<script defer src="civilization-app.js?v=2"></script>
+</body></html>
