@@ -212,6 +212,7 @@ function step(world){
   workingAge:0,employedCount:0,housed:0,trustSum:0,adminSum:0,incidents:0,
   youthOffers:0,housingBuild:0,overdoseDeaths:0,schoolServed:0,healthServed:0,spending:0}));
  const offenseTotals=new Float64Array(OFFENSES.length),recordedOffenses=new Float64Array(OFFENSES.length),
+   typeCounts=new Uint16Array(n*OFFENSES.length),typeRecorded=new Uint16Array(n*OFFENSES.length),
    zoneStats=ZONES.map(z=>({id:z.id,label:z.label,population:0,underlying:0,recorded:0,unhoused:0,employment:0}));
  const policyUsage={},interventions={jobOffers:0,medication:0,housingUnits:0,educationStudents:0,
    policeContacts:0,reentryEducated:0,violenceReach:0,preventedExpectedViolentArrests:0,
@@ -366,7 +367,10 @@ function step(world){
    const recordChance=clamp(t.reported*(.62+.58*surveillance)*
      (.78+.34*trust)*(.84+.23*policingReach),0,.99);
    const observed=Math.min(actual,stableValue(actual*recordChance,world.seed,year,i,75+k));
-   incidents[k]=actual;recordings[k]=observed;offenseTotals[k]+=actual;recordedOffenses[k]+=observed;
+   incidents[k]=actual;recordings[k]=observed;
+   typeCounts[i*OFFENSES.length+k]=Math.min(65535,actual);
+   typeRecorded[i*OFFENSES.length+k]=Math.min(65535,observed);
+   offenseTotals[k]+=actual;recordedOffenses[k]+=observed;
    underlying+=actual;recorded+=observed;
   }
   const violentArrests=stableValue(expectedYouthArrest+
@@ -450,7 +454,7 @@ function step(world){
  };
  world.year=year;world.state=cur;world.fiscal={debt:fiscal.debt,capital:world.fiscal.capital,
   backlog:world.fiscal.backlog+fiscal.shortfall};
- world.history.push(report);world.frames.push({year,arrays:cloneState(cur)});
+ world.history.push(report);world.frames.push({year,arrays:cloneState(cur),trueTypes:typeCounts,recordedTypes:typeRecorded});
  world.fiscalHistory.push({...world.fiscal});
  return report;
 }
