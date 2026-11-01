@@ -1,0 +1,117 @@
+/* GENESIS CIVILIZATION II — a generative, fiscal-demographic research cockpit */
+.civilization{background:radial-gradient(ellipse at 58% -3%,#22484d,#06121d 43%,#071322)}
+.civilMain{max-width:1980px}
+.civilHero{display:grid;grid-template-columns:1.5fr .78fr;gap:22px;align-items:center;padding:34px 7px 25px}
+.civilHero h1{font-size:clamp(38px,4.7vw,78px);letter-spacing:-.062em;line-height:1.01;margin:10px 0 19px}
+.civilHero h1 em{font-style:normal;color:#93ffda;text-shadow:0 0 34px #6fefc233}
+.civilHero p{font-size:14px;max-width:840px;color:#b4d5d7}
+.civilHero .heroMeta span{border-color:#356c72;background:#092b39c9}
+.heroRight{position:relative;display:grid;place-items:center;gap:6px}
+.heroOrb{height:194px;width:194px;border:1px solid #287a8d;border-radius:50%;position:relative;background:radial-gradient(circle at 36% 36%,#295d66,#143845 48%,#081e33 78%);display:grid;place-items:center;box-shadow:inset 0 0 25px #96ffdf21,0 0 52px #2bcab722;overflow:hidden}
+.orbRing{position:absolute;inset:16px;border:1px solid #a1ffe76b;border-radius:50%;transform:rotateX(64deg) rotateZ(23deg);animation:orb 19s linear infinite}
+.orbRing.ringTwo{inset:27px;border-color:#baffef6b;transform:rotateY(58deg) rotateX(20deg);animation-duration:27s}
+.orbCenter{text-align:center;z-index:1;font:800 11px ui-monospace,monospace;color:#b4ffee}
+.orbCenter span,.orbCenter small{display:block}.orbCenter strong{display:block;font-size:61px;line-height:1.05;color:#ebfff8}
+@keyframes orb{to{transform:rotateX(70deg) rotateZ(390deg)}}
+.boundary{border:1px solid #83694c;background:#212b32e9;padding:12px;border-radius:10px;width:100%;max-width:490px}
+.boundary strong{font:900 10px ui-monospace,monospace;color:#ffd69a;letter-spacing:.05em}
+.boundary p{font-size:11px;margin:7px 0 0;color:#d4c8b9}
+.genesisSetup{display:grid;grid-template-columns:1fr 1fr 1.7fr .9fr;gap:12px;align-items:end;padding:13px;background:linear-gradient(110deg,#103748,#101f34);border-radius:11px;border:1px solid #397273;margin-bottom:12px}
+.genesisSetup label{margin:0 0 5px}.setupActions{display:flex;gap:8px}.setupActions button{flex:1;min-width:0;font-size:11px}
+.setupMeta{text-align:right}.setupMeta span{display:block;font-size:9px;color:#a4e7dd}.setupMeta strong{display:block;font-size:30px;line-height:1}.setupMeta small{display:block;font-size:10px}
+.civilKPIs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.civilKPIs>div{padding:12px;border:1px solid #365c65;border-radius:8px;background:linear-gradient(135deg,#173847,#102636);min-width:0}
+.civilKPIs small{display:block;font:850 9px ui-monospace,monospace;color:#9cd7d1}
+.civilKPIs strong{font-size:clamp(14px,1.5vw,23px);display:block;margin:7px 0 2px;font-variant-numeric:tabular-nums;word-break:break-word}
+.civilKPIs em{display:block;font:10px system-ui;color:#97b6be}
+.civilLayout{display:grid;grid-template-columns:minmax(274px,315px) minmax(0,1fr);gap:12px;align-items:start}
+.civilSidebar,.civilPrimary{display:flex;flex-direction:column;gap:12px;min-width:0}
+.civilPrimary .panel{padding:20px}
+.civilSidebar .panel{padding:15px}
+.civilSidebar h2{font-size:19px}
+.timeButtons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:12px 0 7px}
+.timeButtons button{font-size:10px;padding:10px 3px}
+.pauseButton{width:100%;border-color:#74566a;background:#3d2938;color:#ffdfdf;font-size:10px}
+.civilizationViewport{height:clamp(480px,52vw,770px)}
+.civilization .sovereignMapLabel{font-size:10px}
+.civilization .mapModule{box-shadow:0 16px 58px #36b7b319}
+.civilization .worldViewport{background:#051421}
+.fiscalTiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:16px 0}
+.fiscalTiles>div{background:#133443;border:1px solid #326678;border-radius:8px;padding:11px;min-width:0}
+.fiscalTiles small{font:850 9px ui-monospace,monospace;color:#afd4d3;display:block}
+.fiscalTiles strong{font-size:17px;display:block;margin:7px 0 2px;font-variant-numeric:tabular-nums}
+.fiscalTiles em{font-size:10px;color:#8dbec6}
+#fiscalChart{width:100%;height:auto;border-radius:8px;border:1px solid #285064;background:#081927}
+.spendingBars{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.spendWorld{background:#102c3b;border:1px solid #315c68;border-radius:8px;padding:11px}
+.spendWorld>strong{font-size:11px;color:#afffe7;display:block;margin-bottom:11px}
+.spendWorld.b>strong{color:#ffd8aa}
+.spendRow{display:grid;grid-template-columns:72px 1fr 55px;gap:8px;align-items:center;margin:8px 0}
+.spendRow span{font-size:10px;color:#b4d1d2}
+.spendRow small{text-align:right;font-size:10px}
+.spendTrack{height:9px;background:#0b2230;border-radius:5px;overflow:hidden}
+.spendTrack i{display:block;height:100%;background:linear-gradient(90deg,#34aaa5,#a8ffde);border-radius:5px}
+.spendWorld.b .spendTrack i{background:linear-gradient(90deg,#c17f62,#ffe0a6)}
+.annotation{font:900 9px ui-monospace,monospace;color:#94e8db;border:1px solid #3a756f;border-radius:5px;padding:7px}
+.demographicGrid{display:grid;grid-template-columns:1.15fr 1fr;gap:18px;margin:14px 0 7px}
+.subheading{font:850 10px ui-monospace,monospace;color:#a6e7d5;margin:9px 0}
+.agePyramid{display:grid;gap:13px}
+.cohort{display:grid;grid-template-columns:103px 1fr 70px;gap:8px;align-items:center}
+.cohort span{font-size:11px;color:#b9d6d5}
+.cohort em{font-style:normal;font:10px ui-monospace,monospace;text-align:right;color:#a7dad3}
+.cohortBars{display:grid;gap:3px}
+.cohortTrack{height:11px;background:#112b3c;border-radius:3px;overflow:hidden}
+.cohortTrack i{display:block;height:100%;border-radius:3px;background:#67e6d2}
+.cohortTrack.b i{background:#f6be91}
+.demographicFlow{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.flowBlock{border:1px solid #3c6171;border-radius:7px;padding:9px;background:#133040}
+.flowBlock span{display:block;color:#acd0d0;font-size:10px}
+.flowBlock strong{font-size:17px;display:block;margin:6px 0 2px;font-variant-numeric:tabular-nums}
+.flowBlock small{font-size:9px;color:#9bbeca}
+.housingStats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}
+.housingStats>div{border:1px solid #365d68;border-radius:8px;padding:11px;background:#112f3d}
+.housingStats small{display:block;font:850 10px ui-monospace,monospace;color:#a6d3cd}
+.housingStats strong{display:block;font-size:18px;margin:8px 0}
+.capacityBars{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.capacityBox{background:#153140;border:1px solid #315a6a;padding:12px;border-radius:8px}
+.capacityBox h3{font-size:12px;color:#d5ffee;margin-bottom:9px}
+.capacityRow{margin:9px 0}
+.capacityRow label{font-size:10px;margin:0 0 5px}
+.capacityTrack{height:9px;background:#091d2d;overflow:hidden;border-radius:5px}
+.capacityTrack span{display:block;background:#7ae6cf;height:100%;border-radius:5px}
+.capacityBox.b .capacityTrack span{background:#ffcb90}
+.civilPolicyControls{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.civilInput{min-width:0}.civilInput label{font-size:9px;line-height:1.45;display:flex;justify-content:space-between;gap:5px}
+.civilInput output{color:#b8ffe0;font-weight:900}
+.worldCard.b .civilInput output{color:#ffd6a2}
+.policyExplainer{margin-top:12px;background:#152d3a;padding:12px;border-left:3px solid #80eccc;color:#c4dee0;font-size:11px}
+.provincePolicyControls{display:grid;grid-template-columns:1fr 1.5fr;gap:8px;align-items:end;margin:12px 0}
+.provincePolicyControls label{grid-column:1/-1;margin-bottom:-5px}
+.matrixActions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.matrixActions button{font-size:10px}
+.matrixActions button.selected{background:#1f7165;color:#dcfff5;border-color:#6ef1d7}
+.matrixActions label{margin:0 0 0 auto;display:flex;align-items:center;gap:8px}
+.matrixActions select{min-width:145px}
+.regionalTable{overflow-x:auto;margin:14px 0}
+.regionalTable table{min-width:660px;width:100%;border-collapse:collapse}
+.regionalTable th{text-align:right;font-size:10px;color:#b0eddd;background:#153e4c;padding:9px}
+.regionalTable td{text-align:right;font:11px ui-monospace,monospace;padding:10px;border-bottom:1px solid #295369}
+.regionalTable th:first-child,.regionalTable td:first-child{text-align:left}
+.regionalTable tbody tr:nth-child(even){background:#122f3d}
+.experimentControls{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.labTrack{height:11px;margin:13px 0 7px;border-radius:8px;border:1px solid #3b6975;background:#123240;overflow:hidden}
+#labTrackBar{width:0;height:100%;background:linear-gradient(90deg,#39b4af,#b4ffe5);transition:width .16s}
+.labResults{overflow-x:auto}
+#labResults table{border-collapse:collapse;width:100%;min-width:520px;margin:14px 0}
+#labResults th{font:900 10px ui-monospace,monospace;padding:10px;background:#1a4651;color:#b3f1d9}
+#labResults td{font:11px ui-monospace,monospace;padding:10px;border-bottom:1px solid #305364;text-align:right}
+#labResults td:first-child{text-align:left}
+.labWarning{border-left:3px solid #c5a074;background:#29313a;color:#e5d2b8;padding:11px;margin:10px 0;font-size:11px}
+.evidencePanel{border-color:#426b67}
+.evidencePanel .sourceClass{font:900 9px ui-monospace,monospace;color:#ffda94}
+.civilMain .eventLog{max-height:250px}
+@media(max-width:1530px){.civilKPIs{grid-template-columns:repeat(4,1fr)}.civilLayout{grid-template-columns:280px minmax(0,1fr)}.civilHero h1{font-size:60px}}
+@media(max-width:1110px){.civilLayout{display:flex;flex-direction:column}.civilSidebar{display:grid;grid-template-columns:1fr 1fr;width:100%}.civilPrimary{width:100%}.civilKPIs{grid-template-columns:repeat(4,1fr)}.civilHero{grid-template-columns:1fr 250px}.genesisSetup{grid-template-columns:1fr 1fr}}
+@media(max-width:800px){.civilHero{grid-template-columns:1fr}.heroRight{display:grid;grid-template-columns:135px 1fr}.heroOrb{width:130px;height:130px}.orbCenter strong{font-size:38px}.civilSidebar{display:flex;flex-direction:column}.demographicGrid{grid-template-columns:1fr}.civilizationViewport{height:540px}.genesisSetup{grid-template-columns:repeat(2,1fr)}.fiscalTiles{grid-template-columns:repeat(3,1fr)}.housingStats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.civilHero h1{font-size:41px}.heroRight{grid-template-columns:1fr}.heroOrb{display:none}.civilKPIs{grid-template-columns:repeat(2,1fr)}.genesisSetup{grid-template-columns:1fr}.setupMeta{text-align:left}.genesisSetup .setupActions{flex-wrap:wrap}.civilizationViewport{height:430px}.policyWorlds,.capacityBars,.spendingBars{grid-template-columns:1fr}.fiscalTiles{grid-template-columns:1fr 1fr}.civilPolicyControls{grid-template-columns:1fr 1fr}.experimentControls{grid-template-columns:1fr}.provincePolicyControls{grid-template-columns:1fr}.matrixActions label{margin-left:0}.civilPrimary .panel{padding:13px}}
+@media(prefers-reduced-motion:reduce){.orbRing{animation:none}#labTrackBar{transition:none}}
