@@ -32,6 +32,8 @@ for(let year=1;year<=12;year++){
  assert(Math.abs(change-left.population)<1e-6,"Demographic population identity fails year "+year);
  assert.equal(left.underlying,left.offenses.reduce((s,v)=>s+v,0));
  assert(left.recorded<=left.underlying);
+ assert(Math.abs(left.crimePer100k-left.underlying/left.population*100000)<1e-7,"Crime rate denominator wrong");
+ assert(Math.abs(left.overdoseDeathRate-left.overdoseDeaths/left.population*100000)<1e-7,"Mortality rate denominator wrong");
  assert(left.recordedOffenses.every((x,i)=>x<=left.offenses[i]));
  assert(left.debt>=0 && left.debtGDP>=0);
  assert(left.effectiveBudget<=left.spending+1e-7,"Delivered exceeds appropriations");
