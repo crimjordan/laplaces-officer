@@ -225,6 +225,19 @@ function renderProvince(){
    " · housing instability "+fmt(r.homeless):"Advance at least one year for provincial outcomes.")
  }
 }
+function renderEcology(){
+ const root=$("ecologyTable");root.replaceChildren();if(!geo)return;
+ const table=add("table",root),head=add("thead",table),tr=add("tr",head);
+ for(const name of ["Land use","Parcels","Population A","Underlying A","Underlying B","Recorded A","Recorded B","Trust A","Trust B"])add("th",tr,name);
+ const body=add("tbody",table);
+ for(let i=0;i<E.ZONES.length;i++){
+  if(i===0)continue;const a=E.zoneReport(A,cursor,i),b=E.zoneReport(B,cursor,i),zone=E.ZONES[i];
+  const row=add("tr",body);
+  for(const value of [zone.label,fmt(a.cells),compact(a.population),cursor?fmt(a.crime):"—",
+   cursor?fmt(b.crime):"—",cursor?fmt(a.recorded):"—",cursor?fmt(b.recorded):"—",
+   pct(a.trust),pct(b.trust)])add("td",row,value);
+ }
+}
 function chart(){
  const canvas=$("historyChart"),ctx=canvas.getContext("2d");if(!ctx)return;
  const width=canvas.width,height=canvas.height,left=78,right=width-29,top=30,bottom=height-42;
@@ -258,7 +271,7 @@ function render(){
  $("timeline").max=A.year;$("timeline").value=cursor;
  $("exportReport").disabled=cursor<1;$("exportCSV").disabled=cursor<1;$("exportJSON").disabled=cursor<1;
  $("systemStatus").textContent=busy?"SIMULATING":"MODEL READY";
- renderStats();renderProvince();renderScene();renderOverrides();chart();
+ renderStats();renderProvince();renderEcology();renderScene();renderOverrides();chart();
 }
 function download(name,data,type){
  const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),link=document.createElement("a");
