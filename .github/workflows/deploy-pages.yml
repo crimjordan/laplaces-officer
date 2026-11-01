@@ -25,6 +25,8 @@ jobs:
         run: node scripts/test-genesis-visuals.cjs
       - name: Verify GENESIS factorial and controlled experiment research lab
         run: node scripts/test-genesis-experiments.cjs
+      - name: Smoke test GENESIS factorial UI and research report buttons
+        run: node scripts/test-genesis-experiment-ui.cjs
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload static website
