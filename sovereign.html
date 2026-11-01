@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#06101f">
+<meta name="description" content="GENESIS SOVEREIGN: Explore 200 years of synthetic society across procedurally generated states, nations and federations. International-inspired policy interventions and transparent uncertainty.">
+<title>GENESIS SOVEREIGN — The Fate of a Nation | Laplace's Officer</title>
+<link rel="stylesheet" href="sovereign.css?v=1">
+</head>
+<body>
+<header class="topbar">
+ <div class="brand"><div class="brandMark">◈</div><div><small>LAPLACE'S OFFICER / SOVEREIGN SYSTEMS</small><strong>GENESIS <span>SOVEREIGN</span></strong></div></div>
+ <nav aria-label="Site navigation"><a href="index.html">HOME</a><a href="genesis.html">GENESIS CITY</a><a href="genesis-experiments.html">EXPERIMENT LAB</a><a href="sovereign-model-card.html">METHODS</a></nav>
+ <div class="operational"><i></i><span id="systemStatus">SYSTEM BOOTING</span></div>
+</header>
+<main>
+<section class="hero">
+ <div>
+  <div class="eyebrow">THE LONG HISTORY OF POSSIBLE SOCIETIES / EXPERIMENT 001</div>
+  <h1>BUILD A NATION.<br><em>CHANGE ITS FUTURE.</em></h1>
+  <p>A living procedural world of cities, suburbs, industrial districts, forests, farmland, rivers and sovereign regions. Compare 200 years of policy, mobility, public health, economic geography and recorded versus underlying harm.</p>
+  <div class="heroMeta"><span>200-YEAR HORIZON</span><span>DUAL POLICY WORLDS</span><span>INTERNATIONAL POLICY EXCHANGE</span><span>ZERO REAL PERSONAL DATA</span></div>
+ </div>
+ <div class="warning"><strong>SCIENTIFIC BOUNDARY</strong><p>Every country, region and person-count here is fictitious. Most demographic, economic and crime mechanisms are invented. Some intervention scenarios draw from real research, but their countrywide effects are <strong>not validated</strong>. Results are experiments in assumptions, not forecasts.</p></div>
+</section>
+<section class="worldControls" aria-label="Geography generation">
+ <div><label for="scale">GEOGRAPHIC SCALE</label><select id="scale"><option value="state">State / 1,320 cells</option><option value="country" selected>Nation / 2,688 cells</option><option value="federation">Federation / 4,368 cells</option></select></div>
+ <div><label for="seed">WORLD GENERATION SEED</label><input id="seed" type="number" value="47121" min="1" max="999999999"></div>
+ <div class="worldAction"><button id="generateWorld" class="btnPrimary">✳ GENERATE NEW CIVILIZATION</button><button id="resetWorld">RESET HISTORY</button></div>
+ <div class="worldTag"><span>YEAR</span><strong id="displayYear">2027</strong><small id="worldSize">A fictional nation is forming</small></div>
+</section>
+<div class="dashboard">
+<aside class="sidebar">
+ <section class="panel timePanel">
+  <div class="eyebrow">01 / TIME MACHINE</div><h2>Governing across centuries</h2>
+  <div class="yearReadout"><span id="yearElapsed">YEAR ZERO</span><strong id="heroYear">2027</strong></div>
+  <input id="timeline" type="range" min="0" max="200" value="0" aria-label="Historical timeline">
+  <div class="timeMeta"><span id="historyCursor">CURRENT: 2027</span><span id="latestYear">MAX: 2027</span></div>
+  <div class="btnRow"><button id="play">▶ PLAY</button><button id="step">+1 YEAR</button><button id="decade">+10 YEARS</button></div>
+  <div class="btnRow"><button id="century">+100 YEARS</button><button id="branch">↺ BRANCH HISTORY</button><button id="pause">Ⅱ PAUSE</button></div>
+  <div class="speedRow"><label for="speed">PLAYBACK INTERVAL</label><select id="speed"><option value="950">SLOW</option><option value="550" selected>NORMAL</option><option value="130">FAST</option></select></div>
+  <p id="simProgress" class="fine" role="status" aria-live="polite">A matched pair of synthetic societies is ready.</p>
+ </section>
+ <section class="panel viewPanel">
+  <div class="eyebrow">02 / CARTOGRAPHIC COMMAND</div><h2>See the system</h2>
+  <div class="switchWorld"><button id="showA" class="active">WORLD A</button><button id="showB">WORLD B</button></div>
+  <label for="layer">GEOGRAPHIC LENS</label><select id="layer">
+   <option value="zoning">Land use and built structure</option><option value="province">Administrative provinces</option>
+   <option value="population">Population density</option><option value="underlying">Underlying criminal incidents</option>
+   <option value="recorded">Police-recorded incidents</option><option value="offense">Selected crime category</option>
+   <option value="employment">Employment</option><option value="housing">Housing stability</option><option value="education">Education</option>
+   <option value="health">Health access</option><option value="trust">Hypothetical trust</option><option value="development">Urban development</option>
+  </select>
+  <label for="offense">OFFENSE FILTER</label><select id="offense"></select>
+  <div class="btnRow"><button id="camOrbit">◇ ORBIT</button><button id="camTop">⌖ TOP</button><button id="camStreet">↗ LOW VIEW</button></div>
+  <button id="captureMap">▣ EXPORT MAP IMAGE</button>
+  <p class="fine">Click a parcel to inspect its province. Drag to rotate the 3D view; scroll to zoom. All buildings and transport animations are symbolic.</p>
+ </section>
+ <section class="panel zonePanel">
+  <div class="eyebrow">03 / EMERGENT GEOGRAPHY</div><h2>Land-use anatomy</h2>
+  <div id="zoneLegend"></div>
+  <p class="fine" id="zoneStatus">Zoning is generated from imaginary cities, highways, terrain, rivers and provincial centers.</p>
+ </section>
+ <section class="panel provincePanel">
+  <div class="eyebrow">04 / TERRITORIAL OBSERVATORY</div><h2 id="provinceName">Selected province</h2>
+  <label for="provinceSelect">CHOOSE REGION</label><select id="provinceSelect"></select>
+  <div id="provinceStats" class="provinceStats"></div>
+  <p id="cellInfo" class="fine">Click any parcel for local geography and land use.</p>
+ </section>
+</aside>
+<div class="primary">
+ <section class="mapModule">
+  <div class="mapTop"><div><div class="eyebrow">LIVE SYNTHETIC TERRITORY / PROJECTION</div><h2 id="mapTitle">A nation emerges</h2></div><div class="mapFlags"><span id="mapMode">3D INITIALIZING</span><span id="mapLayerName">ZONING</span></div></div>
+  <div id="worldViewport" class="worldViewport">
+   <div class="viewportHud top"><span id="mapYear">2027</span><span id="mapPopulation">POPULATION GENERATING</span><span id="mapProvince">ALL PROVINCES</span></div>
+   <div class="viewportHud bottom"><span>NO REAL GEOGRAPHY · NO PEOPLE TRACKED</span><span id="renderStatus">GENERATING TOPOGRAPHY...</span></div>
+  </div>
+  <div class="mapBottom">
+   <span><i class="legendDot" style="background:#69dfca"></i>World A / World B share initial population</span>
+   <span>Colored parcels = selected data layer · Towers = illustrative land use</span>
+  </div>
+ </section>
+ <section class="statsStrip" id="headlineStats" aria-label="National summary indicators"></section>
+ <section class="panel comparisonModule">
+  <div class="between"><div><div class="eyebrow">05 / NATIONAL LONGITUDINAL OBSERVATORY</div><h2>Two political futures. One original geography.</h2></div><label class="chartSelect" for="chartMetric">METRIC <select id="chartMetric"></select></label></div>
+  <div class="worldKeys"><span><i style="background:#72f7da"></i>WORLD A</span><span><i style="background:#ffca90"></i>WORLD B</span></div>
+  <canvas id="historyChart" width="1150" height="315" role="img" aria-label="Synthetic national annual outcomes in two worlds"></canvas>
+  <div id="chartSummary" class="fine">Select a metric and advance time to compare outcomes.</div>
+  <div class="provinceComparison" id="regionalComparison"></div>
+ </section>
+ <section class="panel policiesModule">
+  <div class="between"><div><div class="eyebrow">06 / NATIONAL POLICY DESIGN</div><h2>Governing different societies</h2></div><span class="pill">ALL ASSUMED POLICY REACH IS SYNTHETIC</span></div>
+  <p class="fine">Change national settings separately in A and B. Policies apply prospectively from the next simulated year. Province-level overrides can mix different country-inspired interventions within one nation.</p>
+  <div class="policyWorlds">
+   <div class="worldCard a">
+    <div class="worldCardHeader"><strong>WORLD A</strong><span>REFERENCE GOVERNMENT</span></div>
+    <label for="nationalA">NATIONAL POLICY FRAMEWORK</label><select id="nationalA"></select>
+    <div class="duo"><div><label for="intensityA">POLICY INTENSITY <output id="intensityAOut">65%</output></label><input id="intensityA" type="range" min="0" max="100" value="65"></div>
+    <div><label for="budgetA">BUDGET <output id="budgetAOut">$16B</output></label><input id="budgetA" type="range" min="3" max="30" value="16"></div></div>
+    <div id="controlsA"></div>
+   </div>
+   <div class="worldCard b">
+    <div class="worldCardHeader"><strong>WORLD B</strong><span>ALTERNATIVE GOVERNMENT</span></div>
+    <label for="nationalB">NATIONAL POLICY FRAMEWORK</label><select id="nationalB"></select>
+    <div class="duo"><div><label for="intensityB">POLICY INTENSITY <output id="intensityBOut">75%</output></label><input id="intensityB" type="range" min="0" max="100" value="75"></div>
+    <div><label for="budgetB">BUDGET <output id="budgetBOut">$16B</output></label><input id="budgetB" type="range" min="3" max="30" value="16"></div></div>
+    <div id="controlsB"></div>
+   </div>
+  </div>
+  <div class="policyInfo" id="policyExplanation">Policy evidence and transportability caveats are shown in the Evidence Exchange below.</div>
+ </section>
+ <section class="panel rollout">
+  <div class="eyebrow">07 / PROVINCE-BY-PROVINCE POLICY EXCHANGE</div><h2>Different countries' interventions, inside one fictional country.</h2>
+  <p class="fine">Select a province on the map, choose an international-inspired package, and roll it out in World A, B, or both. The chosen province's policy overrides the national framework from the next simulated year.</p>
+  <div class="rollControls"><label for="localPolicy">REGIONAL INTERVENTION</label><select id="localPolicy"></select>
+   <div class="btnRow"><button id="applyA">APPLY TO A</button><button id="applyB">APPLY TO B</button><button id="clearOverride">CLEAR OVERRIDES</button></div>
+  </div>
+  <p id="rolloutStatus" class="fine" role="status">No special regional rollout selected.</p>
+  <div id="rolloutList" class="rolloutList"></div>
+ </section>
+ <section class="panel shockModule">
+  <div class="eyebrow">08 / HISTORICAL SHOCKS</div><h2>History doesn't obey policy design.</h2>
+  <div class="shockGrid">
+   <button data-shock="recession">◈ RECESSION <small>10 years / employment and property exposure</small></button>
+   <button data-shock="flood">⌁ CLIMATE DISASTER <small>8 years / housing and industry</small></button>
+   <button data-shock="epidemic">✳ HEALTH EMERGENCY <small>6 years / care and overdose pressure</small></button>
+   <button data-shock="migration">↝ POPULATION MOVEMENT <small>10 years / external arrivals</small></button>
+  </div>
+  <div class="shockTarget"><label for="shockScope">SHOCK TARGET</label><select id="shockScope"><option value="-1">Entire nation</option></select><label for="shockWorld">APPLIES TO</label><select id="shockWorld"><option value="both">Both worlds (shared shock)</option><option value="A">World A only</option><option value="B">World B only</option></select></div>
+  <p class="fine">Each shock is an entirely hypothetical stress test, not a prediction of a particular disaster.</p>
+ </section>
+ <section class="panel evidenceModule" id="evidence">
+  <div class="eyebrow">09 / THE WORLD POLICY EVIDENCE EXCHANGE</div><h2>International ideas, distinctly different evidence.</h2>
+  <div id="evidenceCards" class="evidenceCards"></div>
+  <p class="fine">Policy labels indicate real-world inspirations. Unless a specific measured outcome is explicitly identified, the intervention effect sizes inside the simulator are not transported from empirical studies.</p>
+ </section>
+ <section class="panel dataModule">
+  <div class="eyebrow">10 / THE HISTORIAN'S DESK</div><h2>Reports, data and recorded history</h2>
+  <div class="btnRow"><button id="exportReport" class="btnPrimary">▣ GENERATE NATIONAL REPORT / PDF</button><button id="exportCSV">↓ YEARLY CSV</button><button id="exportJSON">↓ COMPLETE MODEL JSON</button></div>
+  <p id="exportStatus" class="fine" role="status">Run the simulation to generate a report and export outputs.</p>
+  <div id="eventLog" class="eventLog"></div>
+ </section>
+</div></div>
+<footer>
+ <span>GENESIS // SOVEREIGN 1.0 — VIRTUAL SOCIETIES · SYNTHETIC DATA ONLY</span>
+ <span><a href="sovereign-model-card.html">METHODOLOGY</a> · <a href="genesis.html">LIVING CITY</a> · <a href="genesis-experiments.html">CONTROLLED LAB</a></span>
+</footer>
+</main>
+<script src="sovereign-engine.js?v=1"></script>
+<script src="sovereign-view.js?v=1"></script>
+<script defer src="sovereign-app.js?v=1"></script>
+</body>
+</html>
