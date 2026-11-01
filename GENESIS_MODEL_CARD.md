@@ -86,6 +86,58 @@ The Experiment Lab still runs paired seeds with common initial conditions. Versi
 
 The simulator has **not been calibrated to observed incident rates, age structures, treatment eligibility and retention, education/justice-system exposures, police recording probabilities, mortality hazards or budgets**. Most effect pathways remain hypothetical. The site is appropriate for conceptual teaching, mechanisms research, sensitivity testing and debugging—but not decision support for deploying policing resources or making claims about the measured effects of actual prevention programs.
 
+## Controlled Experiments Laboratory (November 2026)
+
+**Live lab:** https://crimjordan.github.io/laplaces-officer/genesis-experiments.html
+
+This additional research environment separates *assumption sensitivity* from *policy-factor comparison* and holds the other configurable inputs constant. It runs the existing GENESIS v2 synthetic model without changing its underlying parameterization. The full experiment design, each arm's settings and all random seeds are exported.
+
+### Registered experiment types
+
+1. **Controlled two-arm comparisons.**
+   - *Resource reallocation*: prevention share 20% versus 80% at an identical nominal total budget. This changes both prevention access and patrol quantities and therefore **cannot identify a pure direct prevention effect**.
+   - *Patrol allocation algorithm*: recorded-hotspot prediction versus rotating equal allocation, with equal patrol quantity and budget.
+   - *Surveillance observation*: 20% versus 80% coverage, holding other controls constant. Compare recorded and underlying outcomes because surveillance changes measurement.
+   - *Police encounter style*: intensive versus procedural. Contact frequency and trust responses remain stylized assumptions.
+   - *Assumed patrol deterrence*: settings of 0% and 70%; these scale **hypothetical**, offense-specific coefficients rather than defining 70% effectiveness.
+2. **Structural sensitivity sweeps.** Four settings (0, 25, 50, 100) for employment, housing, education or all three optional exposure pathways. Their effects are assumed, not sourced from the Heller, Larochelle, RAND or hot-spots policing studies. The zero setting is the reference; pathways remain inactive unless intentionally enabled.
+3. **Three-factor, eight-arm full factorial design** (2 × 2 × 2) that crosses: prevention share (20, 80), surveillance coverage (20, 80), and hypothetical employment link (0, 100). Identical nominal budgets, patrol base rule, encounter style, service mix and synthetic starting residents are preserved. The factorial effects quantify *model response* and can be nonadditive; they are not estimates of actual treatment-effect interaction.
+
+### Replication and numerical contrasts
+
+Each design is run with the same seeded initial synthetic population and corresponding pseudorandom streams across arms, repeated across separate seeds (10, 20, 40 or 80 pairs in the interface). A trial seed equals \`seedBase + 7919 × replicationIndex\`. By default the lab uses 40 seeds, 384 fictional residents per world and a five-year period, with optional one-, two-, five- or ten-year configurations supported by the core.
+
+For each seed and outcome the lab computes
+
+\`\`\`text
+paired contrast = outcome(alternative policy world) − outcome(reference world)
+\`\`\`
+
+The reported mean is the average paired contrast across synthetic random seeds. The displayed 5th–95th percentiles represent the *empirical percentiles of seed-level contrasts*, not confidence intervals about true policy impacts.
+
+For a binary factorial factor A and outcome Y, the *main effect* is the difference between the mean simulated outcome at A=high and at A=low, averaging over all balanced combinations of the other two factors. A two-way interaction AB is the averaged difference-in-differences:
+
+\`\`\`text
+AB = mean_over_C[ Y11,C − Y10,C − Y01,C + Y00,C ]
+\`\`\`
+
+The three-way interaction is the third finite difference, \`Y111 − Y110 − Y101 − Y011 + Y100 + Y010 + Y001 − Y000\`. All calculations are performed separately within a seed, then summarized across replications. These are *algebraic synthetic contrasts*, not regression coefficients estimated from observations of real people.
+
+### Reports and reproducibility
+
+The dedicated lab exports:
+
+- **Seed-level CSV:** one record for each seed × arm, with each simulated outcome.
+- **Contrast CSV:** paired effect means, standard deviations, 5th/50th/95th percentiles, and sign counts; factorial effects and interactions are separately labeled.
+- **Full JSON:** exact arm configurations, seeds, outcomes, individual paired contrasts and reference metadata.
+- **Standalone HTML research report / Print-to-PDF:** registered design, precise settings, selected outcome contrasts, factorial effects, research evidence, limitations, replication metadata and embedded seed-level JSON.
+
+The simulation runs in a browser Web Worker, with a yielding main-thread fallback when Workers are unsupported. It is not hosted on a remote prediction or data-collection service.
+
+### What remains unvalidated
+
+This laboratory provides strong *internal reproducibility and mechanisms-debugging tools*, not real-world calibration. The model lacks calibrated crime incidence, outcome-specific exposure denominators, representative demographics, baseline service utilization and eligibility, and empirical estimates for many structural pathways. Future credible policy analysis requires external data, explicit identification strategies, sensitivity to unobserved mechanisms, and careful checks of transportability. No chart or laboratory report should be used to allocate real police resources or predict an identifiable person's behavior.
+
 ## Reading reports responsibly
 
 GENESIS exports monthly paired-world counts, synthetic life-course CSV data, replication CSV data, machine-readable scenario JSON, and standalone HTML research reports that can be printed to PDF.
