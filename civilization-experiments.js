@@ -4,8 +4,8 @@
 */
 (function(root){"use strict";
 const E=root.GenesisCivilization;if(!E)throw Error("Load civilization-engine.js first");
-const METRICS=["population","gdp","gdpPerCapita","debtGDP","debt","spending","underlying","recorded",
- "overdoseDeaths","violentArrests","unhoused","unhousedRate","employment","trust","adminQuality",
+const METRICS=["population","gdp","gdpPerCapita","debtGDP","debt","spending","underlying","crimePer100k","recorded","recordedPer100k",
+ "overdoseDeaths","overdoseDeathRate","violentArrests","unhoused","unhousedRate","employment","trust","adminQuality",
  "births","deaths","netExternalMigration","housingBuild","youthOffers","medicationMonths",
  "careUnmet","wastedBudget","implementationFailures"];
 const LABELS=Object.fromEntries(E.metricNames);
