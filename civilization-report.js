@@ -35,8 +35,11 @@ function build(geo,A,B,years){
   ["Debt as share of GDP",pc(a.debtGDP),pc(b.debtGDP)],
   ["Housing instability",fmt(a.unhoused),fmt(b.unhoused)],
   ["Underlying offenses",fmt(a.underlying),fmt(b.underlying)],
+  ["Underlying offenses / 100,000",fmt(a.crimePer100k,1),fmt(b.crimePer100k,1)],
   ["Police-recorded offenses",fmt(a.recorded),fmt(b.recorded)],
+  ["Police-recorded offenses / 100,000",fmt(a.recordedPer100k,1),fmt(b.recordedPer100k,1)],
   ["Opioid-overdose deaths",fmt(a.overdoseDeaths),fmt(b.overdoseDeaths)],
+  ["Opioid-overdose mortality / 100,000",fmt(a.overdoseDeathRate,2),fmt(b.overdoseDeathRate,2)],
   ["Hypothetical trust",pc(a.trust),pc(b.trust)]
  ];
  const stateA=E.snapshot(A,n).arrays,stateB=E.snapshot(B,n).arrays;
@@ -82,7 +85,7 @@ function build(geo,A,B,years){
  const css="@page{size:A4;margin:13mm}*{box-sizing:border-box}body{font:12px/1.5 system-ui,Arial;color:#16313a;max-width:1000px;margin:20px auto;padding:37px;background:#fff}"+
   "h1{font-size:38px;letter-spacing:-.05em}h2{font-size:19px}h3{font-size:13px}"+
   ".eyebrow{font-size:10px;letter-spacing:.13em;color:#098876;font-weight:900}.warning{background:#fff2df;border:1px solid #d7ae80;padding:12px}"+
-  "section{margin:25px 0;break-inside:auto}table{border-collapse:collapse;width:100%;font-size:10px}th{text-align:left;color:#12544c;background:#e9f2f2;padding:8px}td{padding:7px;border-bottom:1px solid #d9e4e6}tr{break-inside:avoid}"+
+  "section{margin:25px 0;break-inside:auto}table{border-collapse:collapse;width:100%;font-size:10px}th{text-align:left;color:#12544c;background:#e9f2f2;padding:8px}td{padding:7px;border-bottom:1px solid #d9e4e6;overflow-wrap:anywhere;word-break:break-word}tr{break-inside:avoid}"+
   ".plots{display:grid;grid-template-columns:1fr 1fr;gap:10px}.plot{border:1px solid #e1e9e9;padding:9px;break-inside:avoid}.plot svg{width:100%;height:auto}.small{font-size:10px;color:#6d848b}"+
   ".toolbar{display:flex;justify-content:space-between;padding:12px;background:#173f46;color:white;margin:-37px -37px 20px}.toolbar button{padding:9px;background:#c1ffdf;border:0;border-radius:4px;cursor:pointer}"+
   ".reference{border-left:3px solid #21897d;padding:8px;background:#eff8f6;margin:9px 0}a{color:#087e70}"+
