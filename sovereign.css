@@ -194,3 +194,9 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;color:
 .ecologyTableWrap th:first-child,.ecologyTableWrap td:first-child{text-align:left}
 .ecologyTableWrap td{border-bottom:1px solid #315563;padding:9px 8px;text-align:right;font-variant-numeric:tabular-nums;color:#d8eeeb}
 .ecologyTableWrap tr:nth-child(even){background:#133240}
+
+/* Cinematic camera-projected settlement and province labels. */
+.sovereignMapLabels{position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden}
+.sovereignMapLabel{position:absolute;top:0;left:0;white-space:nowrap;pointer-events:none;font:850 10px ui-monospace,monospace;letter-spacing:.03em;color:#e5fff5;text-shadow:0 1px 9px #031825;background:#072938b8;border:1px solid #3eacaaa6;border-radius:5px;padding:4px 6px;box-shadow:0 0 13px #35d1c724}
+.sovereignMapLabel.province{font-size:9px;letter-spacing:.07em;color:#ffda9d;border-color:#c1a16c74;background:#1e2831ab;padding:3px 5px}
+@media(max-width:700px){.sovereignMapLabel{font-size:8px;padding:3px}.sovereignMapLabel.province{font-size:7px}}
