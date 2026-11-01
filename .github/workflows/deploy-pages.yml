@@ -31,6 +31,8 @@ jobs:
         run: node scripts/test-sovereign.cjs
       - name: Smoke test SOVEREIGN interactive controls, regional rollouts and report exports
         run: node scripts/test-sovereign-ui.cjs
+      - name: Verify SOVEREIGN full geographic visualization without WebGL
+        run: node scripts/test-sovereign-visuals.cjs
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload static website
