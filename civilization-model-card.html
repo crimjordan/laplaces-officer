@@ -1,0 +1,145 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GENESIS Civilization II — Model Card & Empirical Provenance</title><meta name="theme-color" content="#071b28">
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{background:radial-gradient(ellipse at 50% -5%,#1b4b52,#071523 58%),#071521;color:#e6f8f5;font:14px/1.8 system-ui,-apple-system,sans-serif;margin:0}
+a{color:#91f7dc;text-decoration:none}a:hover{text-decoration:underline}
+nav{position:sticky;top:0;z-index:3;background:#081d2bda;border-bottom:1px solid #345868;padding:15px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap;backdrop-filter:blur(13px)}
+nav a{font:850 11px ui-monospace,monospace;color:#a7ded7}
+main{max-width:1060px;margin:auto;padding:25px 21px 75px}
+.hero{padding:30px 0 34px;border-bottom:2px solid #366e72}
+.eyebrow{font:900 10px ui-monospace,monospace;letter-spacing:.14em;color:#85f6d8}
+h1{font-size:clamp(38px,6.2vw,80px);line-height:1.03;letter-spacing:-.065em;margin:10px 0 18px}
+h1 em{color:#8cffd8;font-style:normal}h2{font-size:26px;letter-spacing:-.03em;margin:9px 0 15px}
+h3{font-size:16px;line-height:1.35;margin:10px 0}
+p{color:#bed4d6;margin:9px 0 17px}
+section{border-bottom:1px solid #2e5261;padding:27px 0}
+.warning{border-left:3px solid #e7b877;background:#31313a;color:#f1d1a7;padding:19px;margin:22px 0}
+.warning strong{display:block;font-size:12px}
+.warning p{color:#dfd1bf;margin:7px 0 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.grid>div{background:#123342;border:1px solid #36636e;border-radius:9px;padding:16px}
+.grid strong{color:#9affde}.grid p{font-size:12px}
+code,pre{font:12px/1.65 ui-monospace,monospace;color:#c3ffdf}
+pre{background:#102e3d;border:1px solid #335e6a;padding:15px;border-radius:8px;overflow:auto}
+table{border-collapse:collapse;width:100%;font-size:12px;margin:15px 0}
+th{text-align:left;color:#c8f9e9;background:#1a4052;padding:10px}
+td{padding:10px;vertical-align:top;border-bottom:1px solid #335869}
+tr:nth-child(even){background:#122e3d}
+.provenance{background:#122f3e;border-left:3px solid #4bdbba;padding:15px;margin:12px 0}
+.provenance small{color:#f2d394;font-size:10px;letter-spacing:.06em;font-weight:850}
+.provenance strong{display:block;margin:4px 0}.provenance p{font-size:12px;margin:6px 0}
+li{margin:8px 0;color:#c7dedb}
+footer{margin-top:25px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:#91b8bd;font:11px ui-monospace,monospace}
+@media(max-width:650px){main{padding:20px 12px 40px}table{display:block;overflow-x:auto}td,th{min-width:160px}}
+</style></head><body>
+<nav><a href="civilization.html">◉ BACK TO CIVILIZATION</a><a href="sovereign.html">SOVEREIGN V1</a><a href="genesis-experiments.html">CONTROLLED EXPERIMENT LAB</a><a href="index.html">HOME</a></nav>
+<main>
+<header class="hero"><div class="eyebrow">PUBLIC METHOD SPECIFICATION / CIVILIZATION ENGINE 2.0</div>
+<h1>AN ENTIRE SOCIETY.<br><em>EXPLICIT ASSUMPTIONS.</em></h1>
+<p>A public description of how generated territories, cohort-component population flows, constrained governments, housing stocks, program access, crime types, and policy comparisons are computed.</p></header>
+<div class="warning"><strong>THE MODEL HAS NOT BEEN CALIBRATED OR EXTERNALLY VALIDATED.</strong>
+<p>The computational architecture incorporates certain concepts and narrow effect anchors supported by research. That does not make the simulated crime rates, population pathways, policy effects, budgets or housing markets empirical estimates. Neither model-generated maps nor 200-year paths should inform actual enforcement decisions.</p></div>
+<section><div class="eyebrow">01 / OBJECT AND SCALE</div><h2>What exists in Civilization II?</h2>
+<div class="grid">
+<div><strong>State · 1,320 synthetic areas</strong><p>9 provinces, six generated city centers, seven land-use classes, up to 200 years.</p></div>
+<div><strong>Country · 2,688 synthetic areas</strong><p>16 provinces, 12 generated urban clusters, transport corridors and rivers, up to 200 years.</p></div>
+<div><strong>Federation · 4,368 synthetic areas</strong><p>24 provinces, 19 urban anchors, a maximum of 120 years for performance.</p></div>
+</div>
+<p>Each cell represents a fictional aggregate geographic area, not an identifiable resident or address. The map is generated with seeded fractal terrain, fictional rivers, highway connections, province centers, and distance-to-city zoning rules. A new seed generates a distinct fictional society. Province and town identifiers are unique and stable within each generated world.</p>
+<p>Each cell tracks population by four age groups, housing units, jobs, wages, schooling, access to care, age-specific outcomes, institutional trust, program administration, crime and recording intensity. The visible 3D towers are visualization proxies, not actual buildings. There are no person-level forecasts.</p>
+</section>
+<section><div class="eyebrow">02 / DEMOGRAPHIC ACCOUNTING</div><h2>Population cannot simply remain the same in every policy world</h2>
+<p>GenESIS uses an approximate cohort-component structure: children 0–17, young adults 18–34, adults 35–64 and older adults 65+. People enter through births, age out of cohorts, die at assumed age-specific hazards, and move internally or across borders. Internal movements sum to zero over the entire fictional nation.</p>
+<pre>Population at t + 1
+  = Population at t
+    + Simulated births
+    - Simulated deaths
+    + Net external migration
+
+Internal migration across provinces:
+  Sum(internal arrivals - departures) = 0 nationally</pre>
+<p>The engine checks the accounting identity numerically after each simulated year and rejects a time step if it fails by more than floating-point tolerance.</p>
+<div class="provenance"><small>SUPPORTED METHODS · NOT CALIBRATED PARAMETERS</small><strong>United Nations, World Population Prospects 2024</strong>
+<p>Real demographic projections use cohort-component accounting with detailed fertility, mortality, and migration inputs. The UN implementation includes country-specific, age- and sex-specific rates; this four-cohort simulator does not. <a href="https://www.un.org/development/desa/pd/world-population-prospects-2024">Official UN methodology</a>.</p>
+</div>
+<div class="provenance"><small>ACCOUNTING VALIDATION</small><strong>UK Office for National Statistics — cohort-component framework</strong>
+<p>The familiar population identity is births minus deaths plus net migration. The model borrows this bookkeeping, not observed British population rates. <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationprojections/methodologies/methodologyusedtoproducethenationalpopulationprojections">Methodology</a>.</p>
+</div>
+</section>
+<section><div class="eyebrow">03 / THE FISCAL STATE</div><h2>Announced government spending is not the same as feasible spending</h2>
+<p>GDP is a stylized function of workers, fictional real wages and jobs. Public revenue depends on a tax-rate slider; planned spending is a share of GDP. Debt interest and a borrowing limit restrict appropriations. Six sectors compete for the actually funded public budget. A service provider's delivery depends on local administrative capacity, shocks, and probabilistic implementation failures.</p>
+<pre>Government revenue = fictional GDP × tax rate
+Debt service = previous government debt × assumed interest rate
+
+Available for programs
+  = revenue + permitted new borrowing - debt service
+
+Appropriated spending
+  = min(target % GDP, available for programs)
+
+Actual delivered services
+  = sector allocation × local administrative delivery fraction
+
+Fiscal deficit = appropriations + interest - revenue
+Government debt(t+1) = max(0, debt(t) + deficit)</pre>
+<p>Default assumptions: 2.8% annual interest, public budget shares allocated across education, health, housing, jobs, policing, and climate resilience; implementation efficiency depends on administrative quality and stress. These are fictional numerical parameters. GDP and money are constant-2027-dollar equivalents and do not correspond to a national economy or an IMF baseline.</p>
+<p>Changing housing funding may reduce funds available for policing under the same total budget; increasing a tax rate can increase capacity, but there is no calibrated labor-supply or tax-behavioral model. Debt limits have no empirically estimated default risk.</p>
+</section>
+<section><div class="eyebrow">04 / BUILT ENVIRONMENT AND PUBLIC CAPACITY</div><h2>Housing shortages, crowded services and institutional failure</h2>
+<table><thead><tr><th>System</th><th>Explicit stock and flow</th><th>Important limitation</th></tr></thead><tbody>
+<tr><td>Housing</td><td>Housing units + publicly funded units + private construction − damage/retirement; housing need derives from household demand, vacancies and fictional affordability strain.</td><td>Costs, household sizes, construction responsiveness, zoning and rent pressures are not estimated from observed markets.</td></tr>
+<tr><td>Schools</td><td>Age-eligible pupils, funded seats, existing regional service accessibility, and eventual changes in education index.</td><td>Actual learning, school quality, and peer mechanisms are abstracted into hypothetical coverage.</td></tr>
+<tr><td>Health</td><td>Encounter demand, funded service capacity, unmet access and a restricted medication exposure pathway.</td><td>Medical epidemiology, treatment retention, demographics and local clinical capacity are not calibrated.</td></tr>
+<tr><td>Employment</td><td>Working-age residents, job slots, regional wages, recession effects, and funded youth-program offers.</td><td>Fictional labor-productivity and job creation parameters; no market-equilibrium wage model.</td></tr>
+<tr><td>Government</td><td>Administrative capacity varies by district, is affected by stress and trust, and probabilistically prevents some allocated funding from reaching programs.</td><td>Failure rate is hypothetical, not measured corruption, state capacity or civil-service performance.</td></tr>
+</tbody></table>
+</section>
+<section><div class="eyebrow">05 / DISTINCT OFFENSE TYPES AND POLICE RECORDING</div><h2>Recorded incidents are not underlying harm</h2>
+<p>The engine models theft, burglary, vehicle theft, robbery, assault, homicide, fraud, cybercrime, drug-market offenses and disorder incidents independently. Each category uses a hypothetical annual count baseline and category-specific spatial factors. Population exposure, socioeconomic indexes and simulated shocks can modify event generation. Patrol deterrence is an optional sensitivity assumption.</p>
+<pre>Simulated underlying event count
+  = annual offense rate (invented)
+    × exposed population / 1,000
+    × modeled geographic/social risk
+    × category-specific policy multipliers
+    × seeded event variation
+
+Police-recorded event count
+  = subset of underlying events
+    shaped by reported proportion,
+    surveillance, trust and patrol presence</pre>
+<p>Drug-possession criminal processing is distinct from drug-market offending and from nonfatal overdose. The police-recording model should not be used to claim actual officer detection rates, criminal prevalence, or credible local hot-spots forecasts.</p>
+</section>
+<section><div class="eyebrow">06 / INTERNATIONAL POLICY EVIDENCE</div><h2>Only narrow outcomes receive numerical study anchors</h2>
+<div class="provenance"><small>RANDOMIZED EXPERIMENT / NARROW TRANSFER</small><strong>Chicago youth employment — Sara B. Heller (2014)</strong>
+<p>A randomized trial among selected disadvantaged Chicago high-school youth found a 43% reduction in violent-crime arrests over 16 months for program assignment. This is not a nationwide crime-reduction estimate, an effect on homicide, or proof of permanent employment gains. Civilization applies the related 0.57 ratio only to the simulated offered-youth arrest component. <a href="https://pubmed.ncbi.nlm.nih.gov/25477459/">Research article</a>.</p></div>
+<div class="provenance"><small>OBSERVATIONAL COHORT / ASSOCIATION</small><strong>Medication after nonfatal overdose — Larochelle et al. (2018)</strong>
+<p>In a Massachusetts cohort of prior overdose survivors, methadone treatment was associated with a lower adjusted opioid-related death hazard (0.41). Civilizations II uses the associated relative factor for a fictional treated survivor subset, not a randomized or nationally validated treatment effect. The eligibility pool and untreated hazard remain uncalibrated. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6387681/">Study</a>.</p></div>
+<div class="provenance"><small>META-ANALYSIS / POPULATION LIMITATIONS</small><strong>Correctional education — RAND (2013)</strong>
+<p>Correctional education appears related to lower recidivism odds in the studied context. The model uses a 0.57 odds multiplier in a fictional offered subset. The underlying recidivism risk, program completion and jurisdictional transport are assumptions. <a href="https://www.rand.org/pubs/research_reports/RR266.html">Research report</a>.</p></div>
+<div class="provenance"><small>QUALITATIVE POLICY INSPIRATION / NO DIRECT COEFFICIENT</small><strong>Finland, Portugal, Scotland and Norway</strong>
+<p>Housing First, health-first drug policy, violence reduction and reentry are prompts for exploring institutional design, not empirical estimates of how much crime will change when they are imported to a fictional national environment. Their implementation strengths, delivery rates and interactions are entirely hypothetical. <a href="https://www.unsw.edu.au/content/dam/pdfs/ada/sprc/research-reports/dpmp-drug-summit-2024-explainers/2024-11-was-decriminalisation-effective-in-portugal-v3.pdf">Portugal evidence and limitations</a>.</p></div>
+</section>
+<section><div class="eyebrow">07 / EXPERIMENTAL DESIGN</div><h2>What a matched simulation can and cannot answer</h2>
+<p>World A and B share a common geography and pseudorandom streams. Changing only a single factor isolates its programmed influence under that particular set of equations. Changing several spending, surveillance and national policy controls together creates a package comparison. Repeated seeds in the national experiment tab yield means and 5th–95th percentile ranges of *within-model* differences.</p>
+<pre>Paired synthetic contrast (seed s)
+  = outcome in World B under seed s
+    − outcome in World A under seed s
+
+Reported experiment mean
+  = average contrast across distinct fictional seeds
+
+Reported 5th–95th percentiles
+  = seed-distribution percentiles, NOT
+    confidence limits for real-world policies</pre>
+<p>The national replication workflow starts new fictional histories using current input settings; it does not automatically reconstruct each historical slider movement previously made in the interactive simulator. Neither matched seeds nor explicit government accounting establish external validity.</p>
+</section>
+<section><div class="eyebrow">08 / RESEARCH ROADMAP</div><h2>What genuine calibration would require</h2>
+<div class="grid"><div><strong>Population foundations</strong><p>Age-sex single-year census structure, vital rates, migration patterns and cohort-specific exposure times.</p></div>
+<div><strong>Geographic foundations</strong><p>Actual boundary polygons, land-use parcels, building and housing inventory, transport networks and regional prices.</p></div>
+<div><strong>Public finances</strong><p>Observed budget accounts, debt and cost data, service quality measures, actual program eligibility and take-up.</p></div>
+<div><strong>Criminal justice</strong><p>Crime-specific victimization prevalence, incident reporting rates, police contact data, recidivism outcomes and publication of measurement assumptions.</p></div>
+<div><strong>Policy evidence</strong><p>Clearly defined estimands, identification strategies, study population matching, uncertainty, and checks for transportability between jurisdictions.</p></div>
+<div><strong>Validation</strong><p>Historical holdout tests, sensitivity to omitted mechanisms, seed replication, calibration targets, and independent benchmarks.</p></div></div>
+</section>
+<footer><span>GENESIS CIVILIZATION II / v2.0 · RESEARCH SOFTWARE · SYNTHETIC DATA</span><a href="civilization.html">RETURN TO THE SIMULATION</a></footer>
+</main></body></html>
