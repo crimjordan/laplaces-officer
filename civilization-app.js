@@ -123,6 +123,10 @@ function pause(){
 }
 function reset(){
  pause();if(busy)return;
+ if(worker){worker.terminate();worker=null}
+ replicateResult=null;setLabBusy(false);
+ $("exportNationalExperiment").disabled=true;$("labResults").replaceChildren();
+ $("labTrackBar").style.width="0%";$("labStatus").textContent="New terrain generated. Previous experiment cleared; run again for the new settings.";
  viewer?.dispose();viewer=null;viewerGeneration++;
  const scale=$("scale").value,seed=Math.max(1,Math.floor(+$("seed").value||303030));
  geo=E.terrain(seed,scale);
@@ -240,8 +244,8 @@ function nationalStats(){
    cursor?"B "+p(metric(B,"debtGDP")):"FISCAL CONSTRAINT"],
   ["HOUSING NEED",cursor?compact(metric(A,"unhoused")):"—",
    cursor?"B "+compact(metric(B,"unhoused")):"HOUSEHOLD CAPACITY"],
-  ["UNDERLYING CRIME",cursor?compact(metric(A,"underlying")):"—",
-   cursor?"B "+compact(metric(B,"underlying")):"NOT POLICE RECORDINGS"],
+  ["UNDERLYING CRIME / 100K",cursor?d(metric(A,"crimePer100k"),1):"—",
+   cursor?"B "+d(metric(B,"crimePer100k"),1):"EXPOSURE-DENOMINATED"],
   ["OLDER ADULTS",cursor?compact(metric(A,"over65")):"—",
    cursor?"B "+compact(metric(B,"over65")):"AGE 65+"],
   ["DELIVERY LOSSES",cursor?"$"+d(metric(A,"wastedBudget"),2)+"B":"—",
