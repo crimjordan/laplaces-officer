@@ -29,6 +29,8 @@ jobs:
         run: node scripts/test-genesis-experiment-ui.cjs
       - name: Verify GENESIS SOVEREIGN geographies, research mechanisms and reports
         run: node scripts/test-sovereign.cjs
+      - name: Smoke test SOVEREIGN interactive controls, regional rollouts and report exports
+        run: node scripts/test-sovereign-ui.cjs
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload static website
