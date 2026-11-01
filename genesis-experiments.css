@@ -1,0 +1,114 @@
+/* GENESIS CONTROLLED EXPERIMENTS — legible scientific dashboard / cinematic lab */
+.lab{background:radial-gradient(ellipse at 60% -7%,#174f53,transparent 37%),radial-gradient(ellipse at 102% 32%,#1d304e,transparent 32%),#06111e}
+.labPage{padding:0 19px 50px;max-width:1780px}
+.labHero{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,.68fr);gap:27px;align-items:center;padding:35px 7px 28px}
+.labHero h1{font-size:clamp(39px,5.1vw,69px);letter-spacing:-.055em;margin:10px 0 15px}
+.labHero p{font-size:14px;color:#bbd4dd;line-height:1.7;max-width:850px}
+.labHero em{color:#72fae3}
+.labFlags{display:flex;flex-wrap:wrap;gap:7px}
+.labFlags span{font:800 10px ui-monospace,monospace;border-radius:20px;padding:7px 10px;color:#a4e9dc;border:1px solid #336c72}
+.labWarning{border:1px solid #907950;background:linear-gradient(145deg,#273041,#262f34);border-radius:11px;padding:21px;box-shadow:inset 0 0 23px #d9a96b0e}
+.labWarning strong{color:#ffdcab;font-size:11px;letter-spacing:.09em}
+.labWarning p{font-size:12px;color:#d1d1ca;margin:10px 0;line-height:1.55}
+.labWarning a{color:#90f9dd;font-size:11px;font-weight:800}
+.labTopStats{display:grid;grid-template-columns:1.3fr .65fr .75fr .75fr .85fr;gap:9px;margin-bottom:15px}
+.labTopStats>div{padding:15px 16px;background:linear-gradient(130deg,#173a47,#0d2132);border:1px solid #345866;border-radius:10px}
+.labTopStats small{display:block;font-size:10px;color:#9dbec9;letter-spacing:.07em;font-weight:800}
+.labTopStats strong{display:block;font-size:19px;line-height:1.12;margin-top:8px;letter-spacing:-.025em;word-break:break-word}
+.labLayout{display:grid;grid-template-columns:minmax(270px,340px) minmax(0,1fr);gap:15px;align-items:start}
+.labSidebar,.labPrimary{display:flex;flex-direction:column;gap:13px;min-width:0}
+.labPanel{padding:20px;border-color:#325668;background:linear-gradient(125deg,#0b1d2e,#10243a)}
+.labPanel h2{margin:6px 0 13px;font-size:21px}
+.labPanel input[type=number]{width:100%;padding:11px 12px;border:1px solid #3e6a78;background:#143044;color:#eff8f8;border-radius:7px}
+.labPanel select{padding:11px 12px;border-color:#3a6677;background:#15334a;font-size:12px}
+.labPanel label{margin:14px 0 6px;font-weight:850;font-size:10px}
+.labModeList{display:grid;gap:8px;margin:16px 0 11px}
+.labModeList button{display:block;text-align:left;background:#112e40;border:1px solid #3e6577;padding:12px 14px}
+.labModeList button strong{display:block;color:#eefcf6;font-size:12px;margin-bottom:3px}
+.labModeList button small{font-size:10px;color:#9bbcc7}
+.labModeList button.selected{background:linear-gradient(115deg,#1d635f,#19434e);border-color:#61dec8;box-shadow:0 0 0 1px #4dedc441}
+.labModeList button.selected strong{color:#a1ffdb}
+.labModeList button.selected small{color:#c1e6df}
+.labTwocol{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#runExperiment,#cancelExperiment{display:block;width:100%;padding:13px 9px;margin:14px 0 0;font-weight:900;letter-spacing:.035em}
+#cancelExperiment{margin-top:7px;background:#39252e;color:#ffd8da;border-color:#6e4358}
+#cancelExperiment:disabled{opacity:.42}
+.labProgress{height:11px;background:#203b4b;border:1px solid #315464;border-radius:20px;margin:14px 0 8px;overflow:hidden}
+#labProgressBar{height:100%;width:0;background:linear-gradient(90deg,#419ca1,#76ffdc);box-shadow:0 0 14px #55f9dd5e;transition:width .12s}
+.labPrimary>.panel>.between{gap:12px;flex-wrap:wrap}
+.labPrimary>.panel>.between button{font-size:10px;font-weight:800}
+.armPreview{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px;margin:15px 0}
+.armCard{background:linear-gradient(135deg,#173a4a,#11293e);border:1px solid #2c6672;padding:12px;border-radius:9px;min-width:0;position:relative;overflow:hidden}
+.armCard:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#67ead4}
+.armCard:nth-child(2n):before{background:#f8c28c}
+.armCard .armNumber{font:850 9px ui-monospace,monospace;color:#89d4d2;letter-spacing:.06em;display:block}
+.armCard strong{display:block;font-size:13px;line-height:1.32;margin:7px 0}
+.armCard small{display:block;color:#98b8c8;font-size:10px}
+.labDetails{margin-top:13px}
+.labDetails summary{cursor:pointer;color:#89f4d7;font-size:11px;font-weight:800;padding:10px 0}
+.labDetails pre{font:10px/1.6 ui-monospace,monospace;color:#b4d9e2;overflow:auto;background:#071c2c;padding:13px;border:1px solid #285365;border-radius:8px;max-height:390px}
+.labEmpty{text-align:center;padding:60px 20px 76px;background:radial-gradient(ellipse at 50% 45%,#193e49,#081926 77%);border-radius:10px;border:1px dashed #356575}
+.labEmpty h3{font-size:18px;margin:6px 0 10px}
+.labEmpty p{font-size:12px;color:#a7c4cf;max-width:590px;margin:0 auto;line-height:1.7}
+.emptyOrbit{font-size:74px;color:#73ffe0;text-shadow:0 0 33px #48f1ca}
+#resultsTag,.modelTag{display:inline-block;font:900 10px ui-monospace,monospace;color:#edc893;border:1px solid #756547;background:#3b3340;padding:7px 10px;border-radius:6px;letter-spacing:.02em}
+.modelTag.complete{background:#174c4c;color:#8bffde;border-color:#46aa95}
+#outcomeSelect{max-width:590px;margin:0 0 17px}
+.resultKpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:11px 0 15px}
+.resultKpis>div{border:1px solid #315d65;background:linear-gradient(130deg,#17404b,#10293d);border-radius:8px;padding:13px;min-width:0}
+.resultKpis small{font-size:10px;color:#a2c8c9;display:block}
+.resultKpis strong{font-size:clamp(16px,2.1vw,26px);display:block;margin:9px 0 2px;color:#e8fffa;font-variant-numeric:tabular-nums}
+.resultKpis em{font-style:normal;font-size:10px;color:#9bb9c7}
+#contrastCanvas{width:100%;height:auto;display:block;border-radius:8px;border:1px solid #294e60;background:#081c2a}
+#chartCaption{margin:13px 0 24px}
+.labTableWrap{overflow-x:auto;max-width:100%;margin-top:15px}
+.labTableWrap table{border-collapse:collapse;width:100%;min-width:600px;font-size:11px}
+.labTableWrap th{text-align:right;color:#a5d4d5;background:#153648;font-weight:900;padding:12px 10px}
+.labTableWrap th:first-child{text-align:left}
+.labTableWrap td{border-bottom:1px solid #295266;padding:10px 9px;text-align:right;font-variant-numeric:tabular-nums;color:#d2eeeb}
+.labTableWrap td:first-child{text-align:left;font-weight:750}
+.labTableWrap tbody tr:nth-child(2n){background:#112c3d}
+.labTableWrap tbody tr:hover{background:#1b3c4e}
+.labTableWrap caption{text-align:left;font-size:13px;font-weight:800;padding:9px 0;color:#a0f5de}
+.methodGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.methodGrid>div{background:#142c40;padding:14px;border:1px solid #2c5061;border-radius:9px}
+.methodGrid strong{font-size:12px;color:#d0fff0}
+.methodGrid p{font-size:11px;line-height:1.62;color:#9dbecc;margin:7px 0 0}
+.labMethodWarning{background:#302d37;border-left:3px solid #efbd87;padding:15px;margin-top:13px}
+.labMethodWarning strong{color:#fbd2a1;font-size:11px;letter-spacing:.03em}
+.labMethodWarning p{font-size:11px;line-height:1.65;color:#d0c7c8;margin:7px 0 0}
+.labExportButtons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0}
+.labExportButtons button{font-size:11px;font-weight:900;padding:11px 8px}
+.labExportButtons .mainbtn{color:#073329}
+.labPrimary #progressText{min-height:34px}
+footer{padding:27px 10px;margin-top:22px}
+@media(max-width:1150px){
+ .labLayout{grid-template-columns:minmax(250px,295px) minmax(0,1fr)}
+ .resultKpis{grid-template-columns:repeat(2,1fr)}
+ .labTopStats{grid-template-columns:repeat(5,1fr)}
+}
+@media(max-width:880px){
+ .labHero{grid-template-columns:1fr}
+ .labLayout{grid-template-columns:1fr}
+ .labSidebar{display:grid;grid-template-columns:1fr 1fr}
+ .labSidebar .labPanel:first-child{grid-column:1/-1}
+ .labTopStats{grid-template-columns:repeat(3,1fr)}
+ .labPrimary{grid-column:1/-1}
+}
+@media(max-width:600px){
+ .labPage{padding:0 9px 28px}
+ .labHero{padding:23px 8px 25px;gap:10px}
+ .labHero h1{font-size:37px}
+ .labTopStats{grid-template-columns:repeat(2,1fr)}
+ .labTopStats>div{padding:11px}
+ .labTopStats strong{font-size:16px}
+ .labSidebar{display:flex;flex-direction:column}
+ .labPanel{padding:13px}
+ .labTwocol{grid-template-columns:1fr 1fr}
+ .armPreview{grid-template-columns:1fr 1fr}
+ .methodGrid{grid-template-columns:1fr}
+ .labExportButtons{grid-template-columns:1fr}
+ .resultKpis{grid-template-columns:1fr 1fr}
+ .labDetails pre{max-height:290px}
+}
+@media(prefers-reduced-motion:reduce){#labProgressBar{transition:none}}
