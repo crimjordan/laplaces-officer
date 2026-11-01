@@ -24,7 +24,7 @@ for(const mode of ["isolated","structural","factorial"]){
  assert(analysis.paired.every(c=>Number.isFinite(c.summary.mean)),"Nonfinite contrast in "+mode);
  assert(analysis.paired.every(c=>c.summary.n===2),"Incorrect replication count");
  assert(X.rawCSV(analysis).startsWith("seed,arm_id"),"Raw CSV headers absent");
- assert(X.effectsCSV(analysis).includes("q")===false||true);
+ assert(X.effectsCSV(analysis).startsWith("kind,effect,arm"),"Contrast CSV headers absent");
  const again=X.runSeed(E,plan,0);
  assert.deepEqual(JSON.parse(JSON.stringify(again)),JSON.parse(JSON.stringify(batches[0])),"Repeated seed changed results");
 }
@@ -54,7 +54,7 @@ assert.equal(find("Prevention × surveillance"),12.5);
 assert.equal(find("Prevention × surveillance × employment link"),11);
 // Validate worker's complete messaging flow in a VM, without a browser.
 const messages=[];const workerGlobal={postMessage:msg=>messages.push(msg)};
-const workerCtx=vm.createContext({self:workerGlobal,Date,Math,Uint8Array,Uint16Array,Float32Array,console});
+const workerCtx=vm.createContext({self:workerGlobal,window:workerGlobal,Date,Math,Uint8Array,Uint16Array,Float32Array,console});
 workerCtx.importScripts=(...names)=>{for(const file of names)vm.runInContext(read(file.split("?")[0]),workerCtx,{filename:file})};
 vm.runInContext(read("genesis-experiment-worker.js"),workerCtx);
 workerGlobal.onmessage({data:{action:"start",spec:{kind:"isolated",test:"surveillance",seeds:2,years:1,population:128}}});
