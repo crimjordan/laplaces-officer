@@ -185,3 +185,12 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;color:
  .mapFlags{justify-content:start}
 }
 @media(prefers-reduced-motion:reduce){button{transition:none}}
+
+/* Land-use analytic decomposition (fictional rates and land parcels only). */
+.ecologyModule{border-color:#39797d;background:linear-gradient(122deg,#0c2b37,#152837)}
+.ecologyTableWrap{max-width:100%;overflow-x:auto}
+.ecologyTableWrap table{width:100%;border-collapse:collapse;font-size:11px;min-width:700px}
+.ecologyTableWrap th{text-align:right;padding:10px 8px;background:#194250;color:#a5f4df;font-size:10px}
+.ecologyTableWrap th:first-child,.ecologyTableWrap td:first-child{text-align:left}
+.ecologyTableWrap td{border-bottom:1px solid #315563;padding:9px 8px;text-align:right;font-variant-numeric:tabular-nums;color:#d8eeeb}
+.ecologyTableWrap tr:nth-child(even){background:#133240}
