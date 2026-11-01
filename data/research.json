@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-31T15:23:48.000279+00:00",
+  "updated": "2026-11-01T16:06:19.306405+00:00",
   "items": [
     {
       "title": "Predictive Policing",
@@ -176,6 +176,12 @@
       "source": "OpenAlex"
     },
     {
+      "title": "About Face: why the police may have fewer surveillance cameras in the future",
+      "url": "https://openalex.org/W7224978990",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
       "title": "AI-Driven Surveillance Auditing to Police Ethically",
       "url": "https://doi.org/10.5281/zenodo.22144614",
       "year": 2026,
@@ -224,12 +230,6 @@
       "source": "OpenAlex"
     },
     {
-      "title": "About Face: why the police may have fewer surveillance cameras in the future",
-      "url": "https://openalex.org/W7224978990",
-      "year": 2026,
-      "source": "OpenAlex"
-    },
-    {
       "title": "Police Surveillance and Use of Facial Recognition Technology: Charter Issues, Legal Frameworks and Oversight Mechanisms",
       "url": "https://openalex.org/W7162610109",
       "year": 2026,
@@ -248,8 +248,8 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Resisting Surveillance AI: Mechanisms of Accountability Evasion and Community Engagement",
-      "url": "https://doi.org/10.1609/aies.v9i4.43360",
+      "title": "Internal Supervision in Handling Domestic Violence by Police Members: The Role of Investigation Supervisory Officers from the Perspective of Accountability and Conflicts of Interest",
+      "url": "https://doi.org/10.62885/legisci.v4i2.1216",
       "year": 2026,
       "source": "OpenAlex"
     },
