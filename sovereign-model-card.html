@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GENESIS SOVEREIGN — Model Card, Sources & Limits</title>
+<meta name="theme-color" content="#071724">
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{background:radial-gradient(ellipse at 50% 0,#1d4853,#071621 50%),#071521;color:#e6f7f6;margin:0;font:14px/1.75 system-ui,Arial}
+a{color:#9efcde;text-decoration:none}a:hover{text-decoration:underline}main{max-width:1100px;margin:auto;padding:28px 20px 60px}
+nav{padding:18px;border-bottom:1px solid #325769;background:#071e2be8;display:flex;gap:22px;flex-wrap:wrap;justify-content:center;font-weight:800;font-size:12px}
+h1{font-size:clamp(40px,6vw,75px);line-height:1;letter-spacing:-.06em;margin:12px 0}h1 em{font-style:normal;color:#80f6d7}
+h2{font-size:24px;margin:10px 0}h3{font-size:17px;margin:10px 0}p{margin:9px 0 17px}
+.eyebrow{font:900 10px ui-monospace,monospace;letter-spacing:.13em;color:#79f3d5}.hero{padding:35px 0;border-bottom:2px solid #3a7180}
+.hero p{font-size:16px;color:#bdd3db;max-width:860px}.warning{border:1px solid #a6885c;background:#352c32;border-radius:9px;color:#ffe5c2;padding:18px;margin:21px 0}
+section{padding:24px 0;border-bottom:1px solid #2d4c60}table{width:100%;border-collapse:collapse;margin:16px 0;font-size:12px}thead{background:#1b4052}th,td{text-align:left;padding:10px 11px;border-bottom:1px solid #2d5264;vertical-align:top}tr:nth-child(even){background:#122d3d}th{color:#d0fcf0}
+code,pre{font:12px/1.7 ui-monospace,monospace;color:#b1f8e1}pre{background:#0c2837;padding:17px;border:1px solid #3b6372;overflow:auto;border-radius:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.grid>div{background:#133040;border:1px solid #3b6070;border-radius:9px;padding:16px}
+.grid strong{color:#9df8d8}.grid p{font-size:12px;color:#b4ccd4}.source{padding:15px;border-left:3px solid #6deace;background:#123143;margin:12px 0}
+.source small{display:block;color:#eaca98}.source p{font-size:12px;color:#bfd5d9;margin:6px 0}
+footer{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;padding:28px 0;color:#93b3c2;font-size:11px}
+@media(max-width:650px){table{display:block;overflow-x:auto}th,td{min-width:135px;padding:8px}}
+</style></head><body>
+<nav><a href="index.html">HOME</a><a href="sovereign.html">RETURN TO SOVEREIGN</a><a href="genesis.html">CITY GENESIS</a><a href="genesis-experiments.html">CONTROLLED LAB</a></nav>
+<main><header class="hero"><div class="eyebrow">SOVEREIGN v1.0 / PUBLIC MODEL CARD</div><h1>THE SCIENCE<br><em>BEHIND THE FICTION.</em></h1>
+<p>Model architecture, mathematical assumptions, geographic generation, international policy inspirations, research anchors, and boundaries of valid interpretation.</p>
+</header>
+<div class="warning"><strong>THIS IS NOT AN EMPIRICALLY CALIBRATED NATIONAL FORECAST.</strong> SOVEREIGN is a fictional experimental geography simulator. Its numerical crime, mortality, migration, schooling, housing, surveillance and economic parameters are mostly invented. No region represents a real community, and no policy output should be used to decide where police operate or to predict criminal behavior.</div>
+<section><div class="eyebrow">01 / THE COMPUTATIONAL OBJECT</div><h2>What the simulator actually generates</h2>
+<div class="grid"><div><strong>State: 1,320 cells</strong><p>44 × 30 grid, 9 fictional provinces, 6 procedurally placed city anchors, 200-year maximum horizon.</p></div>
+<div><strong>Country: 2,688 cells</strong><p>64 × 42 grid, 16 fictional provinces, 12 city anchors, 200-year maximum horizon.</p></div>
+<div><strong>Federation: 4,368 cells</strong><p>84 × 52 grid, 24 fictional provinces, 19 city anchors, 120-year maximum horizon for performance.</p></div></div>
+<p>Each cell has a synthetic population, employment, education, housing stability, health access, trust index, deprivation, development, police-recording score and drug-overdose survivor pool. People are represented as aggregate counts, <strong>not individual agents</strong>. Unlike the city-scale GENESIS simulator, SOVEREIGN does not model separate named resident lives.</p>
+<p>Each world evolves in annual steps. World A and World B begin with identical spatial data and deterministic random streams. Changing a policy may alter later state transitions and measured outcomes. Annual typed-array snapshots enable historical inspection and timeline branching. Repeated independent seed experiments would be required to measure within-model stochastic variability.</p>
+</section>
+<section><div class="eyebrow">02 / PROCEDURALLY GENERATED GEOGRAPHY</div><h2>Why the territory looks different in every seed</h2>
+<p>The map is not sourced from OpenStreetMap, satellite imagery or census data. It is produced from seeded multiscale spatial noise, fictitious city centers, nonlinear waterways, connected road lines and jittered province centers. Urbanicity results from proximity to generated cities and transport, as well as surface terrain. Distinct land uses include urban residential, suburban, commercial/CBD, industrial, rural/agricultural, woodland/wilderness and water/river.</p>
+<p>Land-use type, density, terrain index, employment opportunity and road access influence hypothetical regional conditions. A stylized transport animation does not depict real vehicle routes. Building extrusions represent generated development indexes, not actual infrastructure.</p>
+</section>
+<section><div class="eyebrow">03 / SOCIAL SYSTEMS & INTERDEPENDENCE</div><h2>What changes across 200 years</h2>
+<table><thead><tr><th>Mechanism</th><th>Current model treatment</th><th>Evidence status</th></tr></thead><tbody>
+<tr><td>Regional population</td><td>Invented 0.25% annual growth, regional shocks and neighboring-cell migration driven by employment, housing and health attractiveness.</td><td>Hypothetical. No fertility, age structure, real migration model or census calibration.</td></tr>
+<tr><td>Employment and education</td><td>Slow bounded adjustment toward regional opportunity indexes with public-investment input and shocks.</td><td>Hypothetical. Does not measure labor-market elasticity or wage effects.</td></tr>
+<tr><td>Housing</td><td>Housing stability changes under housing support, city density pressures and shocks; a fictional housing-instability stock is derived from the index.</td><td>Hypothetical mechanism. Finland's actual Housing First effects are not imported.</td></tr>
+<tr><td>Health care and overdose</td><td>Health access affects a fictional treatment participation pool; opioid mortality association is restricted to treated prior-overdose survivors.</td><td>Baseline exposure and hazards assumed; narrow observational medication effect anchored in Larochelle et al.</td></tr>
+<tr><td>Crime and victimization</td><td>Ten offense types generated from assumed incidence rates per 1,000 population, spatial conditions, and category-specific exposure rules.</td><td>Uncalibrated. Not official crime rates or empirically fitted risk scores.</td></tr>
+<tr><td>Policing and surveillance</td><td>Patrol and observation change model detection probabilities; recorded and underlying counts are distinct.</td><td>Illustrative observation-feedback architecture, not a validated deployment system.</td></tr>
+<tr><td>Spillovers</td><td>Neighboring risk scores influence future hypothetical incident intensity. Migration flows across province lines are tracked.</td><td>Assumed; adjacency is not fitted to real travel or criminogenic diffusion.</td></tr>
+<tr><td>Future shocks</td><td>Economic recession, flood, health emergency and immigration wave apply bounded annual scenario multipliers.</td><td>Completely synthetic scenario experiments.</td></tr>
+</tbody></table>
+<h3>Illustrative event-generation logic</h3>
+<pre>Reference expected incidents
+  = synthetic population / 1000
+    × hypothetical offense baseline
+    × regional deprivation/urbanicity factor
+    × neighbor-spillover adjustment
+
+Final expected incidents
+  = reference expectation
+    × category-specific scenario adjustments
+    × any applicable policy exposure multiplier
+    × stylized patrol modifier
+
+Realized incidents
+  = nonnegative rounded expectation
+    + seed-stable event noise
+
+Recorded incidents
+  = subset of realized incidents
+    shaped by reporting probability,
+      surveillance, trust and patrol presence</pre>
+<p>These are structural equations chosen for explanatory interactivity, not a model estimated by regression, trial analysis or historical time-series fitting. The deterministic noise makes identical worlds reproducible but does not estimate causal effects.</p>
+</section>
+<section><div class="eyebrow">04 / INTERNATIONAL POLICY EXCHANGE</div><h2>Program ideas are not transportable effect estimates</h2>
+<div class="source"><strong>Finland · Housing First</strong><small>Descriptive policy experience / aggregate homelessness trends</small>
+<p>The software assumes sustained housing support improves the fictional housing-stability index at an invented rate. Finland's declining long-term homelessness does not identify a universal causal crime effect.</p>
+<a href="https://www.europarl.europa.eu/RegData/etudes/STUD/2025/759352/CASP_STU%282025%29759352%28ANN01%29_EN.pdf">European Parliament housing research</a></div>
+<div class="source"><strong>Portugal · Health-first drug policy</strong><small>Policy-history evaluations with multiple co-occurring changes</small>
+<p>Modeled decriminalization changes criminal processing of possession contacts and referrals, not drug-market activity or overdose events automatically. Treatment expansion, service capacity and legislation co-occur historically.</p>
+<a href="https://www.unsw.edu.au/content/dam/pdfs/ada/sprc/research-reports/dpmp-drug-summit-2024-explainers/2024-11-was-decriminalisation-effective-in-portugal-v3.pdf">UNSW Drug Policy Modelling Program (2024)</a></div>
+<div class="source"><strong>Scotland · Violence reduction / focused deterrence</strong><small>Inspirational framework; review evidence largely quasi-experimental</small>
+<p>The illustrative intervention adjusts some violent-incident expectations with an invented coefficient, not a coefficient imported from Scottish evaluations. The systematic review found encouraging but context-dependent associations.</p>
+<a href="https://doi.org/10.1002/cl2.1051">Braga, Weisburd & Turchan — systematic review</a></div>
+<div class="source"><strong>Norway · Reentry and correctional education</strong><small>Norway-inspired scenario; numerical anchor from US RAND meta-analysis</small>
+<p>Correctional education is an international reentry-policy inspiration. The recidivism odds ratio 0.57 comes from a US-centered correctional-education meta-analysis, <strong>not from a Norwegian treatment study</strong>. The simulator's baseline and program take-up are hypothetical.</p>
+<a href="https://www.rand.org/pubs/research_reports/RR266.html">RAND correctional education research</a></div>
+<div class="source"><strong>United States / Chicago · Summer youth jobs</strong><small>Randomized trial; narrow specific outcome</small>
+<p>Heller's trial reported a 43% reduction in violent-crime arrests over 16 months among assigned selected disadvantaged youth. This simulator applies a 0.57 multiplier only to the fictional subset offered youth jobs. It does <strong>not</strong> reduce all underlying crime or predict future adult employment.</p>
+<a href="https://doi.org/10.1126/science.1257809">Heller (2014), Science</a></div>
+<div class="source"><strong>Cross-context medication treatment · Opioid-overdose mortality</strong><small>Observational Massachusetts cohort, not a country-level experiment</small>
+<p>Larochelle et al. reported an adjusted opioid-overdose mortality hazard ratio of 0.41 during methadone treatment among survivors of prior nonfatal overdose. The simulator uses this narrow conditional multiplier. The baseline survivor pool, annual hazard and service capacity are fictional.</p>
+<a href="https://doi.org/10.7326/M17-3107">Larochelle et al. (2018), Annals of Internal Medicine</a></div>
+<p><strong>Integrated policy exchange</strong> is a deliberately synthetic combination of several inspirations. No evidence establishes its assumed uptake, interaction effects, or superiority over a single policy.</p>
+</section>
+<section><div class="eyebrow">05 / HOW TO RUN A VALID MODEL COMPARISON</div><h2>Methods for interpreting the virtual society</h2>
+<div class="grid"><div><strong>Match conditions</strong><p>Use the same geographic seed, budgets, shocks and province targeting, while changing only a defined policy factor where possible.</p></div>
+<div><strong>Compare specific outcomes</strong><p>Do not treat arrests, underlying victimizations, police recordings, recidivism and overdose mortality as interchangeable.</p></div>
+<div><strong>Inspect mechanisms</strong><p>Compare housing support, treatment starts, health referrals, youth offers and migration as intermediate modeled outcomes.</p></div>
+<div><strong>Reproduce the scenario</strong><p>Export national annual CSV and JSON describing region generation, policies, shocks and yearly results.</p></div></div>
+<p>The long horizon is particularly speculative. A 100- or 200-year output is a demonstration of compounding structural assumptions, <strong>not a credible social forecast</strong>. The model currently lacks fiscal budget constraints, price systems, climate models, validated cohorts, demographic age transitions, parameter uncertainty, and external evaluation. A convincing national research instrument would require those elements and real calibration data.</p>
+</section>
+<footer><span>GENESIS SOVEREIGN / MODEL VERSION 1.0 · EDUCATIONAL RESEARCH SOFTWARE</span><span><a href="sovereign.html">ENTER THE SIMULATOR</a></span></footer>
+</main></body></html>
