@@ -17,7 +17,13 @@ const LAYERS={
  trust:{label:"Hypothetical trust",color:0xf6adff},
  development:{label:"Built development",color:0xffffa4},
  province:{label:"Administrative provinces",color:0x73e4fd},
- offense:{label:"Selected offense type",color:0xff91c3}
+ offense:{label:"Selected offense type",color:0xff91c3},
+ adminQuality:{label:"Policy implementation capacity",color:0x88ffcf},
+ climateRisk:{label:"Climate vulnerability",color:0xffbe81},
+ elderlyShare:{label:"Share aged 65+",color:0xd5baff},
+ childrenShare:{label:"Share aged 0-17",color:0xbaf8ff},
+ housingGap:{label:"Unmet household capacity",color:0xff9d9a},
+ deprivation:{label:"Hypothetical deprivation",color:0xffbb8f}
 };
 const LAND_NAMES=["water","urban","suburban","commercial","industrial","rural","wilderness"];
 function colorFromInt(hex){return[(hex>>16)&255,(hex>>8)&255,hex&255]}
@@ -27,6 +33,10 @@ function cellValue(cell,arrays,layer,offense,frame,index){
  if(layer==="zoning")return .35+cell.zone*.12;
  if(layer==="province")return (cell.province%9)/8;
  if(layer==="population")return Math.log1p(arrays.population[i])/11;
+ if(layer==="elderlyShare")return arrays.elderly?.[i]/Math.max(1,arrays.population[i])*2.2||0;
+ if(layer==="childrenShare")return arrays.children?.[i]/Math.max(1,arrays.population[i])*2.2||0;
+ if(layer==="housingGap")return Math.max(0,arrays.population[i]-(arrays.housingUnits?.[i]||0)*2.4)/Math.max(1,arrays.population[i])*3;
+
  if(layer==="underlying")return arrays.underlying[i]/Math.max(10,arrays.population[i]/1000*120);
  if(layer==="recorded")return arrays.recorded[i]/Math.max(10,arrays.population[i]/1000*75);
  if(layer==="offense")return frame?.trueTypes?.[i*10+(Number(offense)||0)]/Math.max(5,arrays.population[i]/1000*15)||0;
