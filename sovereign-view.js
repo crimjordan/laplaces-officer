@@ -192,6 +192,27 @@ async function webgl(container,geo,select,status){
   dataBeacons.add(mesh);
  }
  scene.add(dataBeacons);
+ // Geographic title labels are positioned from the 3D camera so commercial
+ // clusters and rural regional headquarters remain recognizable while orbiting.
+ const labelLayer=document.createElement("div");labelLayer.className="sovereignMapLabels";container.append(labelLayer);
+ const titles=[];
+ const addLabel=(name,x,z,type)=>{
+  const label=document.createElement("div");label.className="sovereignMapLabel "+type;
+  label.textContent=name;labelLayer.append(label);
+  titles.push({label,pos:new THREE.Vector3(x,5.7,z)});
+ };
+ geo.cities.forEach(c=>addLabel(c.name,c.x-w/2+.5,c.y-h/2+.5,"city"));
+ geo.provinces.forEach(p=>addLabel(p.name.replace(" Region",""),p.x-w/2+.5,p.y-h/2+.5,"province"));
+ function updateLabels(){
+  const cw=container.clientWidth||960,ch=container.clientHeight||600;
+  for(const item of titles){
+   const p=item.pos.clone().project(camera);
+   const x=(p.x+1)*cw*.5,y=(1-p.y)*ch*.5;
+   const visible=p.z>-1&&p.z<1&&x>8&&x<cw-8&&y>28&&y<ch-16&&radius<span*2.5;
+   item.label.style.display=visible?"block":"none";
+   if(visible)item.label.style.transform="translate(-50%,-50%) translate("+x.toFixed(1)+"px,"+y.toFixed(1)+"px)";
+  }
+ }
  const starsGeo=new THREE.BufferGeometry(),starsArr=new Float32Array(900*3);
  for(let i=0;i<900;i++){const a=i*2.3999,r=120+i%130,el=60+(i*29%210);
   starsArr[3*i]=Math.cos(a)*r;starsArr[3*i+1]=el;starsArr[3*i+2]=Math.sin(a)*r}
@@ -256,6 +277,7 @@ async function webgl(container,geo,select,status){
     transitPositions[i*3+2]=a.y-h/2+(b.y-a.y)*f;
    }transitGeometry.attributes.position.needsUpdate=true;
    dataBeacons.children.forEach((m,i)=>{m.position.y=3.3+Math.sin(ts*.001+i)*.6});
+   updateLabels();
   }
   renderer.render(scene,camera);
  }
@@ -265,7 +287,7 @@ async function webgl(container,geo,select,status){
    else if(mode==="street"){elevation=.32;radius=span*.63;playing=false}
    else{elevation=.85;radius=span*1.4;playing=true}positionCamera()},
   capture(){renderer.render(scene,camera);return renderer.domElement.toDataURL("image/png")},
-  dispose(){disposed=true;cancelAnimationFrame(raf);root.removeEventListener("resize",size);renderer.dispose();renderer.domElement.remove();
+  dispose(){disposed=true;cancelAnimationFrame(raf);root.removeEventListener("resize",size);renderer.dispose();renderer.domElement.remove();labelLayer.remove();
    for(const mesh of [terrainMesh,towers])mesh.dispose?.();
    for(const g of [boxGeo,skylineGeo,borderGeo,starsGeo,transitGeometry,sphereGeo])g.dispose?.()}
  };
