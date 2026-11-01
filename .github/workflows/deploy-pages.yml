@@ -33,6 +33,8 @@ jobs:
         run: node scripts/test-sovereign-ui.cjs
       - name: Verify SOVEREIGN full geographic visualization without WebGL
         run: node scripts/test-sovereign-visuals.cjs
+      - name: Verify GENESIS Civilization II demographic, fiscal and national experiment engine
+        run: node scripts/test-civilization.cjs
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload static website
