@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GENESIS | Controlled Experiments & Sensitivity Laboratory</title>
+<meta name="theme-color" content="#071320">
+<meta name="description" content="Run controlled experimental designs, structural sensitivities, and factorial comparisons using the uncalibrated GENESIS agent-based criminology simulator.">
+<link rel="stylesheet" href="genesis.css?v=lab1"><link rel="stylesheet" href="genesis-experiments.css?v=lab1">
+</head><body class="lab">
+<header class="sitebar">
+ <div class="brand"><span class="glyph">✳</span><div><div class="eyebrow">LAPLACE'S OFFICER / EXPERIMENTAL METHODS</div><strong>GENESIS <span class="muted thin">/ MODEL TESTING LAB</span></strong></div></div>
+ <nav><a href="index.html">HOME</a><a href="genesis.html">GENESIS 3D</a><a href="genesis-legacy.html">LEGACY V1</a><a href="GENESIS_MODEL_CARD.md">MODEL CARD</a></nav>
+ <span class="systemstatus"><i></i> SYNTHETIC LAB / LOCAL COMPUTATION</span>
+</header>
+<main class="labPage">
+<section class="labHero">
+ <div><div class="eyebrow">MODEL EXPERIMENTS / TRANSPARENCY / REPRODUCIBILITY</div>
+ <h1>DON'T JUST SIMULATE. <em>TEST.</em></h1>
+ <p>Run controlled policy comparisons on identical initial populations. Vary one model input, sweep hypothetical social mechanisms, or measure three-way interactions. See exactly what changed—and what didn't.</p>
+ <div class="labFlags"><span>FIXED BUDGET CONTROLS</span><span>MATCHED RANDOM SEEDS</span><span>MODEL-INTERNAL EFFECTS</span><span>CSV · JSON · PDF</span></div>
+ </div>
+ <div class="labWarning"><strong>NOT A REAL-WORLD CAUSAL ESTIMATE</strong><p>All baseline rates, most mechanisms, and social effects in GENESIS remain hypothetical. Intervals here describe simulated seed-to-seed variation, not uncertainty about actual policing or prevention outcomes.</p><a href="GENESIS_MODEL_CARD.md">Read methodology and provenance</a></div>
+</section>
+<section class="labTopStats" aria-label="Experiment run summary">
+ <div><small>DESIGN</small><strong id="metricDesign">CONTROLLED PAIR</strong></div>
+ <div><small>ARMS</small><strong id="metricArms">2</strong></div>
+ <div><small>REPLICATIONS</small><strong id="metricSeeds">40</strong></div>
+ <div><small>MODEL YEARS</small><strong id="metricYears">5</strong></div>
+ <div><small>STATUS</small><strong id="metricStatus">READY</strong></div>
+</section>
+<section class="labLayout">
+ <aside class="labSidebar">
+  <div class="panel labPanel">
+   <div class="eyebrow">01 / EXPERIMENTAL DESIGN</div><h2>Choose your question</h2>
+   <div class="labModeList" role="group" aria-label="Experiment type">
+    <button type="button" data-mode="isolated" class="selected" aria-pressed="true"><strong>01 · Controlled contrast</strong><small>Change one setting; hold others fixed</small></button>
+    <button type="button" data-mode="structural" aria-pressed="false"><strong>02 · Structural sensitivity</strong><small>Zero to maximum hypothetical pathway</small></button>
+    <button type="button" data-mode="factorial" aria-pressed="false"><strong>03 · Factorial experiment</strong><small>3 factors · 8 arms · interactions</small></button>
+   </div>
+   <div id="isolatedControl"><label for="isolatedTest">WHICH POLICY DIFFERENCE?</label><select id="isolatedTest">
+    <option value="reallocation">Resource reallocation (20% vs 80% prevention)</option>
+    <option value="allocation">Prediction vs rotating equal patrol</option>
+    <option value="surveillance">Surveillance coverage (20% vs 80%)</option>
+    <option value="encounters">Intensive vs procedural encounters</option>
+    <option value="deterrence">Patrol deterrence assumption (0% vs 70%)</option>
+   </select></div>
+   <div id="structuralControl" hidden><label for="structuralTest">HYPOTHETICAL EXPOSURE PATHWAY</label><select id="structuralTest">
+    <option value="combined">Employment + housing + education</option><option value="employment">Employment only</option><option value="housing">Housing only</option><option value="education">Education only</option>
+   </select><p class="fine">Runs 0%, 25%, 50%, 100% values with the same policies; nonzero coefficients are invented.</p></div>
+   <div id="factorialControl" hidden>
+    <p class="fine"><strong>Full factorial (8 arms):</strong> 20% vs 80% prevention share, 20% vs 80% surveillance coverage, and 0% vs 100% hypothetical employment link.</p>
+    <p class="fine">The analysis estimates main effects, all two-way interactions, and a three-way interaction within the model.</p>
+   </div>
+  </div>
+  <div class="panel labPanel">
+   <div class="eyebrow">02 / HELD-CONSTANT PARAMETERS</div><h2>Control the experiment</h2>
+   <label for="baseBudget">TOTAL CITY BUDGET · FICTIONAL $M</label><input type="number" id="baseBudget" value="12" min="3" max="24">
+   <label for="basePolicy">BASE PATROL ALLOCATION STRATEGY</label><select id="basePolicy">
+    <option value="problem">Problem-oriented</option><option value="predictive">Recorded-hotspot prediction</option>
+    <option value="equal">Rotating equal coverage</option><option value="random">Random coverage</option><option value="needs">Needs-targeted</option>
+   </select>
+   <div class="labTwocol">
+    <div><label for="basePrevention">PREVENTION SHARE (%)</label><input type="number" id="basePrevention" value="50" min="0" max="100"></div>
+    <div><label for="baseSurveillance">SURVEILLANCE (%)</label><input type="number" id="baseSurveillance" value="40" min="0" max="100"></div>
+   </div>
+   <div class="labTwocol">
+    <div><label for="basePatrolEffect">PATROL ASSUMPTION (%)</label><input type="number" id="basePatrolEffect" value="35" min="0" max="100"></div>
+    <div><label for="baseProcedure">ENCOUNTER STYLE</label><select id="baseProcedure"><option value="procedural">Procedural</option><option value="intensive">Intensive</option></select></div>
+   </div>
+   <p class="fine">A selected experimental factor overrides its baseline input. The exact settings of every simulated arm are shown in the design preview.</p>
+  </div>
+  <div class="panel labPanel">
+   <div class="eyebrow">03 / REPLICATION CONTROL</div><h2>Simulation parameters</h2>
+   <label for="seedCount">MATCHED RANDOM-SEED REPLICATIONS</label><select id="seedCount"><option value="10">10 · smoke test</option><option value="20">20 · exploratory</option><option selected value="40">40 · recommended</option><option value="80">80 · more stable</option></select>
+   <label for="simYears">TIME HORIZON</label><select id="simYears"><option value="2">2 simulated years</option><option selected value="5">5 simulated years</option><option value="10">10 simulated years</option></select>
+   <label for="simPop">CLOSED COHORT SIZE PER WORLD</label><select id="simPop"><option value="192">192 · fast</option><option selected value="384">384 · balanced</option><option value="768">768 · detailed</option><option value="1152">1,152 · full sample</option></select>
+   <label for="seedBase">FIRST REPLICATION SEED</label><input type="number" id="seedBase" value="91371" min="1" max="2000000000">
+   <p class="fine">Each seed is reused for every arm in the design. Replicates have newly generated populations but share initial conditions within a seed.</p>
+   <button id="runExperiment" class="mainbtn" type="button">◆ RUN CONTROLLED EXPERIMENT</button>
+   <button id="cancelExperiment" type="button" disabled>■ CANCEL EXPERIMENT</button>
+   <div class="labProgress"><div id="labProgressBar"></div></div>
+   <p id="progressText" class="fine" role="status" aria-live="polite">Ready. Runs execute locally in a separate worker.</p>
+  </div>
+ </aside>
+ <div class="labPrimary">
+  <div class="panel labPanel">
+   <div class="between"><div><div class="eyebrow">04 / REGISTERED DESIGN</div><h2 id="designTitle">Fixed-budget patrol/prevention reallocation</h2></div><button id="copyConfig" type="button">⌁ COPY DESIGN LINK</button></div>
+   <p class="fine" id="designDescription"></p>
+   <div id="armPreview" class="armPreview"></div>
+   <details class="labDetails"><summary>See exact parameter values for every experimental arm</summary><div id="parameterMatrix"></div></details>
+   <p id="designCaution" class="fine">Changes to inputs will update this design. Previous results remain marked with their exact recorded settings until you run again.</p>
+  </div>
+  <div class="panel labPanel">
+   <div class="between"><div><div class="eyebrow">05 / PAIRED-REPLICATION RESULTS</div><h2>What changed across simulated seeds?</h2></div><span id="resultsTag" class="modelTag">NO RUN YET</span></div>
+   <label for="outcomeSelect">OUTCOME TO ANALYZE</label><select id="outcomeSelect"></select>
+   <div id="resultsEmpty" class="labEmpty"><div class="emptyOrbit">◇</div><h3>Scientific comparison starts here</h3><p>Choose a design and run multiple matched seeds to see differences, distributions, conditional expected events, and where the interventions actually reach.</p></div>
+   <div id="resultsContent" hidden>
+    <div id="resultKpis" class="resultKpis"></div>
+    <canvas id="contrastCanvas" width="1100" height="340" role="img" aria-label="Paired model-generated differences across random seeds"></canvas>
+    <p class="fine" id="chartCaption">Dots are synthetic paired-seed differences. The colored marker is the mean; whiskers show model-generated 5th–95th percentiles—not an empirical confidence interval.</p>
+    <div id="resultTable" class="labTableWrap"></div>
+    <div id="factorialTable" class="labTableWrap"></div>
+   </div>
+  </div>
+  <div class="panel labPanel">
+   <div class="eyebrow">06 / METHODS & COMPARISON LOGIC</div><h2>What's being held constant?</h2>
+   <div class="methodGrid">
+    <div><strong>Matched initial conditions</strong><p>Each replication seed generates the same fictional residents and baseline districts across all experimental arms.</p></div>
+    <div><strong>Fixed nominal budget</strong><p>The amount is identical in each arm. Changing prevention share reallocates this amount between patrol and public services.</p></div>
+    <div><strong>One mechanism at a time</strong><p>Controlled comparisons change one configured factor. The factorial design deliberately changes three fully crossed factors to identify model interactions.</p></div>
+    <div><strong>Multiple distinct outcomes</strong><p>Compare underlying events, recorded events, arrests, mortality, recidivism, employment, treatment and program reach separately.</p></div>
+   </div>
+   <div class="labMethodWarning"><strong>WHY THIS IS NOT CAUSAL IDENTIFICATION</strong>
+    <p>Within-model treatment contrasts can be computed because the world-generating rules are explicit. But model assumptions, unknown transportability, confounding in source studies, uncalibrated rates and invented structural coefficients prevent interpreting these contrasts as real-world causal effects.</p>
+   </div>
+  </div>
+  <div class="panel labPanel">
+   <div class="eyebrow">07 / RESEARCH OUTPUTS</div><h2>Export a reproducible experiment</h2>
+   <div class="labExportButtons">
+    <button id="exportRaw" disabled>↓ SEED-LEVEL CSV</button>
+    <button id="exportEffects" disabled>↓ CONTRASTS CSV</button>
+    <button id="exportJSON" disabled>↓ FULL MODEL JSON</button>
+    <button id="exportReport" disabled class="mainbtn">▣ RESEARCH REPORT / PDF</button>
+   </div>
+   <p id="exportFeedback" class="fine">Exports become available after a successful experiment. Reports include exact model settings, paired contrasts, factorial interactions where applicable, diagnostics and limitations.</p>
+  </div>
+ </div>
+</section>
+<footer><span>LAPLACE // GENESIS · CONTROLLED LAB · SYNTHETIC DATA ONLY</span><span><a href="genesis.html">RETURN TO LIVING CITY</a> · <a href="GENESIS_MODEL_CARD.md">FULL MODEL CARD</a></span></footer>
+</main>
+<script src="genesis-engine-v2.js?v=experiments1"></script>
+<script src="genesis-experiments-core.js?v=experiments1"></script>
+<script defer src="genesis-experiment-lab.js?v=experiments1"></script>
+</body></html>
