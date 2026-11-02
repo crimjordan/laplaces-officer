@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-01T16:06:19.306405+00:00",
+  "updated": "2026-11-02T19:34:16.321639+00:00",
   "items": [
     {
       "title": "Predictive Policing",
@@ -92,14 +92,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Lab dataset: Covert, Intelligent, Adversarial attack on automated license plate recognition systems using digital license plates",
-      "url": "https://doi.org/10.34728/fk2/gwcq6k",
+      "title": "Publicly Disclosed Governance of Private-Sector Automated License Plate Recognition Systems",
+      "url": "https://doi.org/10.5281/zenodo.22182998",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "Publicly Disclosed Governance of Private-Sector Automated License Plate Recognition Systems",
-      "url": "https://doi.org/10.5281/zenodo.22182998",
+      "title": "Lab dataset: Covert, Intelligent, Adversarial attack on automated license plate recognition systems using digital license plates",
+      "url": "https://doi.org/10.34728/fk2/gwcq6k",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -176,12 +176,6 @@
       "source": "OpenAlex"
     },
     {
-      "title": "About Face: why the police may have fewer surveillance cameras in the future",
-      "url": "https://openalex.org/W7224978990",
-      "year": 2026,
-      "source": "OpenAlex"
-    },
-    {
       "title": "AI-Driven Surveillance Auditing to Police Ethically",
       "url": "https://doi.org/10.5281/zenodo.22144614",
       "year": 2026,
@@ -250,6 +244,12 @@
     {
       "title": "Internal Supervision in Handling Domestic Violence by Police Members: The Role of Investigation Supervisory Officers from the Perspective of Accountability and Conflicts of Interest",
       "url": "https://doi.org/10.62885/legisci.v4i2.1216",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Resisting Surveillance AI: Mechanisms of Accountability Evasion and Community Engagement",
+      "url": "https://doi.org/10.1609/aies.v9i4.43360",
       "year": 2026,
       "source": "OpenAlex"
     },
