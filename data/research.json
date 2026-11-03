@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-02T19:34:16.321639+00:00",
+  "updated": "2026-11-03T17:08:21.584286+00:00",
   "items": [
     {
       "title": "Predictive Policing",
@@ -44,14 +44,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Recidivism and Predictive Policing",
-      "url": "https://doi.org/10.1201/9781003731290-24",
+      "title": "Predictive Policing and the Risk of Algorithmic Bias",
+      "url": "https://openalex.org/W7217219339",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "Predictive Policing and the Risk of Algorithmic Bias",
-      "url": "https://openalex.org/W7217219339",
+      "title": "Recidivism and Predictive Policing",
+      "url": "https://doi.org/10.1201/9781003731290-24",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -92,14 +92,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Publicly Disclosed Governance of Private-Sector Automated License Plate Recognition Systems",
-      "url": "https://doi.org/10.5281/zenodo.22182998",
+      "title": "Lab dataset: Covert, Intelligent, Adversarial attack on automated license plate recognition systems using digital license plates",
+      "url": "https://doi.org/10.34728/fk2/gwcq6k",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "Lab dataset: Covert, Intelligent, Adversarial attack on automated license plate recognition systems using digital license plates",
-      "url": "https://doi.org/10.34728/fk2/gwcq6k",
+      "title": "Publicly Disclosed Governance of Private-Sector Automated License Plate Recognition Systems",
+      "url": "https://doi.org/10.5281/zenodo.22182998",
       "year": 2026,
       "source": "OpenAlex"
     },
