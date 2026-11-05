@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-04T17:20:43.706309+00:00",
+  "updated": "2026-11-05T17:27:47.133189+00:00",
   "items": [
     {
       "title": "Predictive Policing",
@@ -14,14 +14,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Rethinking predictive policing",
-      "url": "https://doi.org/10.4324/9781003731115-10",
+      "title": "The Ethics of Predictive Policing",
+      "url": "https://doi.org/10.4324/9781003634591-2",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "The Ethics of Predictive Policing",
-      "url": "https://doi.org/10.4324/9781003634591-2",
+      "title": "Rethinking predictive policing",
+      "url": "https://doi.org/10.4324/9781003731115-10",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -64,6 +64,12 @@
     {
       "title": "Governing Algorithmic Policing in Himachal Pradesh",
       "url": "https://doi.org/10.4018/979-8-3373-5228-2.ch002",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Algorithmic Policing and Criminal Justice: Legislative Safeguards for AI-Driven Law Enforcement",
+      "url": "https://openalex.org/W7218256017",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -230,6 +236,12 @@
       "source": "OpenAlex"
     },
     {
+      "title": "Urban Surveillance, Safety and the Right to the City: A Theoretical Analysis of AI-Enabled Policing Infrastructure, Public Space and Civic Freedom",
+      "url": "https://doi.org/10.68854/ma1emp09",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
       "title": "Police Surveillance and Use of Facial Recognition Technology: Charter Issues, Legal Frameworks and Oversight Mechanisms",
       "url": "https://openalex.org/W7162610109",
       "year": 2026,
@@ -244,12 +256,6 @@
     {
       "title": "Right to Privacy and State Surveillance: Procedural Safeguards and Accountability",
       "url": "https://doi.org/10.22271/27899497.2026.v6.i1a.172",
-      "year": 2026,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "Urban Surveillance, Safety and the Right to the City: A Theoretical Analysis of AI-Enabled Policing Infrastructure, Public Space and Civic Freedom",
-      "url": "https://doi.org/10.68854/ma1emp09",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -346,12 +352,6 @@
     {
       "title": "Algorithmic policing: Tech startups, venture capital and law enforcement in America (Part 2)",
       "url": "https://doi.org/10.1111/1467-8322.12940",
-      "year": 2025,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "Algorithmic Policing and Criminal Justice: Legislative Safeguards for AI-Driven Law Enforcement",
-      "url": "https://openalex.org/W7218256017",
       "year": 2025,
       "source": "OpenAlex"
     },
@@ -752,14 +752,14 @@
       "source": "Crossref"
     },
     {
-      "title": "Surveillance and predictive analytics",
-      "url": "https://doi.org/10.1201/9781315117041-8",
+      "title": "Predictive Policing als eine technisch-soziale Assemblage",
+      "url": "https://doi.org/10.1007/978-3-658-46695-4_5",
       "year": 2024,
       "source": "Crossref"
     },
     {
-      "title": "Predictive Policing als eine technisch-soziale Assemblage",
-      "url": "https://doi.org/10.1007/978-3-658-46695-4_5",
+      "title": "Surveillance and predictive analytics",
+      "url": "https://doi.org/10.1201/9781315117041-8",
       "year": 2024,
       "source": "Crossref"
     },
@@ -854,14 +854,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Police Powers and Accountability",
-      "url": "https://doi.org/10.4324/9781003360308",
+      "title": "Policing controversies: undercover policing",
+      "url": "https://doi.org/10.51952/9781447359418.ch043",
       "year": 2023,
       "source": "OpenAlex"
     },
     {
-      "title": "Policing controversies: undercover policing",
-      "url": "https://doi.org/10.51952/9781447359418.ch043",
+      "title": "Police Powers and Accountability",
+      "url": "https://doi.org/10.4324/9781003360308",
       "year": 2023,
       "source": "OpenAlex"
     },
