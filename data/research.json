@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-08T16:01:58.618776+00:00",
+  "updated": "2026-11-09T19:53:31.258917+00:00",
   "items": [
     {
       "title": "Predictive Policing",
@@ -92,14 +92,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Publicly Disclosed Governance of Private-Sector Automated License Plate Recognition Systems",
-      "url": "https://doi.org/10.5281/zenodo.22182998",
+      "title": "Lab dataset: Covert, Intelligent, Adversarial attack on automated license plate recognition systems using digital license plates",
+      "url": "https://doi.org/10.34728/fk2/gwcq6k",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "Lab dataset: Covert, Intelligent, Adversarial attack on automated license plate recognition systems using digital license plates",
-      "url": "https://doi.org/10.34728/fk2/gwcq6k",
+      "title": "Publicly Disclosed Governance of Private-Sector Automated License Plate Recognition Systems",
+      "url": "https://doi.org/10.5281/zenodo.22182998",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -122,14 +122,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "From Deep Learning to Real-World Surveillance: A Case Study of Flock Safety's Automated License Plate Recognition Network",
-      "url": "https://doi.org/10.2139/ssrn.7240498",
+      "title": "From Policy to Practice: The ALPR Governance-Practice Gap in Law-Enforcement Automated License Plate Recognition Systems",
+      "url": "https://doi.org/10.5281/zenodo.22153342",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "From Policy to Practice: The ALPR Governance-Practice Gap in Law-Enforcement Automated License Plate Recognition Systems",
-      "url": "https://doi.org/10.5281/zenodo.22153342",
+      "title": "From Deep Learning to Real-World Surveillance: A Case Study of Flock Safety's Automated License Plate Recognition Network",
+      "url": "https://doi.org/10.2139/ssrn.7240498",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -206,14 +206,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "TOWARDS RESPONSIBLE ARTIFICIAL INTELLIGENCE (AI) GOVERNANCE IN THE MALAYSIAN CRIMINAL JUSTICE SYSTEM: A LEGAL AND ETHICAL APPRAISAL OF PREDICTIVE POLICING AND AI-DRIVEN SURVEILLANCE",
-      "url": "https://doi.org/10.33102/5ykncb04",
+      "title": "Reality Police Shows as a New Arena of Public Oversight: Mediatized Visibility, Mutual Surveillance in Indonesian Policing Context",
+      "url": "https://doi.org/10.31014/aior.1991.09.01.613",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "Reality Police Shows as a New Arena of Public Oversight: Mediatized Visibility, Mutual Surveillance in Indonesian Policing Context",
-      "url": "https://doi.org/10.31014/aior.1991.09.01.613",
+      "title": "TOWARDS RESPONSIBLE ARTIFICIAL INTELLIGENCE (AI) GOVERNANCE IN THE MALAYSIAN CRIMINAL JUSTICE SYSTEM: A LEGAL AND ETHICAL APPRAISAL OF PREDICTIVE POLICING AND AI-DRIVEN SURVEILLANCE",
+      "url": "https://doi.org/10.33102/5ykncb04",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -590,6 +590,12 @@
       "source": "Crossref"
     },
     {
+      "title": "Lived Experiences in Digitalized Policing and AI Surveillance",
+      "url": "https://doi.org/10.5553/ejps.000044",
+      "year": 2025,
+      "source": "Crossref"
+    },
+    {
       "title": "Algorithmic fairness in predictive policing",
       "url": "https://doi.org/10.1007/s43681-024-00541-3",
       "year": 2024,
@@ -928,12 +934,6 @@
     {
       "title": "Surveillance arbitration in the era of digital policing",
       "url": "https://doi.org/10.32920/23656785.v1",
-      "year": 2023,
-      "source": "Crossref"
-    },
-    {
-      "title": "Surveillance arbitration in the era of digital policing",
-      "url": "https://doi.org/10.32920/23656785",
       "year": 2023,
       "source": "Crossref"
     }
