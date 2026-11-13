@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-12T17:38:24.367546+00:00",
+  "updated": "2026-11-13T17:16:16.051590+00:00",
   "items": [
     {
       "title": "Rethinking predictive policing",
@@ -46,12 +46,6 @@
     {
       "title": "Predictive Policing and the Risk of Algorithmic Bias",
       "url": "https://openalex.org/W7217219339",
-      "year": 2026,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "PREDICTIVE POLICING IN ASIA: A COMPARATIVE STUDY",
-      "url": "https://doi.org/10.47119/ijrp1001911220268688",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -218,14 +212,8 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Increasing Public Trust Through Police Accountability: A Systematic Literature Review",
-      "url": "https://doi.org/10.21203/rs.3.rs-10318568/v1",
-      "year": 2026,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "Urban Surveillance, Safety and the Right to the City: A Theoretical Analysis of AI-Enabled Policing Infrastructure, Public Space and Civic Freedom",
-      "url": "https://doi.org/10.68854/ma1emp09",
+      "title": "4IR Meets Police Accountability",
+      "url": "https://doi.org/10.36096/ijbes.v8i6.1550",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -236,8 +224,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "4IR Meets Police Accountability",
-      "url": "https://doi.org/10.36096/ijbes.v8i6.1550",
+      "title": "Increasing Public Trust Through Police Accountability: A Systematic Literature Review",
+      "url": "https://doi.org/10.21203/rs.3.rs-10318568/v1",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Urban Surveillance, Safety and the Right to the City: A Theoretical Analysis of AI-Enabled Policing Infrastructure, Public Space and Civic Freedom",
+      "url": "https://doi.org/10.68854/ma1emp09",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -266,20 +260,14 @@
       "source": "Crossref"
     },
     {
-      "title": "Digital Surveillance and Predictive Policing: A Rights-Based Analysis in India",
-      "url": "https://doi.org/10.63108/vab.lit.1.8",
-      "year": 2026,
-      "source": "Crossref"
-    },
-    {
       "title": "Surveillance and Policing",
       "url": "https://doi.org/10.4135/9781036204594.n36",
       "year": 2026,
       "source": "Crossref"
     },
     {
-      "title": "Predictive Protest Policing",
-      "url": "https://doi.org/10.25172/smulr.79.3.9",
+      "title": "Digital Surveillance and Predictive Policing: A Rights-Based Analysis in India",
+      "url": "https://doi.org/10.63108/vab.lit.1.8",
       "year": 2026,
       "source": "Crossref"
     },
@@ -290,14 +278,20 @@
       "source": "Crossref"
     },
     {
-      "title": "Predictive Policing: Technology of Stasis",
-      "url": "https://doi.org/10.1353/cul.2026.a1002020",
+      "title": "Predictive Protest Policing",
+      "url": "https://doi.org/10.25172/smulr.79.3.9",
       "year": 2026,
       "source": "Crossref"
     },
     {
       "title": "Predictive Policing Meets Procedural Law",
       "url": "https://doi.org/10.1201/9781003629146-11",
+      "year": 2026,
+      "source": "Crossref"
+    },
+    {
+      "title": "Predictive Policing: Technology of Stasis",
+      "url": "https://doi.org/10.1353/cul.2026.a1002020",
       "year": 2026,
       "source": "Crossref"
     },
@@ -320,20 +314,26 @@
       "source": "Crossref"
     },
     {
+      "title": "PREDICTIVE POLICING IN ASIA: A COMPARATIVE STUDY",
+      "url": "https://doi.org/10.47119/ijrp1001911220268688",
+      "year": 2026,
+      "source": "Crossref"
+    },
+    {
       "title": "Predictive Policing",
       "url": "https://doi.org/10.4324/9781003558491-3",
       "year": 2025,
       "source": "OpenAlex"
     },
     {
-      "title": "Predictive policing",
-      "url": "https://doi.org/10.4337/9781035336906.00075",
+      "title": "Predictive Policing",
+      "url": "https://doi.org/10.4324/9781041056393-3",
       "year": 2025,
       "source": "OpenAlex"
     },
     {
-      "title": "Predictive Policing",
-      "url": "https://doi.org/10.4324/9781041056393-3",
+      "title": "Predictive policing",
+      "url": "https://doi.org/10.4337/9781035336906.00075",
       "year": 2025,
       "source": "OpenAlex"
     },
@@ -346,6 +346,12 @@
     {
       "title": "Verfassungsrechtliche Grenzen des Predictive Policing",
       "url": "https://doi.org/10.3726/b22537",
+      "year": 2025,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Major Milestones in the History of Predictive Policing",
+      "url": "https://openalex.org/W7112456119",
       "year": 2025,
       "source": "OpenAlex"
     },
@@ -580,6 +586,12 @@
     {
       "title": "Risk, Technology, Surveillance, and the Future of Policing",
       "url": "https://doi.org/10.5040/9798881845834.ch-018",
+      "year": 2025,
+      "source": "Crossref"
+    },
+    {
+      "title": "Lived Experiences in Digitalized Policing and AI Surveillance",
+      "url": "https://doi.org/10.5553/ejps.000044",
       "year": 2025,
       "source": "Crossref"
     },
@@ -928,12 +940,6 @@
     {
       "title": "Surveillance arbitration in the era of digital policing",
       "url": "https://doi.org/10.32920/23656785.v1",
-      "year": 2023,
-      "source": "Crossref"
-    },
-    {
-      "title": "Surveillance arbitration in the era of digital policing",
-      "url": "https://doi.org/10.32920/23656785",
       "year": 2023,
       "source": "Crossref"
     }
