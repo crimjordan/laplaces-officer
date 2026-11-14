@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-13T17:16:16.051590+00:00",
+  "updated": "2026-11-14T15:51:58.402395+00:00",
   "items": [
     {
       "title": "Rethinking predictive policing",
@@ -140,14 +140,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Evaluating the Effectiveness, Use, and Privacy Implications of Automated License Plate Recognition A Case Study of Flock Safety Camera Networks in Atlanta and Metropolitan Atlanta",
-      "url": "https://doi.org/10.13140/rg.2.2.26237.73448",
+      "title": "Automated License Plate Detection and Recognition",
+      "url": "https://doi.org/10.1007/978-981-96-7545-6_6",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "Automated License Plate Detection and Recognition",
-      "url": "https://doi.org/10.1007/978-981-96-7545-6_6",
+      "title": "Evaluating the Effectiveness, Use, and Privacy Implications of Automated License Plate Recognition A Case Study of Flock Safety Camera Networks in Atlanta and Metropolitan Atlanta",
+      "url": "https://doi.org/10.13140/rg.2.2.26237.73448",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -212,12 +212,6 @@
       "source": "OpenAlex"
     },
     {
-      "title": "4IR Meets Police Accountability",
-      "url": "https://doi.org/10.36096/ijbes.v8i6.1550",
-      "year": 2026,
-      "source": "OpenAlex"
-    },
-    {
       "title": "TOWARDS RESPONSIBLE ARTIFICIAL INTELLIGENCE (AI) GOVERNANCE IN THE MALAYSIAN CRIMINAL JUSTICE SYSTEM: A LEGAL AND ETHICAL APPRAISAL OF PREDICTIVE POLICING AND AI-DRIVEN SURVEILLANCE",
       "url": "https://doi.org/10.33102/5ykncb04",
       "year": 2026,
@@ -232,6 +226,12 @@
     {
       "title": "Urban Surveillance, Safety and the Right to the City: A Theoretical Analysis of AI-Enabled Policing Infrastructure, Public Space and Civic Freedom",
       "url": "https://doi.org/10.68854/ma1emp09",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "4IR Meets Police Accountability",
+      "url": "https://doi.org/10.36096/ijbes.v8i6.1550",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -284,14 +284,14 @@
       "source": "Crossref"
     },
     {
-      "title": "Predictive Policing Meets Procedural Law",
-      "url": "https://doi.org/10.1201/9781003629146-11",
+      "title": "Predictive Policing: Technology of Stasis",
+      "url": "https://doi.org/10.1353/cul.2026.a1002020",
       "year": 2026,
       "source": "Crossref"
     },
     {
-      "title": "Predictive Policing: Technology of Stasis",
-      "url": "https://doi.org/10.1353/cul.2026.a1002020",
+      "title": "Predictive Policing Meets Procedural Law",
+      "url": "https://doi.org/10.1201/9781003629146-11",
       "year": 2026,
       "source": "Crossref"
     },
@@ -326,14 +326,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Predictive Policing",
-      "url": "https://doi.org/10.4324/9781041056393-3",
+      "title": "Predictive policing",
+      "url": "https://doi.org/10.4337/9781035336906.00075",
       "year": 2025,
       "source": "OpenAlex"
     },
     {
-      "title": "Predictive policing",
-      "url": "https://doi.org/10.4337/9781035336906.00075",
+      "title": "Predictive Policing",
+      "url": "https://doi.org/10.4324/9781041056393-3",
       "year": 2025,
       "source": "OpenAlex"
     },
@@ -440,14 +440,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Advanced IoT-integrated parking systems with automated license plate recognition and payment management",
-      "url": "https://doi.org/10.1038/s41598-025-86441-w",
+      "title": "Road Space Rationing Using Vehicle's Automated License Plate Recognition: A Comprehensive Survey of Methods",
+      "url": "https://doi.org/10.4018/979-8-3373-4571-0.ch005",
       "year": 2025,
       "source": "OpenAlex"
     },
     {
-      "title": "Road Space Rationing Using Vehicle's Automated License Plate Recognition: A Comprehensive Survey of Methods",
-      "url": "https://doi.org/10.4018/979-8-3373-4571-0.ch005",
+      "title": "Advanced IoT-integrated parking systems with automated license plate recognition and payment management",
+      "url": "https://doi.org/10.1038/s41598-025-86441-w",
       "year": 2025,
       "source": "OpenAlex"
     },
@@ -590,12 +590,6 @@
       "source": "Crossref"
     },
     {
-      "title": "Lived Experiences in Digitalized Policing and AI Surveillance",
-      "url": "https://doi.org/10.5553/ejps.000044",
-      "year": 2025,
-      "source": "Crossref"
-    },
-    {
       "title": "Algorithmic fairness in predictive policing",
       "url": "https://doi.org/10.1007/s43681-024-00541-3",
       "year": 2024,
@@ -638,14 +632,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Balancing Safety and Justice, the Ethics of Predictive Policing",
-      "url": "https://doi.org/10.38124/ijisrt/ijisrt24sep617",
+      "title": "THE MERITS AND ETHICAL CONUNDRUMS OF PREDICTIVE POLICING",
+      "url": "https://doi.org/10.33807/monte.20243099",
       "year": 2024,
       "source": "OpenAlex"
     },
     {
-      "title": "THE MERITS AND ETHICAL CONUNDRUMS OF PREDICTIVE POLICING",
-      "url": "https://doi.org/10.33807/monte.20243099",
+      "title": "Balancing Safety and Justice, the Ethics of Predictive Policing",
+      "url": "https://doi.org/10.38124/ijisrt/ijisrt24sep617",
       "year": 2024,
       "source": "OpenAlex"
     },
@@ -734,8 +728,8 @@
       "source": "OpenAlex"
     },
     {
-      "title": "AI-Driven Safety: Automated Helmet Detection and License Plate Recognition",
-      "url": "https://doi.org/10.1109/icces63552.2024.10859938",
+      "title": "StreetSavvy: Automated Parking Management System with License Plate Recognition and Pricing",
+      "url": "https://doi.org/10.55041/ijsrem30763",
       "year": 2024,
       "source": "OpenAlex"
     },
@@ -940,6 +934,12 @@
     {
       "title": "Surveillance arbitration in the era of digital policing",
       "url": "https://doi.org/10.32920/23656785.v1",
+      "year": 2023,
+      "source": "Crossref"
+    },
+    {
+      "title": "Surveillance arbitration in the era of digital policing",
+      "url": "https://doi.org/10.32920/23656785",
       "year": 2023,
       "source": "Crossref"
     }
