@@ -1,15 +1,15 @@
 {
-  "updated": "2026-11-15T16:25:52.112733+00:00",
+  "updated": "2026-11-16T19:40:49.685786+00:00",
   "items": [
     {
-      "title": "Rethinking predictive policing",
-      "url": "https://doi.org/10.4324/9781003731115-10",
+      "title": "The Ethics of Predictive Policing",
+      "url": "https://doi.org/10.4324/9781003634591-2",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "The Ethics of Predictive Policing",
-      "url": "https://doi.org/10.4324/9781003634591-2",
+      "title": "Rethinking predictive policing",
+      "url": "https://doi.org/10.4324/9781003731115-10",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -116,14 +116,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "From Deep Learning to Real-World Surveillance: A Case Study of Flock Safety's Automated License Plate Recognition Network",
-      "url": "https://doi.org/10.2139/ssrn.7240498",
+      "title": "From Policy to Practice: The ALPR Governance-Practice Gap in Law-Enforcement Automated License Plate Recognition Systems",
+      "url": "https://doi.org/10.5281/zenodo.22153342",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "From Policy to Practice: The ALPR Governance-Practice Gap in Law-Enforcement Automated License Plate Recognition Systems",
-      "url": "https://doi.org/10.5281/zenodo.22153342",
+      "title": "From Deep Learning to Real-World Surveillance: A Case Study of Flock Safety's Automated License Plate Recognition Network",
+      "url": "https://doi.org/10.2139/ssrn.7240498",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -206,6 +206,12 @@
       "source": "OpenAlex"
     },
     {
+      "title": "TOWARDS RESPONSIBLE ARTIFICIAL INTELLIGENCE (AI) GOVERNANCE IN THE MALAYSIAN CRIMINAL JUSTICE SYSTEM: A LEGAL AND ETHICAL APPRAISAL OF PREDICTIVE POLICING AND AI-DRIVEN SURVEILLANCE",
+      "url": "https://doi.org/10.33102/5ykncb04",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
       "title": "Reality Police Shows as a New Arena of Public Oversight: Mediatized Visibility, Mutual Surveillance in Indonesian Policing Context",
       "url": "https://doi.org/10.31014/aior.1991.09.01.613",
       "year": 2026,
@@ -224,8 +230,8 @@
       "source": "OpenAlex"
     },
     {
-      "title": "TOWARDS RESPONSIBLE ARTIFICIAL INTELLIGENCE (AI) GOVERNANCE IN THE MALAYSIAN CRIMINAL JUSTICE SYSTEM: A LEGAL AND ETHICAL APPRAISAL OF PREDICTIVE POLICING AND AI-DRIVEN SURVEILLANCE",
-      "url": "https://doi.org/10.33102/5ykncb04",
+      "title": "Police Surveillance and Use of Facial Recognition Technology: Charter Issues, Legal Frameworks and Oversight Mechanisms",
+      "url": "https://openalex.org/W7162610109",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -238,12 +244,6 @@
     {
       "title": "Right to Privacy and State Surveillance: Procedural Safeguards and Accountability",
       "url": "https://doi.org/10.22271/27899497.2026.v6.i1a.172",
-      "year": 2026,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "Police Surveillance and Use of Facial Recognition Technology: Charter Issues, Legal Frameworks and Oversight Mechanisms",
-      "url": "https://openalex.org/W7162610109",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -284,14 +284,14 @@
       "source": "Crossref"
     },
     {
-      "title": "Predictive Policing: Technology of Stasis",
-      "url": "https://doi.org/10.1353/cul.2026.a1002020",
+      "title": "Predictive Policing Meets Procedural Law",
+      "url": "https://doi.org/10.1201/9781003629146-11",
       "year": 2026,
       "source": "Crossref"
     },
     {
-      "title": "Predictive Policing Meets Procedural Law",
-      "url": "https://doi.org/10.1201/9781003629146-11",
+      "title": "Predictive Policing: Technology of Stasis",
+      "url": "https://doi.org/10.1353/cul.2026.a1002020",
       "year": 2026,
       "source": "Crossref"
     },
@@ -458,6 +458,12 @@
       "source": "OpenAlex"
     },
     {
+      "title": "A Deep Learning Framework for Automated Vehicle License Plate Recognition in Nigeria",
+      "url": "https://doi.org/10.51244/ijrsi.2025.1210000033",
+      "year": 2025,
+      "source": "OpenAlex"
+    },
+    {
       "title": "Strengthening Surveillance of Fatal Police Violence for Accountability and Racial Justice",
       "url": "https://doi.org/10.1001/jamanetworkopen.2025.2377",
       "year": 2025,
@@ -490,12 +496,6 @@
     {
       "title": "Police Facial Recognition Systems, Surveillance, and Racial Differences in Police Lethality in U.S. Cities",
       "url": "https://doi.org/10.21428/cb6ab371.60569323",
-      "year": 2025,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "A Comparative Study On Surveillance Technology Using Machine Learning Models",
-      "url": "https://doi.org/10.63363/aijfr.2025.v06i06.2052",
       "year": 2025,
       "source": "OpenAlex"
     },
@@ -586,6 +586,12 @@
     {
       "title": "Risk, Technology, Surveillance, and the Future of Policing",
       "url": "https://doi.org/10.5040/9798881845834.ch-018",
+      "year": 2025,
+      "source": "Crossref"
+    },
+    {
+      "title": "Lived Experiences in Digitalized Policing and AI Surveillance",
+      "url": "https://doi.org/10.5553/ejps.000044",
       "year": 2025,
       "source": "Crossref"
     },
@@ -724,12 +730,6 @@
     {
       "title": "Enhancing Automated Vehicle License Plate Recognition with YOLOv8 and EasyOCR",
       "url": "https://doi.org/10.51519/journalisi.v6i3.848",
-      "year": 2024,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "StreetSavvy: Automated Parking Management System with License Plate Recognition and Pricing",
-      "url": "https://doi.org/10.55041/ijsrem30763",
       "year": 2024,
       "source": "OpenAlex"
     },
@@ -934,12 +934,6 @@
     {
       "title": "Surveillance arbitration in the era of digital policing",
       "url": "https://doi.org/10.32920/23656785.v1",
-      "year": 2023,
-      "source": "Crossref"
-    },
-    {
-      "title": "Surveillance arbitration in the era of digital policing",
-      "url": "https://doi.org/10.32920/23656785",
       "year": 2023,
       "source": "Crossref"
     }
