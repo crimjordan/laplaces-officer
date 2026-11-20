@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-19T18:22:17.527775+00:00",
+  "updated": "2026-11-20T17:52:39.652930+00:00",
   "items": [
     {
       "title": "Rethinking predictive policing",
@@ -38,20 +38,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Recidivism and Predictive Policing",
-      "url": "https://doi.org/10.1201/9781003731290-24",
-      "year": 2026,
-      "source": "OpenAlex"
-    },
-    {
       "title": "Predictive Policing and the Risk of Algorithmic Bias",
       "url": "https://openalex.org/W7217219339",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "PREDICTIVE POLICING IN ASIA: A COMPARATIVE STUDY",
-      "url": "https://doi.org/10.47119/ijrp1001911220268688",
+      "title": "Recidivism and Predictive Policing",
+      "url": "https://doi.org/10.1201/9781003731290-24",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -110,6 +104,12 @@
       "source": "OpenAlex"
     },
     {
+      "title": "From Policy to Practice: The ALPR Governance-Practice Gap in Law-Enforcement Automated License Plate Recognition Systems",
+      "url": "https://doi.org/10.5281/zenodo.22153342",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
       "title": "Enhancing SNN Training via Dynamic Neuronal Threshold Modulation for Automated License Plate Recognition",
       "url": "https://doi.org/10.48084/etasr.17808",
       "year": 2026,
@@ -118,12 +118,6 @@
     {
       "title": "From Deep Learning to Real-World Surveillance: A Case Study of Flock Safety's Automated License Plate Recognition Network",
       "url": "https://doi.org/10.2139/ssrn.7240498",
-      "year": 2026,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "From Policy to Practice: The ALPR Governance-Practice Gap in Law-Enforcement Automated License Plate Recognition Systems",
-      "url": "https://doi.org/10.5281/zenodo.22153342",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -212,6 +206,12 @@
       "source": "OpenAlex"
     },
     {
+      "title": "Urban Surveillance, Safety and the Right to the City: A Theoretical Analysis of AI-Enabled Policing Infrastructure, Public Space and Civic Freedom",
+      "url": "https://doi.org/10.68854/ma1emp09",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
       "title": "Reality Police Shows as a New Arena of Public Oversight: Mediatized Visibility, Mutual Surveillance in Indonesian Policing Context",
       "url": "https://doi.org/10.31014/aior.1991.09.01.613",
       "year": 2026,
@@ -220,12 +220,6 @@
     {
       "title": "Increasing Public Trust Through Police Accountability: A Systematic Literature Review",
       "url": "https://doi.org/10.21203/rs.3.rs-10318568/v1",
-      "year": 2026,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "Urban Surveillance, Safety and the Right to the City: A Theoretical Analysis of AI-Enabled Policing Infrastructure, Public Space and Civic Freedom",
-      "url": "https://doi.org/10.68854/ma1emp09",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -284,14 +278,14 @@
       "source": "Crossref"
     },
     {
-      "title": "Predictive Policing: Technology of Stasis",
-      "url": "https://doi.org/10.1353/cul.2026.a1002020",
+      "title": "Predictive Policing Meets Procedural Law",
+      "url": "https://doi.org/10.1201/9781003629146-11",
       "year": 2026,
       "source": "Crossref"
     },
     {
-      "title": "Predictive Policing Meets Procedural Law",
-      "url": "https://doi.org/10.1201/9781003629146-11",
+      "title": "Predictive Policing: Technology of Stasis",
+      "url": "https://doi.org/10.1353/cul.2026.a1002020",
       "year": 2026,
       "source": "Crossref"
     },
@@ -310,6 +304,12 @@
     {
       "title": "Predictive Policing in American Schools and Universities",
       "url": "https://doi.org/10.2307/jj.37443281.9",
+      "year": 2026,
+      "source": "Crossref"
+    },
+    {
+      "title": "PREDICTIVE POLICING IN ASIA: A COMPARATIVE STUDY",
+      "url": "https://doi.org/10.47119/ijrp1001911220268688",
       "year": 2026,
       "source": "Crossref"
     },
@@ -458,12 +458,6 @@
       "source": "OpenAlex"
     },
     {
-      "title": "A Deep Learning Framework for Automated Vehicle License Plate Recognition in Nigeria",
-      "url": "https://doi.org/10.51244/ijrsi.2025.1210000033",
-      "year": 2025,
-      "source": "OpenAlex"
-    },
-    {
       "title": "Strengthening Surveillance of Fatal Police Violence for Accountability and Racial Justice",
       "url": "https://doi.org/10.1001/jamanetworkopen.2025.2377",
       "year": 2025,
@@ -590,12 +584,6 @@
       "source": "Crossref"
     },
     {
-      "title": "Lived Experiences in Digitalized Policing and AI Surveillance",
-      "url": "https://doi.org/10.5553/ejps.000044",
-      "year": 2025,
-      "source": "Crossref"
-    },
-    {
       "title": "Algorithmic fairness in predictive policing",
       "url": "https://doi.org/10.1007/s43681-024-00541-3",
       "year": 2024,
@@ -646,6 +634,12 @@
     {
       "title": "Balancing Safety and Justice, the Ethics of Predictive Policing",
       "url": "https://doi.org/10.38124/ijisrt/ijisrt24sep617",
+      "year": 2024,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Predicting Police Misconduct",
+      "url": "https://doi.org/10.3386/w32432",
       "year": 2024,
       "source": "OpenAlex"
     },
@@ -866,6 +860,12 @@
       "source": "OpenAlex"
     },
     {
+      "title": "An efficient automated vehicle license plate recognition system under image processing",
+      "url": "https://doi.org/10.11591/ijeecs.v29.i2.pp1055-1062",
+      "year": 2023,
+      "source": "OpenAlex"
+    },
+    {
       "title": "\u2018Crisis\u2019, control and circulation: Biometric surveillance in the policing of the \u2018crimmigrant other\u2019",
       "url": "https://doi.org/10.1177/14613557231184696",
       "year": 2023,
@@ -878,14 +878,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "The Application of Big Data Predictive Analytics and Surveillance Technologies in the Field of Policing",
-      "url": "https://doi.org/10.1007/978-3-031-21920-7_5",
+      "title": "Police Powers and Accountability",
+      "url": "https://doi.org/10.4324/9781003360308",
       "year": 2023,
       "source": "OpenAlex"
     },
     {
-      "title": "Police Powers and Accountability",
-      "url": "https://doi.org/10.4324/9781003360308",
+      "title": "The Application of Big Data Predictive Analytics and Surveillance Technologies in the Field of Policing",
+      "url": "https://doi.org/10.1007/978-3-031-21920-7_5",
       "year": 2023,
       "source": "OpenAlex"
     },
@@ -940,6 +940,12 @@
     {
       "title": "Surveillance arbitration in the era of digital policing",
       "url": "https://doi.org/10.32920/23656785.v1",
+      "year": 2023,
+      "source": "Crossref"
+    },
+    {
+      "title": "Surveillance arbitration in the era of digital policing",
+      "url": "https://doi.org/10.32920/23656785",
       "year": 2023,
       "source": "Crossref"
     }
