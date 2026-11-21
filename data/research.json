@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-20T17:52:39.652930+00:00",
+  "updated": "2026-11-21T16:50:41.410122+00:00",
   "items": [
     {
       "title": "Rethinking predictive policing",
@@ -80,14 +80,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Publicly Disclosed Governance of Private-Sector Automated License Plate Recognition Systems",
-      "url": "https://doi.org/10.5281/zenodo.22182998",
+      "title": "Lab dataset: Covert, Intelligent, Adversarial attack on automated license plate recognition systems using digital license plates",
+      "url": "https://doi.org/10.34728/fk2/gwcq6k",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "Lab dataset: Covert, Intelligent, Adversarial attack on automated license plate recognition systems using digital license plates",
-      "url": "https://doi.org/10.34728/fk2/gwcq6k",
+      "title": "Publicly Disclosed Governance of Private-Sector Automated License Plate Recognition Systems",
+      "url": "https://doi.org/10.5281/zenodo.22182998",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -134,20 +134,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Evaluating the Effectiveness, Use, and Privacy Implications of Automated License Plate Recognition A Case Study of Flock Safety Camera Networks in Atlanta and Metropolitan Atlanta",
-      "url": "https://doi.org/10.13140/rg.2.2.26237.73448",
-      "year": 2026,
-      "source": "OpenAlex"
-    },
-    {
       "title": "Automated License Plate Detection and Recognition",
       "url": "https://doi.org/10.1007/978-981-96-7545-6_6",
       "year": 2026,
       "source": "OpenAlex"
     },
     {
-      "title": "Automated vehicle access control system using license plate recognition",
-      "url": "https://doi.org/10.1038/s41598-026-47210-5",
+      "title": "Evaluating the Effectiveness, Use, and Privacy Implications of Automated License Plate Recognition A Case Study of Flock Safety Camera Networks in Atlanta and Metropolitan Atlanta",
+      "url": "https://doi.org/10.13140/rg.2.2.26237.73448",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -206,14 +200,8 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Urban Surveillance, Safety and the Right to the City: A Theoretical Analysis of AI-Enabled Policing Infrastructure, Public Space and Civic Freedom",
-      "url": "https://doi.org/10.68854/ma1emp09",
-      "year": 2026,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "Reality Police Shows as a New Arena of Public Oversight: Mediatized Visibility, Mutual Surveillance in Indonesian Policing Context",
-      "url": "https://doi.org/10.31014/aior.1991.09.01.613",
+      "title": "Police Surveillance and Use of Facial Recognition Technology: Charter Issues, Legal Frameworks and Oversight Mechanisms",
+      "url": "https://openalex.org/W7162610109",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -224,8 +212,14 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Police Surveillance and Use of Facial Recognition Technology: Charter Issues, Legal Frameworks and Oversight Mechanisms",
-      "url": "https://openalex.org/W7162610109",
+      "title": "Urban Surveillance, Safety and the Right to the City: A Theoretical Analysis of AI-Enabled Policing Infrastructure, Public Space and Civic Freedom",
+      "url": "https://doi.org/10.68854/ma1emp09",
+      "year": 2026,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Reality Police Shows as a New Arena of Public Oversight: Mediatized Visibility, Mutual Surveillance in Indonesian Policing Context",
+      "url": "https://doi.org/10.31014/aior.1991.09.01.613",
       "year": 2026,
       "source": "OpenAlex"
     },
@@ -398,6 +392,12 @@
       "source": "OpenAlex"
     },
     {
+      "title": "Cop, Code, and Conduct: A practice-based understanding of responsible policing in the algorithmic age",
+      "url": "https://doi.org/10.33540/2853",
+      "year": 2025,
+      "source": "OpenAlex"
+    },
+    {
       "title": "Advanced deep learning techniques for automated license plate recognition",
       "url": "https://doi.org/10.1038/s41598-025-24967-9",
       "year": 2025,
@@ -454,6 +454,12 @@
     {
       "title": "Implementation of Automated Tolls with License Plate Recognition Using YOLO",
       "url": "https://doi.org/10.1109/icvadv63329.2025.10961521",
+      "year": 2025,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "A Deep Learning Framework for Automated Vehicle License Plate Recognition in Nigeria",
+      "url": "https://doi.org/10.51244/ijrsi.2025.1210000033",
       "year": 2025,
       "source": "OpenAlex"
     },
@@ -638,12 +644,6 @@
       "source": "OpenAlex"
     },
     {
-      "title": "Predicting Police Misconduct",
-      "url": "https://doi.org/10.3386/w32432",
-      "year": 2024,
-      "source": "OpenAlex"
-    },
-    {
       "title": "Algorithmic Police Reform: 'Reading' a Police Early Intervention Algorithm",
       "url": "https://doi.org/10.1007/978-3-031-68326-8_10",
       "year": 2024,
@@ -818,6 +818,12 @@
       "source": "OpenAlex"
     },
     {
+      "title": "Predictive policing and negotiations of (in)formality: Exploring the Swiss case",
+      "url": "https://doi.org/10.1016/j.ijlcj.2023.100605",
+      "year": 2023,
+      "source": "OpenAlex"
+    },
+    {
       "title": "Algorithmic policing accountability: eight sociotechnical challenges",
       "url": "https://doi.org/10.1080/10439463.2023.2241965",
       "year": 2023,
@@ -844,12 +850,6 @@
     {
       "title": ":The Police Identity Crisis: Hero, Warrior, Guardian, Algorithm",
       "url": "https://doi.org/10.1086/724541",
-      "year": 2023,
-      "source": "OpenAlex"
-    },
-    {
-      "title": "Exploring Police Perspectives on Algorithmic Transparency: A Qualitative Analysis of Police Interviews in the UK",
-      "url": "https://doi.org/10.1145/3617694.3623246",
       "year": 2023,
       "source": "OpenAlex"
     },
@@ -904,6 +904,12 @@
     {
       "title": "Surveillance And Resistance: Police Use of Technology and Activist Mobilization in the San Francisco Bay Area",
       "url": "https://doi.org/10.5070/b337162076",
+      "year": 2023,
+      "source": "OpenAlex"
+    },
+    {
+      "title": "Coproducing Surveillance: How 911 Callers Influence Policing in the Polity",
+      "url": "https://doi.org/10.7302/22319",
       "year": 2023,
       "source": "OpenAlex"
     },
